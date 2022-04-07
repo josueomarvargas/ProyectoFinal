@@ -3,10 +3,10 @@ package clases;
 public class TrabajadorUsuario {
 
 	private int idTrabajador;
-	private int idUsuario;
+	private String idUsuario;
 	private String tipoUsuario;
 
-	public TrabajadorUsuario(int idTrabajador, int idUsuario, String tipoUsuario) {
+	public TrabajadorUsuario(int idTrabajador, String idUsuario, String tipoUsuario) {
 		super();
 		this.idTrabajador = idTrabajador;
 		this.idUsuario = idUsuario;
@@ -25,11 +25,11 @@ public class TrabajadorUsuario {
 		this.idTrabajador = idTrabajador;
 	}
 
-	public int getIdUsuario() {
+	public String getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(String idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 

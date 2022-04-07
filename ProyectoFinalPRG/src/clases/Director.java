@@ -3,7 +3,7 @@ package clases;
 import java.time.LocalDate;
 
 public class Director extends Trabajador{
-	private String nacionalidad;
+	private String categoria;
 
 	public Director() {
 		super();
@@ -16,15 +16,15 @@ public class Director extends Trabajador{
 
 	public Director(String nacionalidad) {
 		super();
-		this.nacionalidad = nacionalidad;
+		this.categoria = nacionalidad;
 	}
 
 	public String getNacionalidad() {
-		return nacionalidad;
+		return categoria;
 	}
 
 	public void setNacionalidad(String nacionalidad) {
-		this.nacionalidad = nacionalidad;
+		this.categoria = nacionalidad;
 	}
 	
 	
