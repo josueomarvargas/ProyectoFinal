@@ -989,24 +989,6 @@
           <element xmi:type="uml:Class" href="Reto_Final.uml#_dx4iULAYEeydWJZuQL4Zww"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dyHy4bAYEeydWJZuQL4Zww" x="254" y="32" width="441" height="221"/>
         </children>
-        <children xmi:type="notation:Shape" xmi:id="_yhJa0LZnEey-NYlDXLxtCg" type="Text" fontName="Segoe UI" description="Factoria">
-          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_yhKB4LZnEey-NYlDXLxtCg" source="PapyrusCSSForceValue">
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_yhKB4bZnEey-NYlDXLxtCg" key="lineColor" value="true"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_yhKB4rZnEey-NYlDXLxtCg" key="fontHeight" value="true"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_yhKB47ZnEey-NYlDXLxtCg" key="bold" value="true"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_yhKB5LZnEey-NYlDXLxtCg" key="italic" value="true"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_yhKB5bZnEey-NYlDXLxtCg" key="fontColor" value="true"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_yhKB5rZnEey-NYlDXLxtCg" key="fillColor" value="true"/>
-          </eAnnotations>
-          <children xmi:type="notation:BasicDecorationNode" xmi:id="_yhKB57ZnEey-NYlDXLxtCg" type="DiagramName">
-            <element xsi:nil="true"/>
-          </children>
-          <children xmi:type="notation:BasicDecorationNode" xmi:id="_yhKB6LZnEey-NYlDXLxtCg" type="Description">
-            <element xsi:nil="true"/>
-          </children>
-          <element xsi:nil="true"/>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yhJa0bZnEey-NYlDXLxtCg" x="434" y="312"/>
-        </children>
         <children xmi:type="notation:Shape" xmi:id="_dFHDQLAVEeydWJZuQL4Zww" type="Class_Shape_CN">
           <children xmi:type="notation:DecorationNode" xmi:id="_dFHDQrAVEeydWJZuQL4Zww" type="Class_NameLabel_CN"/>
           <children xmi:type="notation:DecorationNode" xmi:id="_dFHDQ7AVEeydWJZuQL4Zww" type="Class_FloatingNameLabel_CN">
