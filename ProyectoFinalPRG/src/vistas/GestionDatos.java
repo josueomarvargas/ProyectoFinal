@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
@@ -40,7 +41,7 @@ public class GestionDatos extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JTextArea txtrGestinDeDatos = new JTextArea();
+			JLabel txtrGestinDeDatos = new JLabel();
 			txtrGestinDeDatos.setFont(new Font("Calibri", Font.PLAIN, 27));
 			txtrGestinDeDatos.setBackground(SystemColor.menu);
 			txtrGestinDeDatos.setText("Gesti\u00F3n de Datos");

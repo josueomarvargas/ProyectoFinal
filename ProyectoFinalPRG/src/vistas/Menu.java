@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
+import javax.swing.JLabel;
 
 public class Menu extends JDialog {
 
@@ -40,16 +41,6 @@ public class Menu extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JTextArea txtrMen = new JTextArea();
-			txtrMen.setBackground(SystemColor.menu);
-			txtrMen.setToolTipText("");
-			txtrMen.setText("Men\u00FA");
-			txtrMen.setTabSize(15);
-			txtrMen.setFont(new Font("Calibri", Font.PLAIN, 27));
-			txtrMen.setBounds(168, 11, 111, 37);
-			contentPanel.add(txtrMen);
-		}
-		{
 			JButton btnNewButton = new JButton("Mis Datos");
 			btnNewButton.setFont(new Font("Calibri", Font.PLAIN, 16));
 			btnNewButton.setBounds(107, 72, 240, 37);
@@ -70,6 +61,12 @@ public class Menu extends JDialog {
 			btnNewButton_2.setFont(new Font("Calibri", Font.PLAIN, 15));
 			btnNewButton_2.setBounds(107, 170, 240, 37);
 			contentPanel.add(btnNewButton_2);
+		}
+		{
+			JLabel lblMen = new JLabel("Men\u00FA");
+			lblMen.setFont(new Font("Calibri", Font.PLAIN, 28));
+			lblMen.setBounds(181, 21, 99, 29);
+			contentPanel.add(lblMen);
 		}
 		{
 			JPanel buttonPane = new JPanel();

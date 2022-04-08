@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
@@ -40,11 +41,11 @@ public class SalirPrograma extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JTextArea txtrquieresSalirDel = new JTextArea();
+			JLabel txtrquieresSalirDel = new JLabel();
 			txtrquieresSalirDel.setText("\u00BFQuieres salir del \r\nprograma?");
 			txtrquieresSalirDel.setFont(new Font("Calibri", Font.PLAIN, 28));
 			txtrquieresSalirDel.setBackground(SystemColor.menu);
-			txtrquieresSalirDel.setBounds(117, 53, 239, 83);
+			txtrquieresSalirDel.setBounds(50, 52, 346, 83);
 			contentPanel.add(txtrquieresSalirDel);
 		}
 		{

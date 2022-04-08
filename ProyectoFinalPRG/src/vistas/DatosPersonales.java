@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.JPasswordField;
@@ -15,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JTable;
+import javax.swing.JLabel;
 
 public class DatosPersonales extends JDialog {
 
@@ -38,136 +41,108 @@ public class DatosPersonales extends JDialog {
 	 * Create the dialog.
 	 */
 	public DatosPersonales() {
-		setBounds(100, 100, 492, 445);
+		setBounds(100, 100, 492, 363);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JTextArea txtrNombreDeUsuario = new JTextArea();
-			txtrNombreDeUsuario.setFont(new Font("Calibri", Font.PLAIN, 12));
-			txtrNombreDeUsuario.setBackground(SystemColor.menu);
-			txtrNombreDeUsuario.setText("Nombre de usuario:");
-			txtrNombreDeUsuario.setBounds(36, 56, 111, 22);
-			contentPanel.add(txtrNombreDeUsuario);
-		}
-		{
-			JTextArea txtrContrasea = new JTextArea();
-			txtrContrasea.setFont(new Font("Calibri", Font.PLAIN, 12));
-			txtrContrasea.setBackground(SystemColor.menu);
-			txtrContrasea.setText("Contrase\u00F1a:");
-			txtrContrasea.setBounds(36, 82, 111, 22);
-			contentPanel.add(txtrContrasea);
-		}
-		{
-			JTextArea txtrDni = new JTextArea();
-			txtrDni.setFont(new Font("Calibri", Font.PLAIN, 12));
-			txtrDni.setBackground(SystemColor.menu);
-			txtrDni.setText("DNI:");
-			txtrDni.setBounds(46, 107, 47, 22);
-			contentPanel.add(txtrDni);
-		}
-		{
-			JTextArea txtrNombre = new JTextArea();
-			txtrNombre.setFont(new Font("Calibri", Font.PLAIN, 12));
-			txtrNombre.setBackground(SystemColor.menu);
-			txtrNombre.setText("Nombre:");
-			txtrNombre.setBounds(36, 136, 111, 22);
-			contentPanel.add(txtrNombre);
-		}
-		{
-			JTextArea txtrApellido = new JTextArea();
-			txtrApellido.setBackground(SystemColor.menu);
-			txtrApellido.setFont(new Font("Calibri", Font.PLAIN, 12));
-			txtrApellido.setText("Apellido:");
-			txtrApellido.setBounds(36, 169, 86, 19);
-			contentPanel.add(txtrApellido);
-		}
-		{
-			JTextArea txtrNmeroDePremios = new JTextArea();
-			txtrNmeroDePremios.setBackground(SystemColor.menu);
-			txtrNmeroDePremios.setFont(new Font("Calibri", Font.PLAIN, 12));
-			txtrNmeroDePremios.setText("N\u00FAmero de premios:");
-			txtrNmeroDePremios.setBounds(36, 199, 121, 22);
-			contentPanel.add(txtrNmeroDePremios);
-		}
-		{
-			JTextArea txtrDireccion = new JTextArea();
-			txtrDireccion.setBackground(SystemColor.menu);
-			txtrDireccion.setFont(new Font("Calibri", Font.PLAIN, 12));
-			txtrDireccion.setText("Direccion:");
-			txtrDireccion.setBounds(36, 228, 111, 22);
-			contentPanel.add(txtrDireccion);
-		}
-		{
-			JTextArea txtrDatosPersonales = new JTextArea();
-			txtrDatosPersonales.setBackground(SystemColor.menu);
-			txtrDatosPersonales.setFont(new Font("Calibri", Font.PLAIN, 28));
-			txtrDatosPersonales.setText("Datos Personales");
-			txtrDatosPersonales.setBounds(125, 11, 217, 34);
-			contentPanel.add(txtrDatosPersonales);
-		}
-		{
-			JTextArea textArea = new JTextArea();
-			textArea.setBounds(251, 51, 148, 19);
-			contentPanel.add(textArea);
+			JTextField textField = new JTextField();
+			textField.setBounds(251, 58, 148, 19);
+			contentPanel.add(textField);
 		}
 		{
 			passwordField = new JPasswordField();
-			passwordField.setBounds(251, 79, 148, 20);
+			passwordField.setBounds(251, 88, 79, 20);
 			contentPanel.add(passwordField);
 		}
 		{
-			JTextArea textArea = new JTextArea();
-			textArea.setBounds(251, 139, 148, 19);
-			contentPanel.add(textArea);
+			JTextField textField = new JTextField();
+			textField.setBounds(251, 149, 148, 19);
+			contentPanel.add(textField);
+		}
+		{
+			JTextField textField = new JTextField();
+			textField.setBounds(251, 179, 148, 19);
+			contentPanel.add(textField);
 		}
 		{
 			JTextArea textArea = new JTextArea();
-			textArea.setBounds(251, 164, 148, 19);
+			textArea.setBounds(251, 209, 148, 19);
 			contentPanel.add(textArea);
 		}
 		{
-			JTextArea textArea = new JTextArea();
-			textArea.setBounds(251, 194, 148, 19);
-			contentPanel.add(textArea);
+			JTextField textField = new JTextField();
+			textField.setBounds(251, 239, 148, 19);
+			contentPanel.add(textField);
 		}
 		{
-			JTextArea textArea = new JTextArea();
-			textArea.setBounds(251, 223, 148, 19);
-			contentPanel.add(textArea);
-		}
-		{
-			JTextArea textArea = new JTextArea();
-			textArea.setBounds(251, 107, 148, 19);
-			contentPanel.add(textArea);
+			JTextField textField = new JTextField();
+			textField.setBounds(251, 119, 148, 19);
+			contentPanel.add(textField);
 		}
 		
 		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(457, 0, 17, 362);
+		scrollBar.setBounds(457, 0, 17, 291);
 		contentPanel.add(scrollBar);
-		
-		JTextArea txtrFechaDeNacimiento = new JTextArea();
-		txtrFechaDeNacimiento.setText("Fecha de Nacimiento:");
-		txtrFechaDeNacimiento.setFont(new Font("Calibri", Font.PLAIN, 12));
-		txtrFechaDeNacimiento.setBackground(SystemColor.menu);
-		txtrFechaDeNacimiento.setBounds(36, 261, 148, 19);
-		contentPanel.add(txtrFechaDeNacimiento);
-		
-		JTextArea txtrFechaDeNacimiento_1 = new JTextArea();
-		txtrFechaDeNacimiento_1.setText("N\u00FAmero de Tel\u00E9fono:");
-		txtrFechaDeNacimiento_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-		txtrFechaDeNacimiento_1.setBackground(SystemColor.menu);
-		txtrFechaDeNacimiento_1.setBounds(36, 291, 131, 22);
-		contentPanel.add(txtrFechaDeNacimiento_1);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(251, 253, 148, 19);
-		contentPanel.add(textArea);
-		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(251, 286, 148, 19);
-		contentPanel.add(textArea_1);
+		{
+			JLabel lblNewLabel = new JLabel("Datos Personales");
+			lblNewLabel.setFont(new Font("Calibri", Font.PLAIN, 28));
+			lblNewLabel.setBounds(104, 11, 262, 29);
+			contentPanel.add(lblNewLabel);
+		}
+		{
+			JLabel lblNewLabel_1 = new JLabel("Nombre de usuario :");
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+			lblNewLabel_1.setBounds(86, 62, 118, 19);
+			contentPanel.add(lblNewLabel_1);
+		}
+		{
+			JLabel lblNewLabel_1 = new JLabel("Contrase\u00F1a :");
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+			lblNewLabel_1.setBounds(130, 91, 79, 19);
+			contentPanel.add(lblNewLabel_1);
+		}
+		{
+			JLabel lblNewLabel_1 = new JLabel("DNI :");
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 13));
+			lblNewLabel_1.setBounds(171, 124, 39, 19);
+			contentPanel.add(lblNewLabel_1);
+		}
+		{
+			JLabel lblNewLabel_1 = new JLabel("Nombre :");
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+			lblNewLabel_1.setBounds(150, 154, 54, 19);
+			contentPanel.add(lblNewLabel_1);
+		}
+		{
+			JLabel lblNewLabel_1 = new JLabel("Apellido :");
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+			lblNewLabel_1.setBounds(145, 184, 64, 19);
+			contentPanel.add(lblNewLabel_1);
+		}
+		{
+			JLabel lblNewLabel_1 = new JLabel("N\u00FAmero de premios :");
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+			lblNewLabel_1.setBounds(86, 212, 118, 19);
+			contentPanel.add(lblNewLabel_1);
+		}
+		{
+			JLabel lblNewLabel_1 = new JLabel("Direcci\u00F3n :");
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+			lblNewLabel_1.setBounds(140, 244, 64, 19);
+			contentPanel.add(lblNewLabel_1);
+		}
+		{
+			JLabel lblNewLabel_1 = new JLabel("");
+			lblNewLabel_1.setBounds(86, 272, 95, 19);
+			contentPanel.add(lblNewLabel_1);
+		}
+		{
+			JButton btnMostrar = new JButton("Mostrar");
+			btnMostrar.setBounds(340, 88, 79, 23);
+			contentPanel.add(btnMostrar);
+		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -178,6 +153,11 @@ public class DatosPersonales extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 					}
 				});
+				{
+					JButton btnBorrarDatos = new JButton("Borrar datos");
+					btnBorrarDatos.setActionCommand("OK");
+					buttonPane.add(btnBorrarDatos);
+				}
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
