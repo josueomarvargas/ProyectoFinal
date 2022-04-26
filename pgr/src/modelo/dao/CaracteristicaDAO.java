@@ -1,33 +1,33 @@
-package controlador.dao;
+package modelo.dao;
 
 import java.sql.SQLException;
 import java.util.Map;
 
-import controlador.BDgeneric;
-import modelo.Promociona;
+import controlador.interfaz.BDgeneric;
+import modelo.clases.Equipamiento;
 
-public class PromocionaDAO implements BDgeneric<Promociona> {
+public class CaracteristicaDAO implements BDgeneric<Equipamiento>{
 
 	@Override
-	public boolean create(Promociona clase) throws SQLException {
+	public boolean create(Equipamiento clase) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Promociona search(String id) throws SQLException {
+	public Equipamiento search(String id) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, Promociona> readAll() throws SQLException {
+	public Map<String, Equipamiento> readAll() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean update(Promociona clase) throws SQLException {
+	public boolean update(Equipamiento clase) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}

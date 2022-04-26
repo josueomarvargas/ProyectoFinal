@@ -1,4 +1,4 @@
-package controlador;
+package controlador.utils;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,8 +41,9 @@ import java.util.Properties;
 public class SQLCon {
 
 	// Nombre del archivo properties
-	private static final String properties = "bd.properties";
+	private static final String properties = "./src/modelo/bd.properties";
 	private static Connection con = null;
+	private static SQLCon sql = null;
 
 	// Constructor privado para que no se pueda instanciar fuera de la clase
 	private SQLCon() {
@@ -69,7 +70,7 @@ public class SQLCon {
 	 * 
 	 * @return devolverá un objeto connection con la conexión a la BD
 	 **/
-	public static Connection openConnection() {
+	public static Connection getConnection() {
 		if (con == null) {
 
 			// Hacer que sea seguro entre hilos/procesos (thread safe)
@@ -77,8 +78,8 @@ public class SQLCon {
 				// Se comprueba otra vez porque puede entrar
 				// en la condición ya que lo sincronizamos después
 				if (con == null) {
-					// Instanciamos la clase llamando al constructor privado
-					new SQLCon();
+					// Llamamos al constructor privado
+					sql = new SQLCon();
 				}
 			}
 		}
@@ -92,7 +93,10 @@ public class SQLCon {
 //		bdProp.setProperty("user", user);
 //		bdProp.setProperty("pass", pass);
 //		bdProp.store(new FileOutputStream(properties), null);
-//
+//		
+//		if()
+//			reConnect();
+//		
 //		return bdProp;
 //	}
 

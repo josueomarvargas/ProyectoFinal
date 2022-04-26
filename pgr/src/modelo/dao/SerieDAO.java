@@ -1,33 +1,33 @@
-package controlador.dao;
+package modelo.dao;
 
 import java.sql.SQLException;
 import java.util.Map;
 
-import controlador.BDgeneric;
-import modelo.Participa;
+import controlador.interfaz.BDgeneric;
+import modelo.clases.Serie;
 
-public class ParticipaDAO implements BDgeneric<Participa>{
+public class SerieDAO implements BDgeneric<Serie> {
 
 	@Override
-	public boolean create(Participa clase) throws SQLException {
+	public boolean create(Serie clase) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Participa search(String id) throws SQLException {
+	public Serie search(String id) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, Participa> readAll() throws SQLException {
+	public Map<String, Serie> readAll() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean update(Participa clase) throws SQLException {
+	public boolean update(Serie clase) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}

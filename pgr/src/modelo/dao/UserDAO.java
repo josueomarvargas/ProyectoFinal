@@ -1,4 +1,4 @@
-package controlador.dao;
+package modelo.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import controlador.BDgeneric;
-import controlador.SQLCon;
-import modelo.Usuario;
+import controlador.interfaz.BDgeneric;
+import controlador.utils.SQLCon;
+import modelo.clases.Usuario;
 
 public class UserDAO implements BDgeneric<Usuario> {
 
@@ -17,23 +17,26 @@ public class UserDAO implements BDgeneric<Usuario> {
 	private final String CREATE = "INSERT INTO usuario(idUsuario, passwd) VALUES(?, ?)";
 	private final String SEARCH = "SELECT * FROM usuario WHERE idUsuario = ?";
 	private final String READALL = "SELECT * FROM usuario";
-	private final String UPDATE = "UPDATE usuario SET idUsuario = ?, passwd = ? WHERE idUsuario = ?";
+	private final String UPDATE = "UPDATE usuario SET passwd = ? WHERE idUsuario = ?";
 	private final String DELETE = "DELETE FROM usuario WHERE idUsuario = ?";
 
 	// Establecer conexión a la base de datos
-	private static Connection con = SQLCon.openConnection();
+	private static Connection con = SQLCon.getConnection();
 	private PreparedStatement stat;
 
 	@Override
 	public boolean create(Usuario clase) throws SQLException {
 
 		try {
+			// Prepare Statement - Create
 			stat = con.prepareStatement(CREATE);
+
+			// Añadir datos al Prepare Statement
 			stat.setString(1, clase.getIdUsuario());
 			stat.setString(2, clase.getPasswd());
-			stat.executeUpdate();
 
-			return true; // Si no da ningún error nos devolverá true
+			// Ejecutar consulta y devolver true o false
+			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -51,8 +54,13 @@ public class UserDAO implements BDgeneric<Usuario> {
 		Usuario user = null;
 
 		try {
+			// Prepare Statement - Search
 			stat = con.prepareStatement(SEARCH);
+
+			// Añadir datos al Prepare Statement
 			stat.setString(1, id);
+
+			// Ejecutar consulta y guardarlo en el Result Set
 			rs = stat.executeQuery();
 
 			// Comprobar que RS a recuperado informacion del executeQuery
@@ -64,7 +72,7 @@ public class UserDAO implements BDgeneric<Usuario> {
 
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.err.println(e);
 		}
 
@@ -81,7 +89,10 @@ public class UserDAO implements BDgeneric<Usuario> {
 		Usuario user = null;
 
 		try {
+			// Prepare Statement - ReadAll
 			stat = con.prepareStatement(READALL);
+
+			// Ejecutar consulta y guardarlo en el result set
 			rs = stat.executeQuery();
 
 			// Mientras que RS sigua teniendo filas con información
@@ -94,7 +105,7 @@ public class UserDAO implements BDgeneric<Usuario> {
 				allUsers.put(user.getIdUsuario(), user);
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println(e);
 		}
 
@@ -106,12 +117,15 @@ public class UserDAO implements BDgeneric<Usuario> {
 	public boolean update(Usuario clase) throws SQLException {
 
 		try {
+			// Prepare Statement - Update
 			stat = con.prepareStatement(UPDATE);
-			stat.setString(1, clase.getIdUsuario());
-			stat.setString(2, clase.getPasswd());
-			stat.executeUpdate();
 
-			return true; // Si no da ningún error nos devolverá true
+			// Añadir datos al Prepare Statement
+			stat.setString(1, clase.getPasswd());
+			stat.setString(2, clase.getIdUsuario());
+
+			// Ejecutar consulta y devolver true o false
+			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -125,11 +139,15 @@ public class UserDAO implements BDgeneric<Usuario> {
 	public boolean remove(String id) throws SQLException {
 
 		try {
-			stat = con.prepareStatement(DELETE);
-			stat.setString(1, id);
-			stat.executeUpdate();
 
-			return true; // Si no da ningún error nos devolverá true
+			// Prepare Statement - Delete
+			stat = con.prepareStatement(DELETE);
+
+			// Añadir datos al Prepare Statement
+			stat.setString(1, id);
+
+			// Ejecutar consulta
+			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
 			System.err.println(e);
