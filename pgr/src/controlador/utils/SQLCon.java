@@ -86,18 +86,5 @@ public class SQLCon {
 		return con;
 	}
 
-	// Método para modificar el usuario y el pass en el archivo properties
-//	public static Properties setProperties(String user, String pass) throws IOException {
-//
-//		Properties bdProp = getProperties();
-//		bdProp.setProperty("user", user);
-//		bdProp.setProperty("pass", pass);
-//		bdProp.store(new FileOutputStream(properties), null);
-//		
-//		if()
-//			reConnect();
-//		
-//		return bdProp;
-//	}
 
 }

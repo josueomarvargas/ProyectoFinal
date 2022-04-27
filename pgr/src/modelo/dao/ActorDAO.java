@@ -13,6 +13,15 @@ import controlador.interfaz.BDgeneric;
 import controlador.utils.SQLCon;
 import modelo.clases.Actor;
 
+/**
+ * La clase {@code ActorDAO} es una clase que implementa la interfaz
+ * genérica {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea
+ * métodos CRUD necesarios para gestionar la clase
+ * {@link modelo.clases.Actor Actor}
+ * 
+ * @author Henrique Yeguo
+ * 
+ **/
 public class ActorDAO implements BDgeneric<Actor> {
 
 	// MySQL Consultas
@@ -177,6 +186,11 @@ public class ActorDAO implements BDgeneric<Actor> {
 		// Clase actor para guardar los antiguos datos
 		Actor act = this.search(Integer.toString(clase.getIdTrabajador()));
 
+		// Ordenamos las dos listas alfabéticamente para que luego comparar con el
+		// que hemos recuperado de la base de datos
+		clase.sortList();
+		act.sortList();
+
 		try {
 			// Prepare Statement - Update
 			stat = con.prepareStatement(UPDATE);
@@ -188,6 +202,7 @@ public class ActorDAO implements BDgeneric<Actor> {
 				for (String especNew : clase.getEspecialidades()) {
 					// Comprobar el actor anteriormente no tenia esa especialidad
 					if (!act.getEspecialidades().contains(especNew)) {
+
 						// Iterar por las 2 listas para comprobar cual es la que no coincide
 						for (int j = 0; j < clase.getEspecialidades().size(); j++) {
 							if (!act.getEspecialidades().get(j).equals(clase.getEspecialidades().get(j))) {
@@ -209,6 +224,8 @@ public class ActorDAO implements BDgeneric<Actor> {
 
 					}
 				}
+
+				// Cuando solo se actualiza 1 especialidad
 			} else {
 				stat.setString(1, clase.getEspecialidades().get(0));
 				stat.setInt(2, clase.getIdTrabajador());

@@ -12,6 +12,15 @@ import controlador.interfaz.BDgeneric;
 import controlador.utils.SQLCon;
 import modelo.clases.Trabajador;
 
+/**
+ * La clase {@code TrabajadorDAO} es una clase que implementa la interfaz
+ * genérica {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea
+ * métodos CRUD necesarios para gestionar la clase
+ * {@link modelo.clases.Trabajador Trabajador}
+ * 
+ * @author Henrique Yeguo
+ * 
+ **/
 public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 	// MySQL Consultas

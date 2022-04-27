@@ -12,8 +12,8 @@ import java.util.Map;
  * Los métodos que no devuelven información {@code (create, update, remove)} nos
  * devolverán un boolean para determinar si se ha ejecutado correctamente. Para
  * ello habrá que comprobar qué es lo que devuelve el comando
- * {@link java.sql.PreparedStatement#executeUpdate()} solo hay dos
- * posibilidades:
+ * {@link java.sql.PreparedStatement#executeUpdate() executeUpdate()} solo hay
+ * dos posibilidades:
  * 
  * <li>0 si la consulta no devuelve nada, esto puede llegar ha indicar que hubo
  * un error al ejecutar la sentencia SQL</li>
@@ -33,13 +33,13 @@ import java.util.Map;
  * establecer el AutoCommit de la conexión a la base de datos a false, una vez
  * ejecutados las queries se debe de hacer un commit. Si surgue algún problema
  * en las consultas se podrá llamar al método
- * {@link java.sql.Connection#rollback()} para rehacer los cambios en la
- * transacción actual. También si hay que hacer un insert o update de varios
+ * {@link java.sql.Connection#rollback() rollback()} para rehacer los cambios en
+ * la transacción actual. También si hay que hacer un insert o update de varios
  * datos se recomienda usar el commando
- * {@link java.sql.PreparedStatement#addBatch()} para agruparlos, una vez
- * acabado de añadirlos se debe de ejecutar el comando
- * {@link java.sql.PreparedStatement#executeBatch()}, este devuelve
- * {@code int[]}
+ * {@link java.sql.PreparedStatement#addBatch() addBatch()} para agruparlos, una
+ * vez acabado de añadirlos se debe de ejecutar el comando
+ * {@link java.sql.PreparedStatement#executeBatch() executeBatch()}, este
+ * devuelve {@code int[]}
  * 
  * 
  * @param <T> tipo de objecto genérico, al implementar la interfaz se debe de
