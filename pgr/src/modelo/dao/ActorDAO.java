@@ -116,14 +116,15 @@ public class ActorDAO implements BDgeneric<Actor> {
 		Actor act = null;
 
 		try {
-			// Prepare Statement - Search
-			stat = con.prepareStatement(SEARCH);
+			// Prepare Statement - Read All
+			stat = con.prepareStatement(READALL);
 
 			// Ejecutar consulta y guardarlo en el Result Set
 			rs = stat.executeQuery();
 
 			// Comprobar que RS a recuperado informacion del executeQuery
 			while (rs.next()) {
+
 				/*
 				 * Esto es lo que hará este loop: La primera vez que entre el la condición será
 				 * null, por lo tanto entra, la concición de dentro no entrará porque aún sigue
@@ -132,11 +133,15 @@ public class ActorDAO implements BDgeneric<Actor> {
 				 * del actor coincida con la ID de la consulta y añade la especialidad a la
 				 * lista, cuando vuelva al inicio solo entrará si los IDs no coinciden, si
 				 * coincide será que es el mismo Actor y se le volverá a introducir otra
-				 * especialidad, si es diferente entrará otra vez en la condición y volverá a
-				 * crear el actor y la lista.
+				 * especialidad, si es diferente entrará otra vez en la condición como esta vez
+				 * no es null guarda los datos del actor y los pone en el map y volverá a crear
+				 * el actor y la lista. Cuando sea el último result set guardará los datos al
+				 * map.
 				 */
+
 				if (act == null || act.getIdTrabajador() != rs.getInt(1)) {
 					if (act != null) {
+						act.setEspecialidades(especialidad);
 						actores.put(Integer.toString(act.getIdTrabajador()), act);
 					}
 					// Creamos una instancia del objecto y guardamos solo el ID
@@ -149,6 +154,11 @@ public class ActorDAO implements BDgeneric<Actor> {
 				if (act.getIdTrabajador() == rs.getInt(1)) {
 					// Añadimos la especialidad a la lista
 					especialidad.add(rs.getString(2));
+				}
+
+				if (rs.isLast() == true) {
+					act.setEspecialidades(especialidad);
+					actores.put(Integer.toString(act.getIdTrabajador()), act);
 				}
 			}
 
@@ -163,14 +173,78 @@ public class ActorDAO implements BDgeneric<Actor> {
 
 	@Override
 	public boolean update(Actor clase) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+
+		// Clase actor para guardar los antiguos datos
+		Actor act = this.search(Integer.toString(clase.getIdTrabajador()));
+
+		try {
+			// Prepare Statement - Update
+			stat = con.prepareStatement(UPDATE);
+
+			// Si va a actualizar más de 1 especialidad
+			if (clase.getEspecialidades().size() > 1) {
+				int i = 0;
+				// Añadir al grupo cada especialidad
+				for (String especNew : clase.getEspecialidades()) {
+					// Comprobar el actor anteriormente no tenia esa especialidad
+					if (!act.getEspecialidades().contains(especNew)) {
+						// Iterar por las 2 listas para comprobar cual es la que no coincide
+						for (int j = 0; j < clase.getEspecialidades().size(); j++) {
+							if (!act.getEspecialidades().get(j).equals(clase.getEspecialidades().get(j))) {
+
+								// Añadir datos al Prepare Statement
+								stat.setString(1, clase.getEspecialidades().get(j));
+								stat.setInt(2, clase.getIdTrabajador());
+								stat.setString(3, act.getEspecialidades().get(j));
+								// Añadimos los comandos al grupo
+								stat.addBatch();
+								i++;
+							}
+						}
+					}
+					if (i % 1000 == 0 || i == clase.getEspecialidades().size()) {
+						// Ejecutará los batch en una sola llamada al servidor
+						return stat.executeBatch().length > 0 ? true : false;
+						// Según la API si recibe un número mayor que 0 se a ejecutado correctamente
+
+					}
+				}
+			} else {
+				stat.setString(1, clase.getEspecialidades().get(0));
+				stat.setInt(2, clase.getIdTrabajador());
+				stat.setString(3, act.getEspecialidades().get(0));
+			}
+
+			// Ejecutar consulta y devolver true o false
+			return stat.executeUpdate() > 0 ? true : false;
+
+		} catch (SQLException e) {
+			System.err.println(e);
+
+			return false; // Si hay alguna excepcion devolverá false
+		}
+
 	}
 
 	@Override
 	public boolean remove(String id) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+
+		try {
+			// Prepare Statement - Delete
+			stat = con.prepareStatement(DELETE);
+
+			// Añadir datos al Prepare Statement
+			stat.setString(1, id);
+
+			// Ejecutar consulta y devolver true o false
+			return stat.executeUpdate() > 0 ? true : false;
+
+		} catch (SQLException e) {
+			System.err.println(e);
+
+			return false;
+		}
+
 	}
 
 }

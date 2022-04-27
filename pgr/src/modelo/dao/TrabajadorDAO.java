@@ -57,7 +57,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 	@Override
 	public Trabajador search(String id) throws SQLException {
-		
+
 		// ResultSet y la clase para recoger los datos de la consulta
 		ResultSet rs = null;
 		Trabajador trabajador = null;
