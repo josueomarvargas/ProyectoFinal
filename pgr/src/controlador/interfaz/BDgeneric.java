@@ -74,7 +74,7 @@ public interface BDgeneric<T> {
 	 * parámetros al método un String que contenga el valor que se buscará, para
 	 * buscar se recomienda usar la columna de la clave primaria.
 	 * 
-	 * @param id String con el ID para buscar en la base de datos
+	 * @param id Array String con el ID o los IDs para buscar en la base de datos
 	 * @return <T> el método devuelve un objecto, este debe de ser el mismo que se
 	 *         declaró al implementar la interfaz
 	 * @throws SQLException
@@ -104,13 +104,13 @@ public interface BDgeneric<T> {
 	/**
 	 * Para eliminar la información, pasaremos por parámetro el ID de la tabla
 	 * 
-	 * @param id String con el ID para buscar en la base de datos
+	 * @param id array de string con el ID o IDs para buscar en la base de datos
 	 * @return un boolean que será true o false dependiendo de si se ha ejecutado
 	 *         con éxito la consulta
 	 * 
 	 * @throws SQLException
 	 **/
-	public boolean remove(String id) throws SQLException;
+	public boolean remove(String[] id) throws SQLException;
 
 	// Intentar hacer rollback cuando se trata de una transaccion
 //	if (con.getAutoCommit() == false) {

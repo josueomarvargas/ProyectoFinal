@@ -144,13 +144,13 @@ public class DirectorDAO implements BDgeneric<Director> {
 	}
 
 	@Override
-	public boolean remove(String id) throws SQLException {
+	public boolean remove(String[] id) throws SQLException {
 		try {
 			// Prepare Statement - Delete
 			stat = con.prepareStatement(DELETE);
 
 			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
+			stat.setString(1, id[0]);
 
 			// Ejecutar consulta y devolver true o false
 			return stat.executeUpdate() > 0 ? true : false;

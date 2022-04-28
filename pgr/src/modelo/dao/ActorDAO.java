@@ -14,10 +14,9 @@ import controlador.utils.SQLCon;
 import modelo.clases.Actor;
 
 /**
- * La clase {@code ActorDAO} es una clase que implementa la interfaz
- * genérica {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea
- * métodos CRUD necesarios para gestionar la clase
- * {@link modelo.clases.Actor Actor}
+ * La clase {@code ActorDAO} es una clase que implementa la interfaz genérica
+ * {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea métodos
+ * CRUD necesarios para gestionar la clase {@link modelo.clases.Actor Actor}
  * 
  * @author Henrique Yeguo
  * 
@@ -29,7 +28,7 @@ public class ActorDAO implements BDgeneric<Actor> {
 	private final String SEARCH = "SELECT * FROM especialidad WHERE idTrabajador = ?";
 	private final String READALL = "SELECT * FROM especialidad";
 	private final String UPDATE = "UPDATE especialidad SET especialidad = ? WHERE idTrabajador = ? AND especialidad = ?";
-	private final String DELETE = "DELETE FROM usuario WHERE idTrabajador = ?";
+	private final String DELETE = "DELETE FROM especialidad WHERE idTrabajador = ? AND especialidad = ?";
 
 	// Establecer conexión a la base de datos
 	private static Connection con = SQLCon.getConnection();
@@ -104,15 +103,14 @@ public class ActorDAO implements BDgeneric<Actor> {
 				}
 				especialidad.add(rs.getString(2));
 			}
-			if (act != null && especialidad != null) {
+			if (act != null && !especialidad.isEmpty()) {
 				act.setEspecialidades(especialidad);
 			}
 
-			return act;
 		} catch (SQLException e) {
 			System.err.println(e);
-			return act;
 		}
+		return act;
 	}
 
 	@Override
@@ -171,13 +169,10 @@ public class ActorDAO implements BDgeneric<Actor> {
 				}
 			}
 
-			return actores;
-		} catch (
-
-		SQLException e) {
+		} catch (SQLException e) {
 			System.err.println(e);
-			return actores;
 		}
+		return actores;
 	}
 
 	@Override
@@ -189,6 +184,7 @@ public class ActorDAO implements BDgeneric<Actor> {
 		// Ordenamos las dos listas alfabéticamente para que luego comparar con el
 		// que hemos recuperado de la base de datos
 		clase.sortList();
+		;
 		act.sortList();
 
 		try {
@@ -198,31 +194,25 @@ public class ActorDAO implements BDgeneric<Actor> {
 			// Si va a actualizar más de 1 especialidad
 			if (clase.getEspecialidades().size() > 1) {
 				int i = 0;
-				// Añadir al grupo cada especialidad
-				for (String especNew : clase.getEspecialidades()) {
-					// Comprobar el actor anteriormente no tenia esa especialidad
-					if (!act.getEspecialidades().contains(especNew)) {
+				// Iterar por las 2 listas para comprobar cual es la que no coincide
+				for (int j = 0; j < clase.getEspecialidades().size(); j++) {
+					if (!act.getEspecialidades().get(j).equals(clase.getEspecialidades().get(j))) {
 
-						// Iterar por las 2 listas para comprobar cual es la que no coincide
-						for (int j = 0; j < clase.getEspecialidades().size(); j++) {
-							if (!act.getEspecialidades().get(j).equals(clase.getEspecialidades().get(j))) {
-
-								// Añadir datos al Prepare Statement
-								stat.setString(1, clase.getEspecialidades().get(j));
-								stat.setInt(2, clase.getIdTrabajador());
-								stat.setString(3, act.getEspecialidades().get(j));
-								// Añadimos los comandos al grupo
-								stat.addBatch();
-								i++;
-							}
-						}
+						// Añadir datos al Prepare Statement
+						stat.setString(1, clase.getEspecialidades().get(j));
+						stat.setInt(2, clase.getIdTrabajador());
+						stat.setString(3, act.getEspecialidades().get(j));
+						// Añadimos los comandos al grupo
+						stat.addBatch();
+						i++;
 					}
-					if (i % 1000 == 0 || i == clase.getEspecialidades().size()) {
-						// Ejecutará los batch en una sola llamada al servidor
-						return stat.executeBatch().length > 0 ? true : false;
-						// Según la API si recibe un número mayor que 0 se a ejecutado correctamente
+				}
 
-					}
+				if (i % 1000 == 0 || i == clase.getEspecialidades().size()) {
+					// Ejecutará los batch en una sola llamada al servidor
+					return stat.executeBatch().length > 0 ? true : false;
+					// Según la API si recibe un número mayor que 0 se a ejecutado correctamente
+
 				}
 
 				// Cuando solo se actualiza 1 especialidad
@@ -244,14 +234,15 @@ public class ActorDAO implements BDgeneric<Actor> {
 	}
 
 	@Override
-	public boolean remove(String id) throws SQLException {
+	public boolean remove(String[] id) throws SQLException {
 
 		try {
 			// Prepare Statement - Delete
 			stat = con.prepareStatement(DELETE);
 
 			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
+			stat.setString(1, id[0]);
+			stat.setString(2, id[1]);
 
 			// Ejecutar consulta y devolver true o false
 			return stat.executeUpdate() > 0 ? true : false;

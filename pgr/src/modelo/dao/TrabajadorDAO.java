@@ -25,7 +25,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 	// MySQL Consultas
 	private final String CREATE = "INSERT INTO trabajador"
-			+ "(dni, nombre, apellido, numtel, numPremio, direccion, tipo, FechaNac) "
+			+ "(dni, nombre, apellido, numtel, numPremios, direccion, tipo, FechaNac) "
 			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	private final String SEARCH = "SELECT * FROM trabajador WHERE idTrabajador = ?";
 	private final String READALL = "SELECT * FROM trabajador";
@@ -154,14 +154,14 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	}
 
 	@Override
-	public boolean remove(String id) throws SQLException {
+	public boolean remove(String[] id) throws SQLException {
 
 		try {
 			// Prepare Statement - Delete
 			stat = con.prepareStatement(DELETE);
 
 			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
+			stat.setString(1, id[0]);
 
 			// Ejecutar consulta
 			return stat.executeUpdate() > 0 ? true : false;
