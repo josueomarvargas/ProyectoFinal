@@ -1,15 +1,15 @@
-package clases;
+package modelo.clases;
 
 public class Usuario {
 
 	private String idUsuario;
-	private int passwd;
+	private String passwd;
 
 	public Usuario() {
 		super();
 	}
 
-	public Usuario(String idUsuario, int passwd) {
+	public Usuario(String idUsuario, String passwd) {
 		super();
 		this.idUsuario = idUsuario;
 		this.passwd = passwd;
@@ -23,11 +23,11 @@ public class Usuario {
 		this.idUsuario = idUsuario;
 	}
 
-	public int getPasswd() {
+	public String getPasswd() {
 		return passwd;
 	}
 
-	public void setPasswd(int passwd) {
+	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
 

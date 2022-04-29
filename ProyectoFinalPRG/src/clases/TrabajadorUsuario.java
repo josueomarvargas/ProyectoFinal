@@ -1,10 +1,14 @@
-package clases;
+package modelo.clases;
 
 public class TrabajadorUsuario {
 
 	private int idTrabajador;
 	private String idUsuario;
 	private String tipoUsuario;
+
+	public TrabajadorUsuario() {
+		super();
+	}
 
 	public TrabajadorUsuario(int idTrabajador, String idUsuario, String tipoUsuario) {
 		super();
@@ -13,9 +17,6 @@ public class TrabajadorUsuario {
 		this.tipoUsuario = tipoUsuario;
 	}
 
-	public TrabajadorUsuario() {
-		super();
-	}
 
 	public int getIdTrabajador() {
 		return idTrabajador;

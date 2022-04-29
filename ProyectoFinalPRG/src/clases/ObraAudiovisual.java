@@ -1,4 +1,4 @@
-package clases;
+package modelo.clases;
 
 import java.time.LocalDate;
 

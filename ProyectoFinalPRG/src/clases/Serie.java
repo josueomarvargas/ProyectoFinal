@@ -1,4 +1,4 @@
-package clases;
+package modelo.clases;
 
 import java.time.LocalDate;
 
@@ -13,13 +13,9 @@ public class Serie extends ObraAudiovisual {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Serie(int idObra, String nombre, int duracion, LocalDate fechaEstreno, int presupuesto, String tipo) {
+	public Serie(int idObra, String nombre, int duracion, LocalDate fechaEstreno, int presupuesto, String tipo,
+			int numTemporada, int numCapitulo, String nombreCap) {
 		super(idObra, nombre, duracion, fechaEstreno, presupuesto, tipo);
-		// TODO Auto-generated constructor stub
-	}
-
-	public Serie(int numTemporada, int numCapitulo, String nombreCap) {
-		super();
 		this.numTemporada = numTemporada;
 		this.numCapitulo = numCapitulo;
 		this.nombreCap = nombreCap;

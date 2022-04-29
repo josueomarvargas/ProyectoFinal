@@ -1,26 +1,31 @@
-package clases;
+package modelo.clases;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Participa {
 
-	private int idTrabajador;
+	private List<Integer> idTrabajador;
 	private int idObra;
 
 	public Participa() {
 		super();
+		idTrabajador = new ArrayList<>();
 	}
 
-	public Participa(int idTrabajador, int idObra) {
+	public Participa(List<Integer> idTrabajador, int idObra) {
 		super();
 		this.idTrabajador = idTrabajador;
 		this.idObra = idObra;
 
 	}
 
-	public int getIdTrabajador() {
+	public List<Integer> getIdTrabajador() {
 		return idTrabajador;
 	}
 
-	public void setIdTrabajador(int idTrabajador) {
+	public void setIdTrabajador(List<Integer> idTrabajador) {
 		this.idTrabajador = idTrabajador;
 	}
 
@@ -30,6 +35,10 @@ public class Participa {
 
 	public void setIdObra(int idObra) {
 		this.idObra = idObra;
+	}
+	
+	public void sortList() {
+		Collections.sort(idTrabajador);
 	}
 
 }

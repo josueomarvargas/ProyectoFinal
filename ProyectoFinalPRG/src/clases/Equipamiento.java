@@ -1,5 +1,7 @@
-package clases;
+package modelo.clases;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Equipamiento {
@@ -7,13 +9,14 @@ public class Equipamiento {
 	private int idEquip;
 	private String nombre;
 	private String tipo;
-	private List<Caracteristica> caracteristicas;
+	private List<String> caracteristicas;
 
 	public Equipamiento() {
 		super();
+		caracteristicas = new ArrayList<>();
 	}
 
-	public Equipamiento(int idEquip, String nombre, String tipo, List<Caracteristica> caracteristicas) {
+	public Equipamiento(int idEquip, String nombre, String tipo, List<String> caracteristicas) {
 		super();
 		this.idEquip = idEquip;
 		this.nombre = nombre;
@@ -45,12 +48,16 @@ public class Equipamiento {
 		this.tipo = tipo;
 	}
 
-	public List<Caracteristica> getCaracteristicas() {
+	public List<String> getCaracteristicas() {
 		return caracteristicas;
 	}
 
-	public void setCaracteristicas(List<Caracteristica> caracteristicas) {
+	public void setCaracteristicas(List<String> caracteristicas) {
 		this.caracteristicas = caracteristicas;
+	}
+
+	public void sortList() {
+		Collections.sort(caracteristicas);
 	}
 
 }

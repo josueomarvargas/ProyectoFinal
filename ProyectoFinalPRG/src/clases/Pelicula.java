@@ -1,4 +1,4 @@
-package clases;
+package modelo.clases;
 
 import java.time.LocalDate;
 
@@ -10,12 +10,9 @@ public class Pelicula extends ObraAudiovisual {
 		super();
 	}
 
-	public Pelicula(int idObra, String nombre, int duracion, LocalDate fechaEstreno, int presupuesto, String tipo) {
+	public Pelicula(int idObra, String nombre, int duracion, LocalDate fechaEstreno, int presupuesto, String tipo,
+			boolean esTaquillera) {
 		super(idObra, nombre, duracion, fechaEstreno, presupuesto, tipo);
-	}
-
-	public Pelicula(boolean esTaquillera) {
-		super();
 		this.esTaquillera = esTaquillera;
 	}
 

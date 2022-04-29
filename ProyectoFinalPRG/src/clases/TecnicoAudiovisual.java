@@ -1,34 +1,35 @@
-package clases;
+package modelo.clases;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TecnicoAudiovisual extends Trabajador {
 
-	private List<AreaTrabajo> areaTrabajos;
+	private List<String> areaTrabajos;
 
 	public TecnicoAudiovisual() {
 		super();
-		// TODO Auto-generated constructor stub
+		areaTrabajos = new ArrayList<>();
 	}
 
 	public TecnicoAudiovisual(int idTrabajador, String dni, String nombre, String apellido, int numTel, int numPremios,
-			String direccion, LocalDate fechaNac, String tipo) {
-		super(idTrabajador, dni, nombre, apellido, numTel, numPremios, direccion, fechaNac, tipo);
-		// TODO Auto-generated constructor stub
-	}
-
-	public TecnicoAudiovisual(List<AreaTrabajo> areaTrabajos) {
-		super();
+			String direccion, LocalDate fechaNac, String tipo, List<String> areaTrabajos) {
+		super(idTrabajador, dni, nombre, apellido, numTel, numPremios, direccion, tipo, fechaNac);
 		this.areaTrabajos = areaTrabajos;
 	}
 
-	public List<AreaTrabajo> getAreaTrabajos() {
+	public List<String> getAreaTrabajos() {
 		return areaTrabajos;
 	}
 
-	public void setAreaTrabajos(List<AreaTrabajo> areaTrabajos) {
+	public void setAreaTrabajos(List<String> areaTrabajos) {
 		this.areaTrabajos = areaTrabajos;
+	}
+
+	public void sortList() {
+		Collections.sort(areaTrabajos);
 	}
 
 }

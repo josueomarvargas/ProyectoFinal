@@ -1,8 +1,8 @@
-package clases;
+package modelo.clases;
 
 import java.time.LocalDate;
 
-public class Director extends Trabajador{
+public class Director extends Trabajador {
 	private String categoria;
 
 	public Director() {
@@ -10,22 +10,19 @@ public class Director extends Trabajador{
 	}
 
 	public Director(int idTrabajador, String dni, String nombre, String apellido, int numTel, int numPremios,
-			String direccion, LocalDate fechaNac, String tipo) {
-		super(idTrabajador, dni, nombre, apellido, numTel, numPremios, direccion, fechaNac, tipo);
-	}
-
-	public Director(String nacionalidad) {
-		super();
+			String direccion, LocalDate fechaNac, String tipo, String nacionalidad) {
+		super(idTrabajador, dni, nombre, apellido, numTel, numPremios, direccion, tipo, fechaNac);
 		this.categoria = nacionalidad;
 	}
 
-	public String getNacionalidad() {
+	public String getCategoria() {
 		return categoria;
 	}
 
-	public void setNacionalidad(String nacionalidad) {
-		this.categoria = nacionalidad;
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
+
 	
-	
+
 }

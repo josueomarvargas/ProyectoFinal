@@ -1,8 +1,9 @@
-package clases;
+package modelo.clases;
 
 import java.time.LocalDate;
 
-public class Trabajador{
+public class Trabajador {
+
 	private int idTrabajador;
 	private String dni;
 	private String nombre;
@@ -10,15 +11,15 @@ public class Trabajador{
 	private int numTel;
 	private int numPremios;
 	private String direccion;
-	private LocalDate fechaNac;
 	private String tipo;
+	private LocalDate fechaNac;
 
 	public Trabajador() {
 		super();
 	}
 
 	public Trabajador(int idTrabajador, String dni, String nombre, String apellido, int numTel, int numPremios,
-			String direccion, LocalDate fechaNac, String tipo) {
+			String direccion, String tipo, LocalDate fechaNac) {
 		super();
 		this.idTrabajador = idTrabajador;
 		this.dni = dni;
@@ -27,8 +28,8 @@ public class Trabajador{
 		this.numTel = numTel;
 		this.numPremios = numPremios;
 		this.direccion = direccion;
-		this.fechaNac = fechaNac;
 		this.tipo = tipo;
+		this.fechaNac = fechaNac;
 	}
 
 	public int getIdTrabajador() {
@@ -101,6 +102,13 @@ public class Trabajador{
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	@Override
+	public String toString() {
+		return "Trabajador [idTrabajador=" + idTrabajador + ", dni=" + dni + ", nombre=" + nombre + ", apellido="
+				+ apellido + ", numTel=" + numTel + ", numPremios=" + numPremios + ", direccion=" + direccion
+				+ ", fechaNac=" + fechaNac + ", tipo=" + tipo + "]";
 	}
 
 }
