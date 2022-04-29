@@ -13,6 +13,15 @@ import controlador.interfaz.BDgeneric;
 import controlador.utils.SQLCon;
 import modelo.clases.Equipamiento;
 
+/**
+ * La clase {@code CaracteristicaDAO} es una clase que implementa la interfaz
+ * genérica {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea
+ * métodos CRUD necesarios para gestionar la lista en la clase
+ * {@link modelo.clases.Equipamiento Equipamiento}
+ * 
+ * @author Henrique Yeguo
+ * 
+ **/
 public class CaracteristicaDAO implements BDgeneric<Equipamiento> {
 
 	// MySQL Consultas
@@ -126,14 +135,14 @@ public class CaracteristicaDAO implements BDgeneric<Equipamiento> {
 				/*
 				 * Esto es lo que hará este loop: La primera vez que entre el la condición será
 				 * null, por lo tanto entra, la concición de dentro no entrará porque aún sigue
-				 * siendo null, creará un objecto equip donde se guarda su ID y la lista donde
-				 * se guarda las caracteristicas. En la siguiente condición comprueba que el ID
-				 * del equip coincida con la ID de la consulta y añade el atributo a la lista,
-				 * cuando vuelva al inicio solo entrará si los IDs no coinciden, si coincide
-				 * será que es el mismo equip y se le volverá a introducir otra atributo, si es
+				 * siendo null, creará un objecto donde se guardará su ID y la lista donde
+				 * guardaremos los datos. En la siguiente condición comprueba que el ID del
+				 * equip coincida con la ID de la consulta y añade el dato a la lista, cuando
+				 * vuelva al inicio solo entrará si los IDs no coinciden, si coincide será que
+				 * es el mismo ID y querrá decir que hay más datos por introducir, si es
 				 * diferente entrará otra vez en la condición como esta vez no es null guarda
-				 * los datos del equip y los pone en el map y volverá a crear el equip y la
-				 * lista. Cuando sea el último result set guardará los datos al map.
+				 * los datos en el map y volverá a crear el objeto y la lista. Cuando sea el
+				 * último result set guardará los datos al map.
 				 */
 
 				if (equip == null || equip.getIdEquip() != rs.getInt(1)) {

@@ -72,7 +72,9 @@ public interface BDgeneric<T> {
 	/**
 	 * Para buscar una fila en concreto de la tabla especificada le pasaremos por
 	 * parámetros al método un String que contenga el valor que se buscará, para
-	 * buscar se recomienda usar la columna de la clave primaria.
+	 * buscar se recomienda usar la columna de la clave primaria, en el caso de que
+	 * sea clave compuesta, una de las claves guardarlas en una lista y usar la otra
+	 * para buscar.
 	 * 
 	 * @param id Array String con el ID o los IDs para buscar en la base de datos
 	 * @return <T> el método devuelve un objecto, este debe de ser el mismo que se

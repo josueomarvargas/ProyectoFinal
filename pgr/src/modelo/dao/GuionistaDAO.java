@@ -126,15 +126,14 @@ public class GuionistaDAO implements BDgeneric<Guionista> {
 				/*
 				 * Esto es lo que hará este loop: La primera vez que entre el la condición será
 				 * null, por lo tanto entra, la concición de dentro no entrará porque aún sigue
-				 * siendo null, creará un objecto Guionista donde se guarda su ID y la lista
-				 * donde se guarda las especialidades. En la siguiente condición comprueba que
-				 * el ID coincida con la ID de la consulta y añade la especialidad a la lista,
-				 * cuando vuelva al inicio solo entrará si los IDs no coinciden, si coincide
-				 * será que es el mismo Guionista y se le volverá a introducir otra
-				 * especialidad, si es diferente entrará otra vez en la condición como esta vez
-				 * no es null guarda los datos y los pone en el map y volverá a crear el
-				 * guionista y la lista. Cuando sea el último result set guardará los datos al
-				 * map.
+				 * siendo null, creará un objecto donde se guardará su ID y la lista donde
+				 * guardaremos los datos. En la siguiente condición comprueba que el ID del
+				 * equip coincida con la ID de la consulta y añade el dato a la lista, cuando
+				 * vuelva al inicio solo entrará si los IDs no coinciden, si coincide será que
+				 * es el mismo ID y querrá decir que hay más datos por introducir, si es
+				 * diferente entrará otra vez en la condición como esta vez no es null guarda
+				 * los datos en el map y volverá a crear el objeto y la lista. Cuando sea el
+				 * último result set guardará los datos al map.
 				 */
 
 				if (guionista == null || guionista.getIdTrabajador() != rs.getInt(1)) {
@@ -171,7 +170,7 @@ public class GuionistaDAO implements BDgeneric<Guionista> {
 		// Clase para guardar los antiguos datos
 		Guionista guionista = this.search(Integer.toString(clase.getIdTrabajador()));
 
-		// Ordenamos las dos listas alfabéticamente para que luego comparar con el
+		// Ordenamos las dos listas para que luego comparar con el
 		// que hemos recuperado de la base de datos
 		clase.sortList();
 		guionista.sortList();

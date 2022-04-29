@@ -49,7 +49,7 @@ public class ActorDAO implements BDgeneric<Actor> {
 					// Añadir datos al Prepare Statement
 					stat.setInt(1, clase.getIdTrabajador());
 					stat.setString(2, especialidad);
-					// Añadimos los comandos al grupo
+					// Añadir comando al grupo
 					stat.addBatch();
 					i++;
 
@@ -95,7 +95,7 @@ public class ActorDAO implements BDgeneric<Actor> {
 			rs = stat.executeQuery();
 
 			// Comprobar que RS a recuperado informacion del executeQuery
-			while (rs.next()) { // Como un actor puede tener varias especialidades un while en vez de if
+			while (rs.next()) { // Como este objecto tiene una lista por ende la consulta devuelve varios datos
 				// Creamos una instancia del objecto y añadimos los valores del RS al objecto
 				if (act == null) {
 					act = new Actor();
@@ -135,15 +135,14 @@ public class ActorDAO implements BDgeneric<Actor> {
 				/*
 				 * Esto es lo que hará este loop: La primera vez que entre el la condición será
 				 * null, por lo tanto entra, la concición de dentro no entrará porque aún sigue
-				 * siendo null, creará un objecto Actor donde se guarda su ID y la lista donde
-				 * se guarda las especialidades. En la siguiente condición comprueba que el ID
-				 * del actor coincida con la ID de la consulta y añade la especialidad a la
-				 * lista, cuando vuelva al inicio solo entrará si los IDs no coinciden, si
-				 * coincide será que es el mismo Actor y se le volverá a introducir otra
-				 * especialidad, si es diferente entrará otra vez en la condición como esta vez
-				 * no es null guarda los datos del actor y los pone en el map y volverá a crear
-				 * el actor y la lista. Cuando sea el último result set guardará los datos al
-				 * map.
+				 * siendo null, creará un objecto donde se guardará su ID y la lista donde
+				 * guardaremos los datos. En la siguiente condición comprueba que el ID del
+				 * equip coincida con la ID de la consulta y añade el dato a la lista, cuando
+				 * vuelva al inicio solo entrará si los IDs no coinciden, si coincide será que
+				 * es el mismo ID y querrá decir que hay más datos por introducir, si es
+				 * diferente entrará otra vez en la condición como esta vez no es null guarda
+				 * los datos en el map y volverá a crear el objeto y la lista. Cuando sea el
+				 * último result set guardará los datos al map.
 				 */
 
 				if (act == null || act.getIdTrabajador() != rs.getInt(1)) {
@@ -181,10 +180,9 @@ public class ActorDAO implements BDgeneric<Actor> {
 		// Clase actor para guardar los antiguos datos
 		Actor act = this.search(Integer.toString(clase.getIdTrabajador()));
 
-		// Ordenamos las dos listas alfabéticamente para que luego comparar con el
+		// Ordenamos las dos listas para que luego comparar con el
 		// que hemos recuperado de la base de datos
 		clase.sortList();
-		;
 		act.sortList();
 
 		try {

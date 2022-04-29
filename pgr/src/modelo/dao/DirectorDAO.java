@@ -14,7 +14,7 @@ import modelo.clases.Director;
 /**
  * La clase {@code DirectorDAO} es una clase que implementa la interfaz genérica
  * {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea métodos
- * CRUD necesarios para gestionar la clase {@link modelo.clases.Director
+ * CRUD necesarios para gestionar la tabla {@link modelo.clases.Director
  * Director}
  * 
  * @author Henrique Yeguo
@@ -26,7 +26,7 @@ public class DirectorDAO implements BDgeneric<Director> {
 	private final String CREATE = "INSERT INTO director(idTrabajador, categoria) VALUES(?, ?)";
 	private final String SEARCH = "SELECT * FROM director WHERE idTrabajador = ?";
 	private final String READALL = "SELECT * FROM director";
-	private final String UPDATE = "UPDATE director SET especialidad = ? WHERE idTrabajador = ?";
+	private final String UPDATE = "UPDATE director SET categoria = ? WHERE idTrabajador = ?";
 	private final String DELETE = "DELETE FROM director WHERE idTrabajador = ?";
 
 	// Establecer conexión a la base de datos
@@ -129,8 +129,8 @@ public class DirectorDAO implements BDgeneric<Director> {
 			stat = con.prepareStatement(UPDATE);
 
 			// Añadir datos al Prepare Statement
-			stat.setInt(1, clase.getIdTrabajador());
-			stat.setString(2, clase.getCategoria());
+			stat.setString(1, clase.getCategoria());
+			stat.setInt(2, clase.getIdTrabajador());
 
 			// Ejecutar consulta y devolver true o false
 			return stat.executeUpdate() > 0 ? true : false;
@@ -145,6 +145,7 @@ public class DirectorDAO implements BDgeneric<Director> {
 
 	@Override
 	public boolean remove(String[] id) throws SQLException {
+
 		try {
 			// Prepare Statement - Delete
 			stat = con.prepareStatement(DELETE);
