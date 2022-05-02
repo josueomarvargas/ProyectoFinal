@@ -19,7 +19,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
-import com.toedter.calendar.JDateChooser;
+//import com.toedter.calendar.JDateChooser;
 
 public class AddDatosPersonal extends JDialog {
 
@@ -246,9 +246,9 @@ public class AddDatosPersonal extends JDialog {
 		rdbtnAccion_1_4.setBounds(335, 526, 118, 23);
 		contentPanel.add(rdbtnAccion_1_4);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(251, 273, 148, 20);
-		contentPanel.add(dateChooser);
+	//	JDateChooser dateChooser = new JDateChooser();
+		//dateChooser.setBounds(251, 273, 148, 20);
+	//	contentPanel.add(dateChooser);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

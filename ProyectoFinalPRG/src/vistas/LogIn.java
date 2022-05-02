@@ -14,28 +14,21 @@ import javax.swing.JButton;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class LogIn extends JFrame {
+public class LogIn extends JFrame implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
+	private JButton btnAceptar;
+	private JButton btnCancelar;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LogIn frame = new LogIn();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -49,14 +42,17 @@ public class LogIn extends JFrame {
 		contentPane.setLayout(null);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(147, 168, 173, 28);
+		passwordField.setBounds(147, 168, 173, 20);
 		contentPane.add(passwordField);
 		
-		JButton btnNewButton = new JButton("Aceptar");
-		btnNewButton.setBounds(192, 227, 89, 23);
-		contentPane.add(btnNewButton);
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(this);
+			
+		btnAceptar.setBounds(192, 227, 89, 23);
+		contentPane.add(btnAceptar);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(this);
 		btnCancelar.setBounds(317, 227, 89, 23);
 		contentPane.add(btnCancelar);
 		
@@ -76,8 +72,21 @@ public class LogIn extends JFrame {
 		contentPane.add(lblNewLabel_1_1);
 		
 		textField = new JTextField();
-		textField.setBounds(147, 105, 161, 20);
+		textField.setBounds(147, 105, 173, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(btnAceptar)) {
+			Menu vMenu=new Menu();
+			vMenu.setVisible(true);
+		
+		}
+		else if(e.getSource().equals(btnCancelar)) {
+			SalirPrograma vSalir=new SalirPrograma();
+			vSalir.setVisible(true);			
+		}
 	}
 }

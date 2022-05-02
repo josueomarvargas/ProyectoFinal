@@ -41,26 +41,26 @@ public class Menu extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JButton btnNewButton = new JButton("Mis Datos");
-			btnNewButton.setFont(new Font("Calibri", Font.PLAIN, 16));
-			btnNewButton.setBounds(107, 72, 240, 37);
-			contentPanel.add(btnNewButton);
+			JButton btnMDatos = new JButton("Mis Datos");
+			btnMDatos.setFont(new Font("Calibri", Font.PLAIN, 16));
+			btnMDatos.setBounds(107, 72, 240, 37);
+			contentPanel.add(btnMDatos);
 		}
 		{
-			JButton btnNewButton_1 = new JButton("Gestionar Datos");
-			btnNewButton_1.setFont(new Font("Calibri", Font.PLAIN, 16));
-			btnNewButton_1.addActionListener(new ActionListener() {
+			JButton btnGDatos = new JButton("Gestionar Datos");
+			btnGDatos.setFont(new Font("Calibri", Font.PLAIN, 16));
+			btnGDatos.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 				}
 			});
-			btnNewButton_1.setBounds(107, 120, 240, 37);
-			contentPanel.add(btnNewButton_1);
+			btnGDatos.setBounds(107, 120, 240, 37);
+			contentPanel.add(btnGDatos);
 		}
 		{
-			JButton btnNewButton_2 = new JButton("Consultar obras audiovisuales");
-			btnNewButton_2.setFont(new Font("Calibri", Font.PLAIN, 15));
-			btnNewButton_2.setBounds(107, 170, 240, 37);
-			contentPanel.add(btnNewButton_2);
+			JButton btnConsultarObra = new JButton("Consultar obras audiovisuales");
+			btnConsultarObra.setFont(new Font("Calibri", Font.PLAIN, 15));
+			btnConsultarObra.setBounds(107, 170, 240, 37);
+			contentPanel.add(btnConsultarObra);
 		}
 		{
 			JLabel lblMen = new JLabel("Men\u00FA");

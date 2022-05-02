@@ -14,22 +14,15 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class SalirPrograma extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
+public class SalirPrograma extends JDialog implements ActionListener {
 
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		try {
-			SalirPrograma dialog = new SalirPrograma();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private static final long serialVersionUID = 1L;
+	private final JPanel contentPanel = new JPanel();
+	private JButton btnNo;
+	private JButton btnSi;
 
 	/**
 	 * Create the dialog.
@@ -49,17 +42,15 @@ public class SalirPrograma extends JDialog {
 			contentPanel.add(txtrquieresSalirDel);
 		}
 		{
-			JButton btnNewButton = new JButton("S\u00CD");
-			btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			btnNewButton.setBounds(69, 167, 127, 38);
-			contentPanel.add(btnNewButton);
+			btnSi = new JButton("S\u00CD");
+			btnSi.addActionListener(this);
+			btnSi.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			btnSi.setBounds(69, 167, 127, 38);
+			contentPanel.add(btnSi);
 		}
 		{
-			JButton btnNo = new JButton("NO");
-			btnNo.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
-			});
+			btnNo = new JButton("NO");
+			btnNo.addActionListener(this);
 			btnNo.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			btnNo.setBounds(229, 167, 127, 38);
 			contentPanel.add(btnNo);
@@ -69,6 +60,19 @@ public class SalirPrograma extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		}
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(btnNo)) {
+			this.dispose();
+		}
+		else if(e.getSource().equals(btnSi)) {
+
+			System.exit(0);
+		}
+
 	}
 
 }

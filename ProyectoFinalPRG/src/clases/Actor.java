@@ -1,4 +1,4 @@
-package modelo.clases;
+package clases;
 
 import java.time.LocalDate;
 import java.util.Collections;
