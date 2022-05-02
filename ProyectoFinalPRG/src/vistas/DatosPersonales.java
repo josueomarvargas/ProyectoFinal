@@ -19,23 +19,19 @@ import javax.swing.JScrollBar;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 
-public class DatosPersonales extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
-	private JPasswordField passwordField;
+public class DatosPersonales extends JDialog implements ActionListener {
 
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		try {
-			DatosPersonales dialog = new DatosPersonales();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private static final long serialVersionUID = 1L;
+	private final JPanel contentPanel = new JPanel();
+	private JPasswordField passwordField;
+	private JButton btnMostrar;
+	private JButton btnModificar;
+	private JButton btnVolver;
+	private JButton btnBorrar;
+	private JButton btnAceptar;
 
 	/**
 	 * Create the dialog.
@@ -139,7 +135,7 @@ public class DatosPersonales extends JDialog {
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
-			JButton btnMostrar = new JButton("Mostrar");
+			btnMostrar = new JButton("Mostrar");
 			btnMostrar.setBounds(340, 88, 79, 23);
 			contentPanel.add(btnMostrar);
 		}
@@ -148,29 +144,35 @@ public class DatosPersonales extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Modificar datos");
-				okButton.addActionListener(new ActionListener() {
+				btnModificar = new JButton("Modificar datos");
+				btnModificar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 					}
 				});
 				{
-					JButton btnBorrarDatos = new JButton("Borrar datos");
-					btnBorrarDatos.setActionCommand("OK");
-					buttonPane.add(btnBorrarDatos);
+					btnBorrar = new JButton("Borrar datos");
+					btnBorrar.setActionCommand("OK");
+					buttonPane.add(btnBorrar);
 				}
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				btnModificar.setActionCommand("OK");
+				buttonPane.add(btnModificar);
+				getRootPane().setDefaultButton(btnModificar);
 				{
-					JButton btnNewButton = new JButton("Aceptar");
-					buttonPane.add(btnNewButton);
+					btnAceptar = new JButton("Aceptar");
+					buttonPane.add(btnAceptar);
 				}
 				{
-					JButton cancelButton = new JButton("Volver");
-					cancelButton.setActionCommand("Cancel");
-					buttonPane.add(cancelButton);
+					btnVolver = new JButton("Volver");
+					btnVolver.setActionCommand("Cancel");
+					buttonPane.add(btnVolver);
 				}
 			}
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

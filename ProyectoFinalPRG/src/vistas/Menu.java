@@ -14,23 +14,17 @@ import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
 
-public class Menu extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
+public class Menu extends JDialog implements ActionListener {
 
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		try {
-			Menu dialog = new Menu();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	private static final long serialVersionUID = 1L;
+	private final JPanel contentPanel = new JPanel();
+	private JButton btnMDatos;
+	private JButton btnGDatos;
+	private JButton btnConsultarObra;
+	private JButton okButton;
 	/**
 	 * Create the dialog.
 	 */
@@ -41,13 +35,15 @@ public class Menu extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JButton btnMDatos = new JButton("Mis Datos");
+			btnMDatos = new JButton("Mis Datos");
+			btnMDatos.addActionListener(this);
 			btnMDatos.setFont(new Font("Calibri", Font.PLAIN, 16));
 			btnMDatos.setBounds(107, 72, 240, 37);
 			contentPanel.add(btnMDatos);
 		}
 		{
-			JButton btnGDatos = new JButton("Gestionar Datos");
+			btnGDatos = new JButton("Gestionar Datos");
+			btnGDatos.addActionListener(this);
 			btnGDatos.setFont(new Font("Calibri", Font.PLAIN, 16));
 			btnGDatos.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -57,7 +53,8 @@ public class Menu extends JDialog {
 			contentPanel.add(btnGDatos);
 		}
 		{
-			JButton btnConsultarObra = new JButton("Consultar obras audiovisuales");
+			btnConsultarObra = new JButton("Consultar obras audiovisuales");
+			btnConsultarObra.addActionListener(this);
 			btnConsultarObra.setFont(new Font("Calibri", Font.PLAIN, 15));
 			btnConsultarObra.setBounds(107, 170, 240, 37);
 			contentPanel.add(btnConsultarObra);
@@ -73,13 +70,36 @@ public class Menu extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Cerrar Sesi\u00F3n");
+				okButton = new JButton("Cerrar Sesi\u00F3n");
+				okButton.addActionListener(this);
 				okButton.setFont(new Font("Calibri", Font.PLAIN, 12));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 		}
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(btnMDatos)) {
+			DatosPersonales vMDatos= new DatosPersonales();
+			vMDatos.setVisible(true);
+		}
+		else if(e.getSource().equals(btnGDatos)) {
+			GestionDatos vGDatos= new GestionDatos();
+			vGDatos.setVisible(true);
+
+		}
+		else if(e.getSource().equals(btnConsultarObra)) {
+			ConsultarObras vCObras= new ConsultarObras();
+			vCObras.setVisible(true);
+		}
+		else if(e.getSource().equals(okButton)) {
+			this.dispose();
+		}
+
+
+
 	}
 
 }
