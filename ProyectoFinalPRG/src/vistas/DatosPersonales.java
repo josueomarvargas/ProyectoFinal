@@ -77,7 +77,7 @@ public class DatosPersonales extends JDialog implements ActionListener {
 			textField.setBounds(251, 119, 148, 19);
 			contentPanel.add(textField);
 		}
-		
+
 		JScrollBar scrollBar = new JScrollBar();
 		scrollBar.setBounds(457, 0, 17, 291);
 		contentPanel.add(scrollBar);
@@ -163,6 +163,7 @@ public class DatosPersonales extends JDialog implements ActionListener {
 				}
 				{
 					btnVolver = new JButton("Volver");
+					btnVolver.addActionListener(this);
 					btnVolver.setActionCommand("Cancel");
 					buttonPane.add(btnVolver);
 				}
@@ -172,7 +173,8 @@ public class DatosPersonales extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getSource().equals(btnVolver)) {
+			this.dispose();
+		}
 	}
 }

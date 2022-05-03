@@ -14,10 +14,18 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class GestionDatos extends JDialog {
+public class GestionDatos extends JDialog implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-
+private JButton btnGTrabajadores;
+ private JButton btnGObrasAudiovisuales;
+ private JButton btnGPatrocinadores;
+ private JButton btnGEquipamiento;
+ private JButton btnVolver;
 
 
 	/**
@@ -38,42 +46,51 @@ public class GestionDatos extends JDialog {
 			contentPanel.add(txtrGestinDeDatos);
 		}
 		{
-			JButton btnNewButton = new JButton("Gestionar Trabajadores");
-			btnNewButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
-			});
-			btnNewButton.setFont(new Font("Calibri", Font.PLAIN, 13));
-			btnNewButton.setBounds(132, 60, 203, 34);
-			contentPanel.add(btnNewButton);
+			btnGTrabajadores = new JButton("Gestionar Trabajadores");
+			btnGTrabajadores.addActionListener(this);
+				btnGTrabajadores.setFont(new Font("Calibri", Font.PLAIN, 13));
+			btnGTrabajadores.setBounds(132, 60, 203, 34);
+			contentPanel.add(btnGTrabajadores);
 		}
 		{
-			JButton btnGestionarObrasAudiovisuales = new JButton("Gestionar Obras Audiovisuales");
-			btnGestionarObrasAudiovisuales.setFont(new Font("Calibri", Font.PLAIN, 12));
-			btnGestionarObrasAudiovisuales.setBounds(132, 104, 203, 34);
-			contentPanel.add(btnGestionarObrasAudiovisuales);
+			btnGObrasAudiovisuales = new JButton("Gestionar Obras Audiovisuales");
+			btnGObrasAudiovisuales.addActionListener(this);
+			btnGObrasAudiovisuales.setFont(new Font("Calibri", Font.PLAIN, 12));
+			btnGObrasAudiovisuales.setBounds(132, 104, 203, 34);
+			contentPanel.add(btnGObrasAudiovisuales);
 		}
 		{
-			JButton btnGestionarPatrocinadores = new JButton("Gestionar Patrocinadores");
-			btnGestionarPatrocinadores.setFont(new Font("Calibri", Font.PLAIN, 12));
-			btnGestionarPatrocinadores.setBounds(132, 143, 203, 34);
-			contentPanel.add(btnGestionarPatrocinadores);
+			btnGPatrocinadores = new JButton("Gestionar Patrocinadores");
+			btnGPatrocinadores.addActionListener(this);
+			btnGPatrocinadores.setFont(new Font("Calibri", Font.PLAIN, 12));
+			btnGPatrocinadores.setBounds(132, 143, 203, 34);
+			contentPanel.add(btnGPatrocinadores);
 		}
 		{
-			JButton btnGestionarEquipamiento = new JButton("Gestionar Equipamiento");
-			btnGestionarEquipamiento.setFont(new Font("Calibri", Font.PLAIN, 12));
-			btnGestionarEquipamiento.setBounds(132, 183, 203, 34);
-			contentPanel.add(btnGestionarEquipamiento);
+			btnGEquipamiento = new JButton("Gestionar Equipamiento");
+			btnGEquipamiento.addActionListener(this);
+			btnGEquipamiento.setFont(new Font("Calibri", Font.PLAIN, 12));
+			btnGEquipamiento.setBounds(132, 183, 203, 34);
+			contentPanel.add(btnGEquipamiento);
 		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton cancelButton = new JButton("Volver");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				btnVolver = new JButton("Volver");
+				btnVolver.addActionListener(this);
+				btnVolver.setActionCommand("Cancel");
+				buttonPane.add(btnVolver);
 			}
+		}
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(btnVolver)) {
+			this.dispose();
 		}
 	}
 

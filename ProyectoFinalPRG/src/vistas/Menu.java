@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class Menu extends JDialog implements ActionListener {
 
@@ -24,7 +25,7 @@ public class Menu extends JDialog implements ActionListener {
 	private JButton btnMDatos;
 	private JButton btnGDatos;
 	private JButton btnConsultarObra;
-	private JButton okButton;
+	private JButton btnCerrar;
 	/**
 	 * Create the dialog.
 	 */
@@ -70,19 +71,19 @@ public class Menu extends JDialog implements ActionListener {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("Cerrar Sesi\u00F3n");
-				okButton.addActionListener(this);
-				okButton.setFont(new Font("Calibri", Font.PLAIN, 12));
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				btnCerrar = new JButton("Cerrar Sesi\u00F3n");
+				btnCerrar.addActionListener(this);
+				btnCerrar.setFont(new Font("Calibri", Font.PLAIN, 12));
+				btnCerrar.setActionCommand("OK");
+				buttonPane.add(btnCerrar);
+				getRootPane().setDefaultButton(btnCerrar);
 			}
 		}
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnMDatos)) {
-			DatosPersonales vMDatos= new DatosPersonales();
+			AddDatosPersonal vMDatos= new AddDatosPersonal();
 			vMDatos.setVisible(true);
 		}
 		else if(e.getSource().equals(btnGDatos)) {
@@ -94,8 +95,14 @@ public class Menu extends JDialog implements ActionListener {
 			ConsultarObras vCObras= new ConsultarObras();
 			vCObras.setVisible(true);
 		}
-		else if(e.getSource().equals(okButton)) {
-			this.dispose();
+		else if(e.getSource().equals(btnCerrar)) {
+			//CerrarMenu vCMenu= new CerrarMenu();
+			//vCMenu.setVisible(true);
+			int resp =JOptionPane.showConfirmDialog(null,"¿Estas seguro de que quieres cerrar Sesion?","Alerta!",JOptionPane.YES_NO_OPTION);
+			if (resp==0) {
+				this.dispose();
+				
+			}
 		}
 
 

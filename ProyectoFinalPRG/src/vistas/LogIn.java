@@ -13,6 +13,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -85,8 +86,13 @@ public class LogIn extends JFrame implements ActionListener {
 		
 		}
 		else if(e.getSource().equals(btnCancelar)) {
-			SalirPrograma vSalir=new SalirPrograma();
-			vSalir.setVisible(true);			
+			//SalirPrograma vSalir=new SalirPrograma();
+			//vSalir.setVisible(true);
+			int resp =JOptionPane.showConfirmDialog(null,"¿Quieres Salir del programa?","Alerta!",JOptionPane.YES_NO_OPTION);
+			if (resp==0) {
+				System.exit(0);
+				
+			}
 		}
 	}
 }

@@ -10,14 +10,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JLabel;
 import java.awt.Color;
 
-public class CerrarMenu extends JDialog {
+public class CerrarMenu extends JDialog implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-
-
+	private JButton btnNoAceptar;
+	private JButton btnAceptar;
 
 	/**
 	 * Create the dialog.
@@ -29,16 +36,19 @@ public class CerrarMenu extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JButton btnNewButton = new JButton("S\u00CD");
-			btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			btnNewButton.setBounds(80, 173, 127, 38);
-			contentPanel.add(btnNewButton);
+			btnAceptar = new JButton("S\u00CD");
+			btnAceptar.addActionListener(this);
+			btnAceptar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			btnAceptar.setBounds(80, 173, 127, 38);
+			contentPanel.add(btnAceptar);
+			
 		}
 		{
-			JButton btnNewButton_1 = new JButton("NO");
-			btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			btnNewButton_1.setBounds(236, 173, 119, 38);
-			contentPanel.add(btnNewButton_1);
+			btnNoAceptar = new JButton("NO");
+			btnNoAceptar.addActionListener(this);
+			btnNoAceptar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			btnNoAceptar.setBounds(236, 173, 119, 38);
+			contentPanel.add(btnNoAceptar);
 		}
 		{
 			JLabel lblEstasSeguro = new JLabel("\r\n\u00BF Estas seguro de que \r\n\r\nquieres cerrar sesi\u00F3n?");
@@ -51,6 +61,19 @@ public class CerrarMenu extends JDialog {
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(btnAceptar)) {
+			LogIn vLog = new LogIn();
+			vLog.setVisible(true);
+			this.dispose();
+		}
+		else if(e.getSource().equals(btnNoAceptar)) {
+			this.dispose();
+
 		}
 	}
 

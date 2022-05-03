@@ -13,25 +13,20 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AddDatosPatrocinador extends JDialog {
+public class AddDatosPatrocinador extends JDialog implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			AddDatosPatrocinador dialog = new AddDatosPatrocinador();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private JButton btnBorrarDatos;
+	private JButton btnModificarDatos;
+	private JButton btnAceptar;
+	private JButton btnVolver;
 
 	/**
 	 * Create the dialog.
@@ -92,30 +87,37 @@ public class AddDatosPatrocinador extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton btnBorrarDatos = new JButton("Borrar datos");
+				btnBorrarDatos = new JButton("Borrar datos");
+				btnBorrarDatos.addActionListener(this);
 				btnBorrarDatos.setActionCommand("OK");
 				buttonPane.add(btnBorrarDatos);
 			}
 			{
-				JButton btnModificarDatos = new JButton("Modificar datos");
-				btnModificarDatos.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-					}
-				});
+				btnModificarDatos = new JButton("Modificar datos");
+				btnModificarDatos.addActionListener(this);
 				btnModificarDatos.setActionCommand("OK");
 				buttonPane.add(btnModificarDatos);
 			}
 			{
-				JButton okButton = new JButton("Aceptar");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				btnAceptar = new JButton("Aceptar");
+				btnAceptar.addActionListener(this);
+				btnAceptar.setActionCommand("OK");
+				buttonPane.add(btnAceptar);
+				getRootPane().setDefaultButton(btnAceptar);
 			}
 			{
-				JButton cancelButton = new JButton("Volver");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				btnVolver = new JButton("Volver");
+				btnVolver.addActionListener(this);
+				btnVolver.setActionCommand("Cancel");
+				buttonPane.add(btnVolver);
 			}
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(btnVolver)) {
+			this.dispose();
 		}
 	}
 
