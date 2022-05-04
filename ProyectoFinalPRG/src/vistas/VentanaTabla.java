@@ -37,6 +37,7 @@ public class VentanaTabla extends JFrame implements MouseListener{
 	ModeloTabla modelo;//modelo definido en la clase ModeloTabla
 	private int filasTabla;
 	private int columnasTabla;
+	private JTable table;
 
 	/**
 	 * Create the frame.
@@ -64,12 +65,16 @@ public class VentanaTabla extends JFrame implements MouseListener{
 		contentPane.add(scrollPaneTabla, BorderLayout.CENTER);
 		
 		tablaPersonas = new JTable();
-		tablaPersonas.setBackground(Color.WHITE);
+		tablaPersonas.setBackground(Color.BLACK);
 		tablaPersonas.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		tablaPersonas.addMouseListener(this);
 		//tablaSeguimiento.addKeyListener(this);
 		tablaPersonas.setOpaque(false);
 		scrollPaneTabla.setViewportView(tablaPersonas);
+		
+		table = new JTable();
+		table.setBackground(Color.RED);
+		scrollPaneTabla.setColumnHeaderView(table);
 		
 	}
 	

@@ -21,11 +21,11 @@ public class GestionDatos extends JDialog implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-private JButton btnGTrabajadores;
- private JButton btnGObrasAudiovisuales;
- private JButton btnGPatrocinadores;
- private JButton btnGEquipamiento;
- private JButton btnVolver;
+	private JButton btnGTrabajadores;
+	private JButton btnGObrasAudiovisuales;
+	private JButton btnGPatrocinadores;
+	private JButton btnGEquipamiento;
+	private JButton btnVolver;
 
 
 	/**
@@ -48,7 +48,7 @@ private JButton btnGTrabajadores;
 		{
 			btnGTrabajadores = new JButton("Gestionar Trabajadores");
 			btnGTrabajadores.addActionListener(this);
-				btnGTrabajadores.setFont(new Font("Calibri", Font.PLAIN, 13));
+			btnGTrabajadores.setFont(new Font("Calibri", Font.PLAIN, 13));
 			btnGTrabajadores.setBounds(132, 60, 203, 34);
 			contentPanel.add(btnGTrabajadores);
 		}
@@ -91,6 +91,25 @@ private JButton btnGTrabajadores;
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(btnVolver)) {
 			this.dispose();
+		}
+		else if (e.getSource().equals(btnGTrabajadores)) {
+			TablaTrabajadores vTrabajadores= new TablaTrabajadores();
+			vTrabajadores.setVisible(true);
+
+		}
+		else if (e.getSource().equals(btnGObrasAudiovisuales)) {
+			TablaPeliculasSeries vAudiovisual = new TablaPeliculasSeries();
+			vAudiovisual.setVisible(true);
+
+		}
+		else if(e.getSource().equals(btnGPatrocinadores)) {
+			TablaPatrocinadores vPatrocinadores=new TablaPatrocinadores();
+			vPatrocinadores.setVisible(true);
+		}
+		else if(e.getSource().equals(btnGEquipamiento)) {
+			TablaEquipamiento vEquipamiento= new TablaEquipamiento();
+			vEquipamiento.setVisible(true);
+
 		}
 	}
 

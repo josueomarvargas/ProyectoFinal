@@ -286,6 +286,10 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 				
 				
 			}
+			else if(e.getSource().equals(btnAceptar)){
+				GestionDatos vGDatos = new GestionDatos();
+				
+			}
 		}
 	}
 }
