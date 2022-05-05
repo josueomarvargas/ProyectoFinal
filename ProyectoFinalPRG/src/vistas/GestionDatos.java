@@ -21,19 +21,21 @@ public class GestionDatos extends JDialog implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-private JButton btnGTrabajadores;
- private JButton btnGObrasAudiovisuales;
- private JButton btnGPatrocinadores;
- private JButton btnGEquipamiento;
- private JButton btnVolver;
+	private JButton btnGTrabajadores;
+	private JButton btnGObrasAudiovisuales;
+	private JButton btnGPatrocinadores;
+	private JButton btnGEquipamiento;
+	private JButton btnVolver;
 
 
 	/**
 	 * Create the dialog.
 	 */
 	public GestionDatos() {
+		this.setUndecorated(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -48,7 +50,7 @@ private JButton btnGTrabajadores;
 		{
 			btnGTrabajadores = new JButton("Gestionar Trabajadores");
 			btnGTrabajadores.addActionListener(this);
-				btnGTrabajadores.setFont(new Font("Calibri", Font.PLAIN, 13));
+			btnGTrabajadores.setFont(new Font("Calibri", Font.PLAIN, 13));
 			btnGTrabajadores.setBounds(132, 60, 203, 34);
 			contentPanel.add(btnGTrabajadores);
 		}
@@ -75,6 +77,7 @@ private JButton btnGTrabajadores;
 		}
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(SystemColor.textHighlight);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
@@ -91,6 +94,25 @@ private JButton btnGTrabajadores;
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(btnVolver)) {
 			this.dispose();
+		}
+		else if (e.getSource().equals(btnGTrabajadores)) {
+			TablaTrabajadores vTrabajadores= new TablaTrabajadores();
+			vTrabajadores.setVisible(true);
+
+		}
+		else if (e.getSource().equals(btnGObrasAudiovisuales)) {
+			TablaPeliculasSeries vAudiovisual = new TablaPeliculasSeries();
+			vAudiovisual.setVisible(true);
+
+		}
+		else if(e.getSource().equals(btnGPatrocinadores)) {
+			TablaPatrocinadores vPatrocinadores=new TablaPatrocinadores();
+			vPatrocinadores.setVisible(true);
+		}
+		else if(e.getSource().equals(btnGEquipamiento)) {
+			TablaEquipamiento vEquipamiento= new TablaEquipamiento();
+			vEquipamiento.setVisible(true);
+
 		}
 	}
 

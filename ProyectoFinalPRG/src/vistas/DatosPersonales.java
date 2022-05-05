@@ -37,6 +37,7 @@ public class DatosPersonales extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public DatosPersonales() {
+		this.setUndecorated(true);
 		setBounds(100, 100, 492, 363);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -12,6 +12,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import java.awt.Color;
 
 public class AddDatosPatrocinador extends JDialog implements ActionListener {
 
@@ -32,8 +34,10 @@ public class AddDatosPatrocinador extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public AddDatosPatrocinador() {
+		this.setUndecorated(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -84,10 +88,12 @@ public class AddDatosPatrocinador extends JDialog implements ActionListener {
 		}
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(SystemColor.textHighlight);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnBorrarDatos = new JButton("Borrar datos");
+				btnBorrarDatos.setBackground(new Color(255, 255, 255));
 				btnBorrarDatos.addActionListener(this);
 				btnBorrarDatos.setActionCommand("OK");
 				buttonPane.add(btnBorrarDatos);
@@ -117,6 +123,9 @@ public class AddDatosPatrocinador extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(btnVolver)) {
+			this.dispose();
+		}
+		else if(e.getSource().equals(btnAceptar)) {
 			this.dispose();
 		}
 	}

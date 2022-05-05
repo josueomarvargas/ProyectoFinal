@@ -19,23 +19,14 @@ public class DatosPatrocinador extends JDialog {
 	private JTable table;
 	private JTable table_2;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			DatosPatrocinador dialog = new DatosPatrocinador();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	/**
 	 * Create the dialog.
 	 */
 	public DatosPatrocinador() {
+		this.setUndecorated(true);
+		getContentPane().setBackground(SystemColor.activeCaption);
 		setBounds(100, 100, 533, 268);
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 517, 1);
@@ -48,6 +39,7 @@ public class DatosPatrocinador extends JDialog {
 		contentPanel.add(table);
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(SystemColor.textHighlight);
 			buttonPane.setBounds(0, 196, 517, 33);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane);

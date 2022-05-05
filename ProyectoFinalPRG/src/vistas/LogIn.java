@@ -2,6 +2,7 @@ package vistas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
+import java.awt.Color;
 
 public class LogIn extends JFrame implements ActionListener {
 
@@ -29,15 +32,19 @@ public class LogIn extends JFrame implements ActionListener {
 	private JTextField textField;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
+	private JPanel buttonPane;
 
 
 	/**
 	 * Create the frame.
 	 */
 	public LogIn() {
+		//this.setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 495, 391);
 		contentPane = new JPanel();
+		contentPane.setMaximumSize(new Dimension(40000, 32767));
+		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -45,17 +52,6 @@ public class LogIn extends JFrame implements ActionListener {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(147, 168, 173, 20);
 		contentPane.add(passwordField);
-		
-		btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(this);
-			
-		btnAceptar.setBounds(192, 227, 89, 23);
-		contentPane.add(btnAceptar);
-		
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(this);
-		btnCancelar.setBounds(317, 227, 89, 23);
-		contentPane.add(btnCancelar);
 		
 		JLabel lblIniciarSesin = new JLabel("Iniciar sesi\u00F3n");
 		lblIniciarSesin.setFont(new Font("Calibri", Font.PLAIN, 28));
@@ -76,6 +72,29 @@ public class LogIn extends JFrame implements ActionListener {
 		textField.setBounds(147, 105, 173, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setSize(479, 29);
+			buttonPane.setLocation(0, 323);
+			buttonPane.setBackground(SystemColor.textHighlight);
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				btnAceptar = new JButton("Aceptar");
+				btnAceptar.addActionListener(this);
+				btnAceptar.setFont(new Font("Calibri", Font.PLAIN, 12));
+				btnAceptar.setActionCommand("OK");
+				buttonPane.add(btnAceptar);
+				getRootPane().setDefaultButton(btnAceptar);
+				
+				btnCancelar = new JButton("Cancelar");
+				btnCancelar.addActionListener(this);
+				btnCancelar.setFont(new Font("Calibri", Font.PLAIN, 12));
+				btnCancelar.setActionCommand("OK");
+				buttonPane.add(btnCancelar);
+				getRootPane().setDefaultButton(btnCancelar);
+			}
+		}
 	}
 
 	@Override

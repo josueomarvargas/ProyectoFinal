@@ -14,6 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.Color;
+import javax.swing.UIManager;
+import java.awt.Rectangle;
 
 public class Menu extends JDialog implements ActionListener {
 
@@ -30,8 +33,9 @@ public class Menu extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public Menu() {
-		setBounds(100, 100, 450, 300);
+		this.setUndecorated(true);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -68,6 +72,7 @@ public class Menu extends JDialog implements ActionListener {
 		}
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(SystemColor.textHighlight);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
@@ -92,7 +97,7 @@ public class Menu extends JDialog implements ActionListener {
 
 		}
 		else if(e.getSource().equals(btnConsultarObra)) {
-			ConsultarObras vCObras= new ConsultarObras();
+			TablaPeliculasSeries vCObras= new TablaPeliculasSeries();
 			vCObras.setVisible(true);
 		}
 		else if(e.getSource().equals(btnCerrar)) {
