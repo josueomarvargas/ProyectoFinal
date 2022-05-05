@@ -39,7 +39,7 @@ import modelo.dao.*;
  **/
 
 public enum DAOFactory {
-	CARACTERISTICA(CaracteristicaDAO::new), EQUIP(EquipDAO::new), EQUIPOBRA(EquipObraDAO::new), OBRA(ObraDAO::new),
+	EQUIP(EquipDAO::new), EQUIPOBRA(EquipObraDAO::new), OBRA(ObraDAO::new),
 	PARTICIPA(ParticipaDAO::new), PATROCINADOR(PatrocinadorDAO::new), PELI(PeliDAO::new),
 	PROMOCIONA(PromocionaDAO::new), SERIE(SerieDAO::new), TRABAJADOR(TrabajadorDAO::new), USER(UserDAO::new),
 	TRABAJADORUSER(TrabajadorUserDAO::new), VIEWPELIS(ViewPeliDAO::new), VIEWSERIE(ViewSerieDAO::new);

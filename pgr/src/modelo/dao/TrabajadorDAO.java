@@ -33,7 +33,8 @@ import modelo.clases.Trabajador;
  * objectos que al finalizar el bloque se cierren automáticamente sin uso de un
  * finally, se tienen que declarar antes o en el try. Esto nos será útil para
  * declarar los {@code PrepareStatements} como recursos del try y no tener que
- * preocuparnos por no haberlo cerrado.
+ * preocuparnos por no haberlo cerrado. También hay try sin catch esto se puede
+ * hacer, pero es necesario poner un finally o tener un recurso en el try.
  * 
  * @author Henrique Yeguo
  * 
@@ -70,7 +71,21 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	private final String DELETEATRIBUTO = "CALL deleteAtributo(?, ?)";
 
 	// Establecer conexión a la base de datos
-	private static Connection con = SQLCon.getConnection();
+	private static Connection con;
+
+	private void openConnection() {
+		con = SQLCon.openConnection();
+	}
+
+	private void closeConnection() {
+		try {
+			// Cerrar la conexión aquí y en el SQLCon
+			con.close();
+			SQLCon.closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Inserción de la tabla {@code Trabajador} y de sus hijos:
@@ -79,12 +94,21 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	 * <b>Cómo funciona el método:</b> <blockquote> Será una transacción por lo que
 	 * el autoCommit estará en FALSE, primero crearemos un {@code PrepareStatement}
 	 * con la sentencia para insertar en la tabla {@code Trabajador} y añadimos los
-	 * datos necesarios, ejecutamos la consulta y posteriormente llamaremos al
-	 * método {@link #INSERTATRIBUTO} que le pasaremos el ID y la lista de los
+	 * datos necesarios, ejecutamos la consulta, recogemos el ID que se ha generado
+	 * por el {@code AUTO_INCREMENT} y posteriormente llamaremos al método
+	 * {@link #INSERTATRIBUTO} que le pasaremos el ID generado y la lista de los
 	 * atributos de la clase, un ejemplo: si es actor se le pasara la lista de las
 	 * especialidades que tiene.<br>
 	 * Posteriormente se ejecutará {@code con.commit()} para guardar todos los
 	 * cambios que hemos hecho en la base de datos.</blockquote>
+	 * 
+	 * <note>Nota: al crear el {@code PreparedStatement} aparte de pasar la
+	 * sentencia SQL se ha puesto
+	 * {@link java.sql.PreparedStatement#RETURN_GENERATED_KEYS}, esto sirve para
+	 * decir a la consulta que nos devuelva las claves que se generan por el
+	 * {@code AUTO_INCREMENT}, con esta opción podemos recogerlo en un
+	 * {@code ResultSet}</note>
+	 * 
 	 * 
 	 * @param clase objecto trabajador instanciado como uno de sus hijos
 	 * @return true si se ha ejecutado correctamente la inserción
@@ -92,8 +116,12 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	@Override
 	public boolean create(Trabajador clase) {
 
+		// Abrir la conexión
+		this.openConnection();
+		ResultSet rs;
+
 		// PreparedStatement insertar trabajador
-		try (PreparedStatement trabajadorStat = con.prepareStatement(CREATE)) {
+		try (PreparedStatement trabajadorStat = con.prepareStatement(CREATE, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			// Inicio de la transacción
 			con.setAutoCommit(false);
@@ -111,15 +139,21 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			// Ejecutar consulta
 			trabajadorStat.executeUpdate();
 
-			insertAtributos(clase.getIdTrabajador(), clase.getList());
+			// Recoger la clave del trabajador generada
+			rs = trabajadorStat.getGeneratedKeys();
 
+			if (rs.next()) {
+				insertAtributos(rs.getInt(1), clase.getList());
+			}
+
+			// Aplicamos los cambios al servidor
 			con.commit();
+
+			// Autocommit por defecto
 			con.setAutoCommit(true);
 			return true;
 
-		} catch (
-
-		SQLException e) {
+		} catch (SQLException e) {
 			System.err.println(e);
 
 			try {
@@ -130,6 +164,11 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			}
 
 			return false; // Si hay alguna excepcion devolverá false
+
+		} finally {
+			// Cerrar la conexión
+			this.closeConnection();
+
 		}
 
 	}
@@ -150,7 +189,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	 **/
 	private void insertAtributos(Integer id, List<String> atributoList) throws SQLException {
 
-		// Callable Statement - InsertarAtributo
+		// Callable Statement - Insertar Atributo
 		try (CallableStatement stat = con.prepareCall(INSERTATRIBUTO)) {
 
 			// Iteramos por cada atributo
@@ -165,9 +204,6 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			// Ejecutará el grupo de consultas
 			stat.executeBatch();
 
-		} catch (SQLException e) { // Si hay un problema con el servidor MySQL
-			System.err.println(e);
-			con.rollback();
 		}
 	}
 
@@ -195,6 +231,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	@Override
 	public Trabajador search(String id) {
 
+		this.openConnection();
 		// ResultSet y la clase para recoger los datos de la consulta
 		ResultSet rs = null;
 		Trabajador trabajador = null;
@@ -258,6 +295,14 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 		} catch (SQLException e) {
 			System.err.println(e);
+			try {
+				con.rollback();
+				con.setAutoCommit(true);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			this.closeConnection();
 		}
 
 		// Devolvemos el objecto, si RS NO ha devuelto nada, devolverá NULL
@@ -288,6 +333,9 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	 **/
 	@Override
 	public Map<Integer, Trabajador> readAll() {
+
+		this.closeConnection();
+
 		// RS y la clase para recoger los datos, además un map para guardar
 		Map<Integer, Trabajador> trabajadores = new HashMap<>();
 		ResultSet rs = null;
@@ -349,6 +397,8 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 		} catch (SQLException e) {
 			System.out.println(e);
+		} finally {
+			this.closeConnection();
 		}
 
 		// Devolverá un map con los datos, o un map vacío
@@ -407,6 +457,8 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	@Override
 	public boolean update(Trabajador clase) {
 
+		this.openConnection();
+
 		try (PreparedStatement stat = con.prepareStatement(UPDATE)) {
 
 			// Datos antiguos del trabjador para comprobar que datos hay que actualizar
@@ -441,14 +493,16 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			System.err.println(e);
 
 			try {
+				// Revertir los cambios
 				con.rollback();
 				con.setAutoCommit(true);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
 			return false; // Si hay alguna excepcion devolverá false
+		} finally {
+			this.closeConnection();
 		}
 	}
 
@@ -549,9 +603,6 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			// Ejecutará el grupo de consultas
 			stat.executeBatch();
 
-		} catch (SQLException e) { // Si hay un problema con el servidor MySQL
-			System.err.println(e);
-			con.rollback();
 		}
 
 	}
@@ -572,10 +623,14 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	@Override
 	public boolean remove(String id) {
 
+		this.openConnection();
+
 		// PreparedStatement Delete
 		try (PreparedStatement stat = con.prepareStatement(DELETE)) {
 
+			// Inicio de la transacción
 			con.setAutoCommit(false);
+
 			// Añadir datos al Prepare Statement
 			stat.setInt(1, Integer.parseInt(id));
 
@@ -585,18 +640,24 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			// Aplicamos los cambios al servidor
 			con.commit();
 
+			// Autocommit por defecto
+			con.setAutoCommit(true);
+
 			return true;
 
 		} catch (SQLException e) {
 			System.err.println(e);
-			// Si falla volvemos como estabamos antes
 			try {
+				// Si falla volvemos como estabamos antes
 				con.setAutoCommit(true);
 				con.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 			return false;
+
+		} finally {
+			this.closeConnection();
 		}
 	}
 
