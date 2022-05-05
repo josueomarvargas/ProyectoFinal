@@ -1,7 +1,6 @@
 package modelo.clases;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Participa {
@@ -35,10 +34,6 @@ public class Participa {
 
 	public void setIdObra(int idObra) {
 		this.idObra = idObra;
-	}
-	
-	public void sortList() {
-		Collections.sort(idTrabajador);
 	}
 
 }

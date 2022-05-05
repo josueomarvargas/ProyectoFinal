@@ -1,8 +1,16 @@
 package modelo.clases;
 
 import java.time.LocalDate;
+import java.util.List;
 
-public class Trabajador {
+/**
+ * 
+ * 
+ * @author Henrique Yeguo
+ * @author Iker Aspiazu
+ **/
+
+public abstract class Trabajador {
 
 	private int idTrabajador;
 	private String dni;
@@ -13,24 +21,6 @@ public class Trabajador {
 	private String direccion;
 	private String tipo;
 	private LocalDate fechaNac;
-
-	public Trabajador() {
-		super();
-	}
-
-	public Trabajador(int idTrabajador, String dni, String nombre, String apellido, int numTel, int numPremios,
-			String direccion, String tipo, LocalDate fechaNac) {
-		super();
-		this.idTrabajador = idTrabajador;
-		this.dni = dni;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.numTel = numTel;
-		this.numPremios = numPremios;
-		this.direccion = direccion;
-		this.tipo = tipo;
-		this.fechaNac = fechaNac;
-	}
 
 	public int getIdTrabajador() {
 		return idTrabajador;
@@ -106,9 +96,26 @@ public class Trabajador {
 
 	@Override
 	public String toString() {
-		return "Trabajador [idTrabajador=" + idTrabajador + ", dni=" + dni + ", nombre=" + nombre + ", apellido="
-				+ apellido + ", numTel=" + numTel + ", numPremios=" + numPremios + ", direccion=" + direccion
-				+ ", fechaNac=" + fechaNac + ", tipo=" + tipo + "]";
+		return "idTrabajador=" + idTrabajador + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido
+				+ ", numTel=" + numTel + ", numPremios=" + numPremios + ", direccion=" + direccion + ", tipo=" + tipo
+				+ ", fechaNac=" + fechaNac;
+	}
+
+	public void setDatos(int idTrabajador, String dni, String nombre, String apellido, int numTel, int numPremios,
+			String direccion, String tipo, LocalDate fechaNac) {
+		this.idTrabajador = idTrabajador;
+		this.dni = dni;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.numTel = numTel;
+		this.numPremios = numPremios;
+		this.direccion = direccion;
+		this.tipo = tipo;
+		this.fechaNac = fechaNac;
+	}
+
+	public List<String> getList() {
+		return null;
 	}
 
 }

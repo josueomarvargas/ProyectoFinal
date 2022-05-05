@@ -1,8 +1,6 @@
 package modelo.clases;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class TecnicoAudiovisual extends Trabajador {
@@ -14,12 +12,6 @@ public class TecnicoAudiovisual extends Trabajador {
 		areaTrabajos = new ArrayList<>();
 	}
 
-	public TecnicoAudiovisual(int idTrabajador, String dni, String nombre, String apellido, int numTel, int numPremios,
-			String direccion, LocalDate fechaNac, String tipo, List<String> areaTrabajos) {
-		super(idTrabajador, dni, nombre, apellido, numTel, numPremios, direccion, tipo, fechaNac);
-		this.areaTrabajos = areaTrabajos;
-	}
-
 	public List<String> getAreaTrabajos() {
 		return areaTrabajos;
 	}
@@ -28,8 +20,9 @@ public class TecnicoAudiovisual extends Trabajador {
 		this.areaTrabajos = areaTrabajos;
 	}
 
-	public void sortList() {
-		Collections.sort(areaTrabajos);
+	@Override
+	public List<String> getList() {
+		return areaTrabajos;
 	}
 
 }

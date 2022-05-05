@@ -1,7 +1,6 @@
 package modelo.clases;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class EquipObra {
@@ -34,10 +33,6 @@ public class EquipObra {
 
 	public void setIdEquip(List<Integer> idEquip) {
 		this.idEquip = idEquip;
-	}
-
-	public void sortList() {
-		Collections.sort(idEquip);
 	}
 
 }

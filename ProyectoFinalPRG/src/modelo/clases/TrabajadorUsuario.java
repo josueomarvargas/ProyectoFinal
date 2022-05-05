@@ -17,7 +17,6 @@ public class TrabajadorUsuario {
 		this.tipoUsuario = tipoUsuario;
 	}
 
-
 	public int getIdTrabajador() {
 		return idTrabajador;
 	}

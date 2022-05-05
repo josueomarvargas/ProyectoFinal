@@ -1,7 +1,6 @@
 package modelo.clases;
 
-import java.time.LocalDate;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Actor extends Trabajador {
@@ -10,12 +9,7 @@ public class Actor extends Trabajador {
 
 	public Actor() {
 		super();
-	}
-
-	public Actor(int idTrabajador, String dni, String nombre, String apellido, int numTel, int numPremios,
-			String direccion, String tipo, LocalDate fechaNac, List<String> especialidades) {
-		super(idTrabajador, dni, nombre, apellido, numTel, numPremios, direccion, tipo, fechaNac);
-		this.especialidades = especialidades;
+		especialidades = new ArrayList<>();
 	}
 
 	public List<String> getEspecialidades() {
@@ -26,8 +20,15 @@ public class Actor extends Trabajador {
 		this.especialidades = especialidades;
 	}
 
-	public void sortList() {
-		Collections.sort(especialidades);
+	@Override
+	public String toString() {
+		return super.toString() + ", especialidades=" + especialidades.toString();
 	}
+
+	@Override
+	public List<String> getList() {
+		return especialidades;
+	}
+
 
 }

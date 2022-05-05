@@ -1,18 +1,13 @@
 package modelo.clases;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Director extends Trabajador {
 	private String categoria;
 
 	public Director() {
 		super();
-	}
-
-	public Director(int idTrabajador, String dni, String nombre, String apellido, int numTel, int numPremios,
-			String direccion, LocalDate fechaNac, String tipo, String nacionalidad) {
-		super(idTrabajador, dni, nombre, apellido, numTel, numPremios, direccion, tipo, fechaNac);
-		this.categoria = nacionalidad;
 	}
 
 	public String getCategoria() {
@@ -23,6 +18,11 @@ public class Director extends Trabajador {
 		this.categoria = categoria;
 	}
 
-	
+	@Override
+	public List<String> getList() {
+		List<String> categ = new ArrayList<>();
+		categ.add(this.categoria);
+		return categ;
+	}
 
 }

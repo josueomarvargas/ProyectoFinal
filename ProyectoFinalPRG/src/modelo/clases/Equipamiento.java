@@ -1,7 +1,6 @@
 package modelo.clases;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Equipamiento {
@@ -54,10 +53,6 @@ public class Equipamiento {
 
 	public void setCaracteristicas(List<String> caracteristicas) {
 		this.caracteristicas = caracteristicas;
-	}
-
-	public void sortList() {
-		Collections.sort(caracteristicas);
 	}
 
 }
