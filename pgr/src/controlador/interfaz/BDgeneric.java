@@ -1,10 +1,7 @@
 package controlador.interfaz;
 
-import java.sql.SQLException;
-import java.util.Map;
-
 /**
- * <h1>Interfaz generica</h1>
+ * <h1>Interfaz generica CRUD</h1>
  * <p>
  * Esta interfaz declara los métodos CRUD (CREATE, READ, UPDATE, DELETE) las
  * clases DAO implementarán esta inferfaz especificando la clase que usará.
@@ -64,10 +61,9 @@ public interface BDgeneric<T> {
 	 * @param clase la clase con la información que se necesita para el método
 	 * @return un boolean que será true o false dependiendo de si se ha ejecutado
 	 *         con éxito la consulta
-	 * @throws SQLException
 	 * 
 	 **/
-	public boolean create(T clase) throws SQLException;
+	public boolean create(T clase);
 
 	/**
 	 * Para buscar una fila en concreto de la tabla especificada le pasaremos por
@@ -76,12 +72,12 @@ public interface BDgeneric<T> {
 	 * sea clave compuesta, una de las claves guardarlas en una lista y usar la otra
 	 * para buscar.
 	 * 
-	 * @param id Array String con el ID o los IDs para buscar en la base de datos
+	 * @param id String con el ID para buscar en la base de datos
 	 * @return <T> el método devuelve un objecto, este debe de ser el mismo que se
 	 *         declaró al implementar la interfaz
-	 * @throws SQLException
+	 * 
 	 **/
-	public T search(String id) throws SQLException;
+	public T search(String id);
 
 	/**
 	 * Para leer todo de una tabla no será necesario ningún parámetro, lo que nos
@@ -89,9 +85,8 @@ public interface BDgeneric<T> {
 	 * 
 	 * @return un Map la clave será un string y la clase que se declaró al
 	 *         implementar la interfaz
-	 * @throws SQLException
 	 **/
-	public Map<String, T> readAll() throws SQLException;
+	public java.util.Map<?, T> readAll();
 
 	/**
 	 * Para actualizar le pasaremos la clase con los datos ya cambiados
@@ -99,20 +94,19 @@ public interface BDgeneric<T> {
 	 * @param clase la clase con la información que se necesita para el método
 	 * @return un boolean que será true o false dependiendo de si se ha ejecutado
 	 *         con éxito la consulta
-	 * @trows SQLException
+	 * 
 	 **/
-	public boolean update(T clase) throws SQLException;
+	public boolean update(T clase);
 
 	/**
 	 * Para eliminar la información, pasaremos por parámetro el ID de la tabla
 	 * 
-	 * @param id array de string con el ID o IDs para buscar en la base de datos
+	 * @param id ID del objecto a eliminar en la base de datos
 	 * @return un boolean que será true o false dependiendo de si se ha ejecutado
 	 *         con éxito la consulta
 	 * 
-	 * @throws SQLException
 	 **/
-	public boolean remove(String[] id) throws SQLException;
+	public boolean remove(String id);
 
 	// Intentar hacer rollback cuando se trata de una transaccion
 //	if (con.getAutoCommit() == false) {

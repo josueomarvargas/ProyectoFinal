@@ -1,6 +1,6 @@
 /bin/
-/src/main/Main.java
-/src/modelo/
+/src/main/
 .classpath
 .project
-
+.settings/
+/doc/
