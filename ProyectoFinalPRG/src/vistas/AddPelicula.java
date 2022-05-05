@@ -33,6 +33,7 @@ public class AddPelicula extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public AddPelicula() {
+		this.setUndecorated(true);
 		setBounds(100, 100, 502, 384);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

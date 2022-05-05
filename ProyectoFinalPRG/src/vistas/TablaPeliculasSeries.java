@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
+import java.awt.SystemColor;
 
 public class TablaPeliculasSeries extends JDialog implements ActionListener{
 
@@ -37,12 +38,15 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener{
 	private JButton btnBuscar;
 	private JButton btnAnadir;
 	private JButton btnVolver;
+	private JPanel panel;
 	/**
 	 * Create the dialog.
 	 */
 	public TablaPeliculasSeries() {
+		this.setUndecorated(true);
 		setBounds(100, 100, 629, 319);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
@@ -130,6 +134,11 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener{
 		btnVolver.addActionListener(this);
 		btnVolver.setBounds(514, 254, 89, 23);
 		contentPanel.add(btnVolver);
+		
+		panel = new JPanel();
+		panel.setBackground(SystemColor.textHighlight);
+		panel.setBounds(1, 248, 612, 29);
+		contentPanel.add(panel);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

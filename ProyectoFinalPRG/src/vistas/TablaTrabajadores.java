@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
+import java.awt.SystemColor;
 
 public class TablaTrabajadores extends JDialog implements ActionListener {
 
@@ -26,6 +27,7 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 	private JButton btnBuscar;
 	private JButton btnAnadir;
 	private JButton btnVolver;
+	private JPanel panel;
 
 
 
@@ -33,8 +35,10 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public TablaTrabajadores() {
+		this.setUndecorated(true);
 		setBounds(100, 100, 411, 300);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -78,6 +82,11 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 		btnBuscar.addActionListener(this);
 		btnBuscar.setBounds(160, 229, 72, 23);
 		contentPanel.add(btnBuscar);
+		
+		panel = new JPanel();
+		panel.setBackground(SystemColor.textHighlight);
+		panel.setBounds(0, 224, 395, 37);
+		contentPanel.add(panel);
 	}
 
 

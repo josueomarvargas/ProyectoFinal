@@ -41,8 +41,10 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public AddDatosPersonal() {
+		this.setUndecorated(true);
 		setBounds(100, 100, 620, 625);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -246,6 +248,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		//	contentPanel.add(dateChooser);
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(SystemColor.textHighlight);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{

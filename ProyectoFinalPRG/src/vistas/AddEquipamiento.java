@@ -11,32 +11,30 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Font;
 import javax.swing.JScrollBar;
 import javax.swing.JLabel;
 
-public class AddEquipamiento extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
+public class AddEquipamiento extends JDialog implements ActionListener {
 
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		try {
-			AddEquipamiento dialog = new AddEquipamiento();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	private static final long serialVersionUID = 1L;
+	private final JPanel contentPanel = new JPanel();
+	private JButton btnAadirAUna;
+private JButton btnBorrarDatos;
+private JButton btnModificarDatos;
+private JButton btnAceptar;
+private JButton btnVolver;
 	/**
 	 * Create the dialog.
 	 */
 	public AddEquipamiento() {
-		setBounds(100, 100, 503, 284);
+		this.setUndecorated(true);
+		setBounds(100, 100, 523, 284);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -61,10 +59,6 @@ public class AddEquipamiento extends JDialog {
 			textField.setBounds(127, 155, 148, 46);
 			contentPanel.add(textField);
 		}
-		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(470, 0, 17, 212);
-		contentPanel.add(scrollBar);
 		{
 			JLabel lblNewLabel_1_1 = new JLabel("Caractersticas :");
 			lblNewLabel_1_1.setFont(new Font("Calibri", Font.PLAIN, 14));
@@ -100,32 +94,49 @@ public class AddEquipamiento extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton btnAadirAUna = new JButton("A\u00F1adir a una obra");
+				btnAadirAUna = new JButton("A\u00F1adir a una obra");
+				btnAadirAUna.addActionListener(this);
 				btnAadirAUna.setActionCommand("OK");
 				buttonPane.add(btnAadirAUna);
 			}
 			{
-				JButton btnBorrarDatos = new JButton("Borrar datos");
+				btnBorrarDatos = new JButton("Borrar datos");
+				btnBorrarDatos.addActionListener(this);
 				btnBorrarDatos.setActionCommand("OK");
 				buttonPane.add(btnBorrarDatos);
 			}
 			{
-				JButton btnModificarDatos = new JButton("Modificar datos");
+				btnModificarDatos = new JButton("Modificar datos");
+				btnModificarDatos.addActionListener(this);
 				btnModificarDatos.setActionCommand("OK");
 				buttonPane.add(btnModificarDatos);
 			}
 			{
-				JButton okButton = new JButton("Aceptar");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				btnAceptar = new JButton("Aceptar");
+				btnModificarDatos.addActionListener(this);
+				btnAceptar.setActionCommand("OK");
+				buttonPane.add(btnAceptar);
+				getRootPane().setDefaultButton(btnAceptar);
 			}
 			{
-				JButton cancelButton = new JButton("Volver");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				btnVolver = new JButton("Volver");
+				btnVolver.addActionListener(this);
+				btnVolver.setActionCommand("Cancel");
+				buttonPane.add(btnVolver);
 			}
 		}
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(btnAceptar)) {
+			this.dispose();
+			
+		}
+		else if(e.getSource().equals(btnVolver)) {
+			this.dispose();
+		}
+		
+		
 	}
 }
 

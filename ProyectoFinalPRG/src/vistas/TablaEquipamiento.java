@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import java.awt.SystemColor;
 
 public class TablaEquipamiento extends JDialog implements ActionListener {
 
@@ -26,18 +27,22 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 	private JButton btnBuscar;
 	private JButton btnAnadir;
 	private JButton btnVolver;
+	private JPanel panel;
 
 	/**
 	 * Create the dialog.
 	 */
 	public TablaEquipamiento() {
+		this.setUndecorated(true);
 		setBounds(100, 100, 402, 300);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBackground(SystemColor.activeCaption);
 			scrollPane.setBounds(0, 0, 385, 142);
 			contentPanel.add(scrollPane);
 			{
@@ -76,6 +81,11 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 				contentPanel.add(btnBuscar);
 			}
 		}
+		
+		panel = new JPanel();
+		panel.setBackground(SystemColor.textHighlight);
+		panel.setBounds(0, 223, 386, 38);
+		contentPanel.add(panel);
 	}
 
 	@Override

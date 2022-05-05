@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import java.awt.SystemColor;
 
 public class TablaPatrocinadores extends JDialog implements ActionListener {
 
@@ -26,13 +27,16 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	private JButton btnBuscar;
 	private JButton btnAnadir;
 	private JButton btnVolver;
+	private JPanel panel;
 
 	/**
 	 * Create the dialog.
 	 */
 	public TablaPatrocinadores() {
+		this.setUndecorated(true);
 		setBounds(100, 100, 407, 300);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -78,6 +82,11 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 				contentPanel.add(btnBuscar);
 			}
 		}
+		
+		panel = new JPanel();
+		panel.setBackground(SystemColor.textHighlight);
+		panel.setBounds(0, 225, 391, 36);
+		contentPanel.add(panel);
 	}
 
 	@Override
