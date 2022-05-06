@@ -33,7 +33,7 @@ public class Menu extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public Menu() {
-		this.setUndecorated(true);
+		//this.setUndecorated(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -30,8 +30,8 @@ public class LogIn extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
-	private JButton btnAceptar;
 	private JButton btnCancelar;
+	private JButton btnAceptar;
 	private JPanel buttonPane;
 
 
@@ -73,26 +73,20 @@ public class LogIn extends JFrame implements ActionListener {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		{
-			JPanel buttonPane = new JPanel();
+			buttonPane = new JPanel();
 			buttonPane.setSize(479, 29);
 			buttonPane.setLocation(0, 323);
 			buttonPane.setBackground(SystemColor.textHighlight);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				btnAceptar = new JButton("Aceptar");
-				btnAceptar.addActionListener(this);
-				btnAceptar.setFont(new Font("Calibri", Font.PLAIN, 12));
-				btnAceptar.setActionCommand("OK");
-				buttonPane.add(btnAceptar);
-				getRootPane().setDefaultButton(btnAceptar);
 				
 				btnCancelar = new JButton("Cancelar");
 				btnCancelar.addActionListener(this);
-				btnCancelar.setFont(new Font("Calibri", Font.PLAIN, 12));
-				btnCancelar.setActionCommand("OK");
+				btnAceptar = new JButton("Aceptar");
+				btnAceptar.addActionListener(this);
+				buttonPane.add(btnAceptar);
 				buttonPane.add(btnCancelar);
-				getRootPane().setDefaultButton(btnCancelar);
 			}
 		}
 	}
