@@ -33,15 +33,17 @@ public class LogIn extends JFrame implements ActionListener {
 	private JButton btnCancelar;
 	private JButton btnAceptar;
 	private JPanel buttonPane;
+	private JButton btnCerrarSystem;
 
 
 	/**
 	 * Create the frame.
 	 */
 	public LogIn() {
-		//this.setUndecorated(true);
+		this.setUndecorated(true);
+		//this.setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 495, 391);
+		setBounds(100, 100, 550, 420);
 		contentPane = new JPanel();
 		contentPane.setMaximumSize(new Dimension(40000, 32767));
 		contentPane.setBackground(SystemColor.activeCaption);
@@ -50,35 +52,40 @@ public class LogIn extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(147, 168, 173, 20);
+		passwordField.setBounds(171, 202, 173, 20);
 		contentPane.add(passwordField);
 		
 		JLabel lblIniciarSesin = new JLabel("Iniciar sesi\u00F3n");
+		lblIniciarSesin.setBounds(160, 57, 173, 29);
 		lblIniciarSesin.setFont(new Font("Calibri", Font.PLAIN, 28));
-		lblIniciarSesin.setBounds(135, 30, 173, 29);
 		contentPane.add(lblIniciarSesin);
 		
 		JLabel lblNewLabel_1 = new JLabel("Contrase\u00F1a :");
+		lblNewLabel_1.setBounds(60, 201, 79, 26);
 		lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(37, 171, 79, 26);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Usuario :");
+		lblNewLabel_1_1.setBounds(60, 133, 56, 23);
 		lblNewLabel_1_1.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(60, 106, 56, 23);
 		contentPane.add(lblNewLabel_1_1);
 		
 		textField = new JTextField();
-		textField.setBounds(147, 105, 173, 20);
+		textField.setBounds(171, 132, 173, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
+		
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(512, 0, 39, 39);
+		contentPane.add(btnCerrarSystem);
 		{
 			buttonPane = new JPanel();
-			buttonPane.setSize(479, 29);
-			buttonPane.setLocation(0, 323);
+			buttonPane.setBounds(0, 388, 550, 32);
 			buttonPane.setBackground(SystemColor.textHighlight);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			getContentPane().add(buttonPane);
 			{
 				
 				btnCancelar = new JButton("Cancelar");
@@ -89,6 +96,7 @@ public class LogIn extends JFrame implements ActionListener {
 				buttonPane.add(btnCancelar);
 			}
 		}
+
 	}
 
 	@Override

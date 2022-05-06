@@ -44,7 +44,7 @@ public class VentanaTabla extends JFrame implements MouseListener{
 	 */
 	public VentanaTabla() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1121, 528);
+		setSize(610, 528);
 		
 		iniciarComponentes();
 		setLocationRelativeTo(null);

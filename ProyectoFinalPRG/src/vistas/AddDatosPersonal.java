@@ -1,6 +1,7 @@
 package vistas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -20,6 +21,8 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import java.awt.Component;
 //import com.toedter.calendar.JDateChooser;
 
 public class AddDatosPersonal extends JDialog implements ActionListener {
@@ -37,12 +40,16 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	private JButton btnAceptar;
 	private JButton btnVolver;
 	private JButton btnBorrarDatos;
+	private JButton btnCerrarSystem;
+
 	/**
 	 * Create the dialog.
 	 */
 	public AddDatosPersonal() {
+		
+		
 		this.setUndecorated(true);
-		setBounds(100, 100, 620, 625);
+		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -79,13 +86,11 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 			contentPanel.add(textField);
 		}
 
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(587, 0, 17, 553);
-		contentPanel.add(scrollBar);
+
 		{
 			JLabel lblNewLabel = new JLabel("Datos Personales");
 			lblNewLabel.setFont(new Font("Calibri", Font.PLAIN, 28));
-			lblNewLabel.setBounds(104, 11, 262, 29);
+			lblNewLabel.setBounds(137, 18, 262, 29);
 			contentPanel.add(lblNewLabel);
 		}
 		{
@@ -242,6 +247,14 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		JRadioButton rdbtnAccion_1_4 = new JRadioButton("Efectos especiales");
 		rdbtnAccion_1_4.setBounds(335, 526, 118, 23);
 		contentPanel.add(rdbtnAccion_1_4);
+		
+				JScrollBar scrollBar = new JScrollBar(JScrollBar.VERTICAL);
+				scrollBar.setMaximum(1000);
+				scrollBar.setAutoscrolls(true);
+				scrollBar.setAlignmentX(Component.RIGHT_ALIGNMENT);
+				scrollBar.setAlignmentY(Component.TOP_ALIGNMENT);
+				scrollBar.setBounds(530, 25, 20, 362);
+				contentPanel.add(scrollBar);
 
 		//	JDateChooser dateChooser = new JDateChooser();
 		//dateChooser.setBounds(251, 273, 148, 20);
@@ -276,6 +289,11 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 				}
 			}
 		}
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		contentPanel.add(btnCerrarSystem);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

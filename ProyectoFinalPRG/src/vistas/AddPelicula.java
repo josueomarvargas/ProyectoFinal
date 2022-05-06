@@ -1,6 +1,7 @@
 package vistas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -29,75 +30,74 @@ public class AddPelicula extends JDialog implements ActionListener{
 	private JButton btnAceptar;
 	private JButton btnVolver; 
 	private JButton btnVerPatrocinadores;
+	private JButton btnCerrarSystem;
+
 	/**
 	 * Create the dialog.
 	 */
 	public AddPelicula() {
 		this.setUndecorated(true);
-		setBounds(100, 100, 502, 384);
+		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
 		JTextField textField = new JTextField();
-		textField.setBounds(165, 73, 148, 19);
+		textField.setBounds(165, 98, 148, 19);
 		contentPanel.add(textField);
 
 		JTextField textField_1 = new JTextField();
-		textField_1.setBounds(165, 103, 43, 19);
+		textField_1.setBounds(165, 136, 43, 19);
 		contentPanel.add(textField_1);
 
 		JTextField textField_2 = new JTextField();
-		textField_2.setBounds(165, 141, 148, 19);
+		textField_2.setBounds(165, 171, 148, 19);
 		contentPanel.add(textField_2);
 
 		JTextField textField_3 = new JTextField();
-		textField_3.setBounds(165, 171, 148, 19);
+		textField_3.setBounds(165, 218, 148, 19);
 		contentPanel.add(textField_3);
 
 		JTextField textField_1_1 = new JTextField();
-		textField_1_1.setBounds(342, 96, 43, 19);
+		textField_1_1.setBounds(357, 136, 43, 19);
 		contentPanel.add(textField_1_1);
 
 		btnVerPatrocinadores = new JButton("Ver patrocinadores");
 		btnVerPatrocinadores.addActionListener(this);
 		btnVerPatrocinadores.setActionCommand("OK");
-		btnVerPatrocinadores.setBounds(305, 276, 123, 23);
+		btnVerPatrocinadores.setBounds(377, 314, 123, 23);
 		contentPanel.add(btnVerPatrocinadores);
 
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(469, 0, 17, 312);
-		contentPanel.add(scrollBar);
-
 		JLabel lblNewLabel_1_1 = new JLabel("Nombre :");
-		lblNewLabel_1_1.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(79, 72, 56, 23);
+		lblNewLabel_1_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+		lblNewLabel_1_1.setBounds(76, 99, 59, 23);
 		contentPanel.add(lblNewLabel_1_1);
 
 		JLabel lblNewLabel_1_1_1 = new JLabel("Duraci\u00F3n (min)  :");
-		lblNewLabel_1_1_1.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblNewLabel_1_1_1.setBounds(43, 106, 93, 23);
+		lblNewLabel_1_1_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+		lblNewLabel_1_1_1.setBounds(27, 137, 108, 23);
 		contentPanel.add(lblNewLabel_1_1_1);
 
 		JLabel lblNewLabel_1_1_2 = new JLabel("Fecha de estreno :");
 		lblNewLabel_1_1_2.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblNewLabel_1_1_2.setBounds(31, 140, 104, 23);
+		lblNewLabel_1_1_2.setBounds(31, 172, 104, 23);
 		contentPanel.add(lblNewLabel_1_1_2);
 
 		JLabel lblNewLabel_1_1_3 = new JLabel("Tipo :");
 		lblNewLabel_1_1_3.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblNewLabel_1_1_3.setBounds(99, 174, 36, 23);
+		lblNewLabel_1_1_3.setBounds(99, 219, 36, 23);
 		contentPanel.add(lblNewLabel_1_1_3);
 
 		JLabel lblNewLabel_1_1_4 = new JLabel("Portada :");
 		lblNewLabel_1_1_4.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblNewLabel_1_1_4.setBounds(80, 221, 56, 23);
+		lblNewLabel_1_1_4.setBounds(79, 267, 56, 23);
 		contentPanel.add(lblNewLabel_1_1_4);
 
 		JLabel lblNewLabel_1_1_5 = new JLabel("Presupuesto (Mill) :");
 		lblNewLabel_1_1_5.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblNewLabel_1_1_5.setBounds(227, 99, 116, 23);
+		lblNewLabel_1_1_5.setBounds(227, 137, 116, 23);
 		contentPanel.add(lblNewLabel_1_1_5);
 
 		JLabel lblDatosPelcula = new JLabel("Datos Pel\u00EDcula ");
@@ -106,6 +106,7 @@ public class AddPelicula extends JDialog implements ActionListener{
 		contentPanel.add(lblDatosPelcula);
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(SystemColor.textHighlight);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
@@ -131,6 +132,11 @@ public class AddPelicula extends JDialog implements ActionListener{
 				getRootPane().setDefaultButton(btnVolver);
 			}
 		}
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		contentPanel.add(btnCerrarSystem);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

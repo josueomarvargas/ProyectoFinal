@@ -27,7 +27,7 @@ public class DatosPatrocinador extends JDialog {
 	public DatosPatrocinador() {
 		this.setUndecorated(true);
 		getContentPane().setBackground(SystemColor.activeCaption);
-		setBounds(100, 100, 533, 268);
+		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 517, 1);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -40,7 +40,7 @@ public class DatosPatrocinador extends JDialog {
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(SystemColor.textHighlight);
-			buttonPane.setBounds(0, 196, 517, 33);
+			buttonPane.setBounds(0, 387, 550, 33);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane);
 			{
@@ -83,7 +83,7 @@ public class DatosPatrocinador extends JDialog {
 		table_2.getColumnModel().getColumn(0).setPreferredWidth(51);
 		table_2.getColumnModel().getColumn(2).setPreferredWidth(88);
 		table_2.getColumnModel().getColumn(3).setPreferredWidth(149);
-		table_2.setBounds(0, 52, 517, 145);
+		table_2.setBounds(10, 79, 517, 112);
 		getContentPane().add(table_2);
 	}
 }

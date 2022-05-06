@@ -25,6 +25,8 @@ public class CerrarMenu extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private JButton btnNoAceptar;
 	private JButton btnAceptar;
+	private JButton btnCerrarSystem;
+
 
 	/**
 	 * Create the dialog.

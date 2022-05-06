@@ -29,13 +29,14 @@ public class AddDatosPatrocinador extends JDialog implements ActionListener {
 	private JButton btnModificarDatos;
 	private JButton btnAceptar;
 	private JButton btnVolver;
+	private JButton btnCerrarSystem;
 
 	/**
 	 * Create the dialog.
 	 */
 	public AddDatosPatrocinador() {
-		this.setUndecorated(true);
-		setBounds(100, 100, 450, 300);
+		setUndecorated(true);
+		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -44,46 +45,46 @@ public class AddDatosPatrocinador extends JDialog implements ActionListener {
 		{
 			JLabel lblNewLabel = new JLabel("Datos Personales");
 			lblNewLabel.setFont(new Font("Calibri", Font.PLAIN, 28));
-			lblNewLabel.setBounds(100, 11, 262, 29);
+			lblNewLabel.setBounds(149, 27, 262, 29);
 			contentPanel.add(lblNewLabel);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Nombre  :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-			lblNewLabel_1.setBounds(67, 59, 75, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(51, 87, 75, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Cantidad (MIL) :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-			lblNewLabel_1.setBounds(36, 95, 118, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(51, 145, 118, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Condicion :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-			lblNewLabel_1.setBounds(67, 134, 75, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(51, 207, 75, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Logo de Patrocinador :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-			lblNewLabel_1.setBounds(12, 172, 130, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(51, 269, 152, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			textField = new JTextField();
-			textField.setBounds(184, 56, 148, 19);
+			textField.setBounds(236, 80, 205, 29);
 			contentPanel.add(textField);
 		}
 		{
 			textField_1 = new JTextField();
-			textField_1.setBounds(184, 92, 148, 19);
+			textField_1.setBounds(236, 138, 205, 29);
 			contentPanel.add(textField_1);
 		}
 		{
 			textField_2 = new JTextField();
-			textField_2.setBounds(184, 131, 148, 19);
+			textField_2.setBounds(236, 200, 205, 29);
 			contentPanel.add(textField_2);
 		}
 		{
@@ -118,6 +119,11 @@ public class AddDatosPatrocinador extends JDialog implements ActionListener {
 				buttonPane.add(btnVolver);
 			}
 		}
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		contentPanel.add(btnCerrarSystem);
 	}
 
 	@Override

@@ -13,6 +13,8 @@ import java.awt.SystemColor;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class GestionDatos extends JDialog implements ActionListener {
 
@@ -26,14 +28,14 @@ public class GestionDatos extends JDialog implements ActionListener {
 	private JButton btnGPatrocinadores;
 	private JButton btnGEquipamiento;
 	private JButton btnVolver;
-
+	private JButton btnCerrarSystem;
 
 	/**
 	 * Create the dialog.
 	 */
 	public GestionDatos() {
 		this.setUndecorated(true);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -44,37 +46,43 @@ public class GestionDatos extends JDialog implements ActionListener {
 			txtrGestinDeDatos.setFont(new Font("Calibri", Font.PLAIN, 27));
 			txtrGestinDeDatos.setBackground(SystemColor.menu);
 			txtrGestinDeDatos.setText("Gesti\u00F3n de Datos");
-			txtrGestinDeDatos.setBounds(111, 11, 224, 28);
+			txtrGestinDeDatos.setBounds(151, 38, 224, 28);
 			contentPanel.add(txtrGestinDeDatos);
 		}
 		{
 			btnGTrabajadores = new JButton("Gestionar Trabajadores");
 			btnGTrabajadores.addActionListener(this);
 			btnGTrabajadores.setFont(new Font("Calibri", Font.PLAIN, 13));
-			btnGTrabajadores.setBounds(132, 60, 203, 34);
+			btnGTrabajadores.setBounds(150, 87, 203, 34);
 			contentPanel.add(btnGTrabajadores);
 		}
 		{
 			btnGObrasAudiovisuales = new JButton("Gestionar Obras Audiovisuales");
 			btnGObrasAudiovisuales.addActionListener(this);
 			btnGObrasAudiovisuales.setFont(new Font("Calibri", Font.PLAIN, 12));
-			btnGObrasAudiovisuales.setBounds(132, 104, 203, 34);
+			btnGObrasAudiovisuales.setBounds(150, 142, 203, 34);
 			contentPanel.add(btnGObrasAudiovisuales);
 		}
 		{
 			btnGPatrocinadores = new JButton("Gestionar Patrocinadores");
 			btnGPatrocinadores.addActionListener(this);
 			btnGPatrocinadores.setFont(new Font("Calibri", Font.PLAIN, 12));
-			btnGPatrocinadores.setBounds(132, 143, 203, 34);
+			btnGPatrocinadores.setBounds(150, 201, 203, 34);
 			contentPanel.add(btnGPatrocinadores);
 		}
 		{
 			btnGEquipamiento = new JButton("Gestionar Equipamiento");
 			btnGEquipamiento.addActionListener(this);
 			btnGEquipamiento.setFont(new Font("Calibri", Font.PLAIN, 12));
-			btnGEquipamiento.setBounds(132, 183, 203, 34);
+			btnGEquipamiento.setBounds(150, 256, 203, 34);
 			contentPanel.add(btnGEquipamiento);
 		}
+
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		contentPanel.add(btnCerrarSystem);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(SystemColor.textHighlight);
@@ -82,11 +90,16 @@ public class GestionDatos extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnVolver = new JButton("Volver");
+				buttonPane.add(btnVolver);
 				btnVolver.addActionListener(this);
 				btnVolver.setActionCommand("Cancel");
-				buttonPane.add(btnVolver);
 			}
 		}
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		contentPanel.add(btnCerrarSystem);
 	}
 
 
@@ -115,6 +128,5 @@ public class GestionDatos extends JDialog implements ActionListener {
 
 		}
 	}
-
 }
 

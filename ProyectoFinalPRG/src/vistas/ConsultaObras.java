@@ -16,6 +16,7 @@ public class ConsultaObras extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
+	private JButton btnCerrarSystem;
 
 	/**
 	 * Launch the application.

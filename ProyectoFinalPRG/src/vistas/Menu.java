@@ -29,11 +29,14 @@ public class Menu extends JDialog implements ActionListener {
 	private JButton btnGDatos;
 	private JButton btnConsultarObra;
 	private JButton btnCerrar;
+	private JButton btnCerrarSystem;
+
 	/**
 	 * Create the dialog.
 	 */
 	public Menu() {
-		//this.setUndecorated(true);
+		this.setUndecorated(true);
+		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -43,7 +46,7 @@ public class Menu extends JDialog implements ActionListener {
 			btnMDatos = new JButton("Mis Datos");
 			btnMDatos.addActionListener(this);
 			btnMDatos.setFont(new Font("Calibri", Font.PLAIN, 16));
-			btnMDatos.setBounds(107, 72, 240, 37);
+			btnMDatos.setBounds(143, 110, 240, 37);
 			contentPanel.add(btnMDatos);
 		}
 		{
@@ -54,20 +57,20 @@ public class Menu extends JDialog implements ActionListener {
 				public void actionPerformed(ActionEvent e) {
 				}
 			});
-			btnGDatos.setBounds(107, 120, 240, 37);
+			btnGDatos.setBounds(143, 175, 240, 37);
 			contentPanel.add(btnGDatos);
 		}
 		{
 			btnConsultarObra = new JButton("Consultar obras audiovisuales");
 			btnConsultarObra.addActionListener(this);
 			btnConsultarObra.setFont(new Font("Calibri", Font.PLAIN, 15));
-			btnConsultarObra.setBounds(107, 170, 240, 37);
+			btnConsultarObra.setBounds(143, 240, 240, 37);
 			contentPanel.add(btnConsultarObra);
 		}
 		{
 			JLabel lblMen = new JLabel("Men\u00FA");
 			lblMen.setFont(new Font("Calibri", Font.PLAIN, 28));
-			lblMen.setBounds(181, 21, 99, 29);
+			lblMen.setBounds(214, 41, 99, 29);
 			contentPanel.add(lblMen);
 		}
 		{
@@ -84,6 +87,11 @@ public class Menu extends JDialog implements ActionListener {
 				getRootPane().setDefaultButton(btnCerrar);
 			}
 		}
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		contentPanel.add(btnCerrarSystem);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

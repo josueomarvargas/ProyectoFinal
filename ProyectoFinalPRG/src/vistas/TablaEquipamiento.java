@@ -1,7 +1,9 @@
 package vistas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,13 +30,15 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 	private JButton btnAnadir;
 	private JButton btnVolver;
 	private JPanel panel;
+	private JButton btnCerrarSystem;
+
 
 	/**
 	 * Create the dialog.
 	 */
 	public TablaEquipamiento() {
 		this.setUndecorated(true);
-		setBounds(100, 100, 402, 300);
+		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -43,7 +47,7 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 		{
 			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setBackground(SystemColor.activeCaption);
-			scrollPane.setBounds(0, 0, 385, 142);
+			scrollPane.setBounds(10, 26, 499, 265);
 			contentPanel.add(scrollPane);
 			{
 				table = new JTable();
@@ -60,33 +64,35 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 						}
 						));
 				scrollPane.setViewportView(table);
-				textField = new JTextField();
-				textField.setBounds(10, 230, 140, 20);
-				contentPanel.add(textField);
-				textField.setColumns(10);
-
-				btnVolver = new JButton("Volver");
-				btnVolver.addActionListener(this);
-				btnVolver.setBounds(313, 229, 72, 23);
-				contentPanel.add(btnVolver);
-
-				btnAnadir = new JButton("A\u00F1adir");
-				btnAnadir.addActionListener(this);
-				btnAnadir.setBounds(237, 229, 72, 23);
-				contentPanel.add(btnAnadir);
-
-				btnBuscar = new JButton("Buscar");
-				btnBuscar.addActionListener(this);
-				btnBuscar.setBounds(160, 229, 72, 23);
-				contentPanel.add(btnBuscar);
 			}
+			btnCerrarSystem = new JButton("X");
+			btnCerrarSystem.setForeground(Color.RED);
+			btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+			btnCerrarSystem.setBounds(512, 0, 39, 25);
+			contentPanel.add(btnCerrarSystem);
 		}
 		
 		panel = new JPanel();
 		panel.setBackground(SystemColor.textHighlight);
-		panel.setBounds(0, 223, 386, 38);
+		panel.setBounds(0, 382, 550, 38);
 		contentPanel.add(panel);
+						textField = new JTextField();
+						panel.add(textField);
+						textField.setColumns(10);
+		
+						btnBuscar = new JButton("Buscar");
+						panel.add(btnBuscar);
+						
+										btnAnadir = new JButton("A\u00F1adir");
+										panel.add(btnAnadir);
+										
+														btnVolver = new JButton("Volver");
+														panel.add(btnVolver);
+														btnVolver.addActionListener(this);
+										btnAnadir.addActionListener(this);
+						btnBuscar.addActionListener(this);
 	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

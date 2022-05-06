@@ -1,7 +1,9 @@
 package vistas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -39,19 +41,21 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener{
 	private JButton btnAnadir;
 	private JButton btnVolver;
 	private JPanel panel;
+	private JButton btnCerrarSystem;
+
 	/**
 	 * Create the dialog.
 	 */
 	public TablaPeliculasSeries() {
 		this.setUndecorated(true);
-		setBounds(100, 100, 629, 319);
+		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(1, 0, 467, 129);
+		scrollPane.setBounds(7, 31, 400, 230);
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
@@ -72,73 +76,77 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener{
 		contentPanel.add(scrollPane);
 
 		JLabel lblNewLabel = new JLabel("Nombre:");
-		lblNewLabel.setBounds(489, 16, 46, 14);
+		lblNewLabel.setBounds(417, 79, 46, 14);
 		contentPanel.add(lblNewLabel);
 
 		textField = new JTextField();
-		textField.setBounds(489, 30, 99, 20);
+		textField.setBounds(417, 104, 99, 20);
 		contentPanel.add(textField);
 		textField.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("Director:");
-		lblNewLabel_1.setBounds(489, 52, 46, 14);
+		lblNewLabel_1.setBounds(417, 128, 46, 14);
 		contentPanel.add(lblNewLabel_1);
 
 		textField_1 = new JTextField();
-		textField_1.setBounds(489, 64, 99, 20);
+		textField_1.setBounds(417, 147, 99, 20);
 		contentPanel.add(textField_1);
 		textField_1.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("Guionista:");
-		lblNewLabel_2.setBounds(489, 84, 71, 14);
+		lblNewLabel_2.setBounds(417, 171, 71, 14);
 		contentPanel.add(lblNewLabel_2);
 
 		textField_2 = new JTextField();
-		textField_2.setBounds(489, 98, 99, 20);
+		textField_2.setBounds(419, 186, 99, 20);
 		contentPanel.add(textField_2);
 		textField_2.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("Num Trabajadores:");
-		lblNewLabel_3.setBounds(489, 120, 99, 14);
+		lblNewLabel_3.setBounds(419, 212, 99, 14);
 		contentPanel.add(lblNewLabel_3);
 
 		textField_3 = new JTextField();
-		textField_3.setBounds(489, 135, 99, 20);
+		textField_3.setBounds(419, 229, 99, 20);
 		contentPanel.add(textField_3);
 		textField_3.setColumns(10);
 
 		JLabel lblNewLabel_4 = new JLabel("Presupuesto:");
-		lblNewLabel_4.setBounds(489, 157, 83, 14);
+		lblNewLabel_4.setBounds(419, 260, 83, 14);
 		contentPanel.add(lblNewLabel_4);
 
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Mayor a Menor", "Menor a Mayor"}));
-		comboBox.setBounds(489, 171, 99, 22);
+		comboBox.setBounds(419, 275, 99, 22);
 		contentPanel.add(comboBox);
 
 		JCheckBox chckbxNewCheckBox = new JCheckBox("Taquillera");
-		chckbxNewCheckBox.setBounds(489, 194, 97, 23);
+		chckbxNewCheckBox.setBounds(421, 304, 97, 23);
 		contentPanel.add(chckbxNewCheckBox);
 
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		contentPanel.add(btnCerrarSystem);
+		
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(this);
-		btnBuscar.setBounds(489, 220, 89, 23);
+		btnBuscar.setBounds(421, 340, 89, 23);
 		contentPanel.add(btnBuscar);
-
-		btnAnadir = new JButton("A\u00F1adir");
-		btnAnadir.addActionListener(this);
-		btnAnadir.setBounds(414, 254, 89, 23);
-		contentPanel.add(btnAnadir);
-
-		btnVolver = new JButton("Volver");
-		btnVolver.addActionListener(this);
-		btnVolver.setBounds(514, 254, 89, 23);
-		contentPanel.add(btnVolver);
 		
 		panel = new JPanel();
 		panel.setBackground(SystemColor.textHighlight);
-		panel.setBounds(1, 248, 612, 29);
+		panel.setBounds(0, 391, 550, 29);
 		contentPanel.add(panel);
+		
+				btnAnadir = new JButton("A\u00F1adir");
+				panel.add(btnAnadir);
+				
+						btnVolver = new JButton("Volver");
+						panel.add(btnVolver);
+						btnVolver.addActionListener(this);
+				btnAnadir.addActionListener(this);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

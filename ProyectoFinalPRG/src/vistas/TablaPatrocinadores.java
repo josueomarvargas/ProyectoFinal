@@ -1,7 +1,9 @@
 package vistas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,13 +30,15 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	private JButton btnAnadir;
 	private JButton btnVolver;
 	private JPanel panel;
+	private JButton btnCerrarSystem;
+
 
 	/**
 	 * Create the dialog.
 	 */
 	public TablaPatrocinadores() {
 		this.setUndecorated(true);
-		setBounds(100, 100, 407, 300);
+		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -42,7 +46,7 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(0, 0, 397, 137);
+			scrollPane.setBounds(20, 30, 498, 168);
 			contentPanel.add(scrollPane);
 			{
 				table = new JTable();
@@ -60,33 +64,34 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 						}
 						));
 				scrollPane.setViewportView(table);
-
-				textField = new JTextField();
-				textField.setBounds(10, 230, 140, 20);
-				contentPanel.add(textField);
-				textField.setColumns(10);
-
-				btnVolver = new JButton("Volver");
-				btnVolver.addActionListener(this);
-				btnVolver.setBounds(313, 229, 72, 23);
-				contentPanel.add(btnVolver);
-
-				btnAnadir = new JButton("A\u00F1adir");
-				btnAnadir.addActionListener(this);
-				btnAnadir.setBounds(237, 229, 72, 23);
-				contentPanel.add(btnAnadir);
-
-				btnBuscar = new JButton("Buscar");
-				btnBuscar.addActionListener(this);
-				btnBuscar.setBounds(160, 229, 72, 23);
-				contentPanel.add(btnBuscar);
 			}
 		}
-		
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		contentPanel.add(btnCerrarSystem);
+
 		panel = new JPanel();
 		panel.setBackground(SystemColor.textHighlight);
-		panel.setBounds(0, 225, 391, 36);
+		panel.setBounds(0, 384, 550, 36);
 		contentPanel.add(panel);
+
+		textField = new JTextField();
+		panel.add(textField);
+		textField.setColumns(10);
+
+		btnBuscar = new JButton("Buscar");
+		panel.add(btnBuscar);
+
+		btnAnadir = new JButton("A\u00F1adir");
+		panel.add(btnAnadir);
+
+		btnVolver = new JButton("Volver");
+		panel.add(btnVolver);
+		btnVolver.addActionListener(this);
+		btnAnadir.addActionListener(this);
+		btnBuscar.addActionListener(this);
 	}
 
 	@Override
@@ -98,7 +103,7 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		else if(e.getSource().equals(btnVolver)) {
 			this.dispose();
 		}
-		
-		}
 
 	}
+
+}

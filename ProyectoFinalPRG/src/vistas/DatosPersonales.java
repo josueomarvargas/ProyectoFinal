@@ -32,102 +32,95 @@ public class DatosPersonales extends JDialog implements ActionListener {
 	private JButton btnVolver;
 	private JButton btnBorrar;
 	private JButton btnAceptar;
+	private JTextField textField_1;
 
 	/**
 	 * Create the dialog.
 	 */
 	public DatosPersonales() {
-		this.setUndecorated(true);
-		setBounds(100, 100, 492, 363);
+		//this.setUndecorated(true);
+		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JTextField textField = new JTextField();
-			textField.setBounds(251, 58, 148, 19);
+			textField.setBounds(251, 88, 187, 19);
 			contentPanel.add(textField);
 		}
 		{
 			passwordField = new JPasswordField();
-			passwordField.setBounds(251, 88, 79, 20);
+			passwordField.setBounds(251, 118, 148, 20);
 			contentPanel.add(passwordField);
 		}
 		{
 			JTextField textField = new JTextField();
-			textField.setBounds(251, 149, 148, 19);
+			textField.setBounds(251, 179, 187, 19);
 			contentPanel.add(textField);
 		}
 		{
 			JTextField textField = new JTextField();
-			textField.setBounds(251, 179, 148, 19);
-			contentPanel.add(textField);
-		}
-		{
-			JTextArea textArea = new JTextArea();
-			textArea.setBounds(251, 209, 148, 19);
-			contentPanel.add(textArea);
-		}
-		{
-			JTextField textField = new JTextField();
-			textField.setBounds(251, 239, 148, 19);
+			textField.setBounds(251, 209, 187, 19);
 			contentPanel.add(textField);
 		}
 		{
 			JTextField textField = new JTextField();
-			textField.setBounds(251, 119, 148, 19);
+			textField.setBounds(251, 272, 187, 19);
 			contentPanel.add(textField);
 		}
-
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(457, 0, 17, 291);
-		contentPanel.add(scrollBar);
+		{
+			JTextField textField = new JTextField();
+			textField.setBounds(251, 149, 187, 19);
+			contentPanel.add(textField);
+		}
 		{
 			JLabel lblNewLabel = new JLabel("Datos Personales");
 			lblNewLabel.setFont(new Font("Calibri", Font.PLAIN, 28));
-			lblNewLabel.setBounds(104, 11, 262, 29);
+			lblNewLabel.setBounds(106, 36, 262, 29);
 			contentPanel.add(lblNewLabel);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Nombre de usuario :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-			lblNewLabel_1.setBounds(86, 62, 118, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(66, 91, 140, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Contrase\u00F1a :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-			lblNewLabel_1.setBounds(130, 91, 79, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(117, 121, 89, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("DNI :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 13));
-			lblNewLabel_1.setBounds(171, 124, 39, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(166, 152, 40, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Nombre :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-			lblNewLabel_1.setBounds(150, 154, 54, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(139, 182, 71, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Apellido :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-			lblNewLabel_1.setBounds(145, 184, 64, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(135, 212, 71, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("N\u00FAmero de premios :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-			lblNewLabel_1.setBounds(86, 212, 118, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(59, 242, 140, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Direcci\u00F3n :");
-			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-			lblNewLabel_1.setBounds(140, 244, 64, 19);
+			lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblNewLabel_1.setBounds(125, 275, 71, 19);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
@@ -137,11 +130,17 @@ public class DatosPersonales extends JDialog implements ActionListener {
 		}
 		{
 			btnMostrar = new JButton("Mostrar");
-			btnMostrar.setBounds(340, 88, 79, 23);
+			btnMostrar.setBounds(414, 117, 79, 23);
 			contentPanel.add(btnMostrar);
 		}
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(251, 241, 187, 20);
+		contentPanel.add(textField_1);
+		textField_1.setColumns(10);
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(SystemColor.textHighlight);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
