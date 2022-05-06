@@ -27,9 +27,9 @@ class ActorDAOTest {
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		act = new Actor();
-		act.setIdTrabajador(10);
+		act.setIdTrabajador(13);
 		act.setDni("17090623Y");
-		act.setNombre("manu");
+		act.setNombre("manuel");
 		act.setApellido("Garcia");
 		act.setNumTel(688612456);
 		act.setNumPremios(6);
@@ -60,7 +60,7 @@ class ActorDAOTest {
 
 //	@Test
 //	void testSearch() {
-
+//
 //		try {
 //			Trabajador aux = aDao.search("1");
 //			
@@ -73,56 +73,54 @@ class ActorDAOTest {
 //
 //		fail("Not yet implemented");
 //	}
-//
-	@Test
-	void testReadAll() {
-		try {
-			Trabajador aux;
-			Map<Integer, Trabajador> map = aDao.readAll();
-//			System.out.println(map.get(2).toString());
-			Iterator<Trabajador> iter = map.values().iterator();
-			while (iter.hasNext()) {
-				aux = iter.next();
-				if(aux instanceof Actor) {
-					System.out.println(((Actor) aux).toString());
-					
-				}
-				
-		act.toString();		
-						
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		fail("Not yet implemented");
-	}
-//
+
 //	@Test
-//	void testUpdate() {
+//	void testReadAll() {
+//		try {
+//			Trabajador aux;
+//			Map<Integer, Trabajador> map = aDao.readAll();
+//			Iterator<Trabajador> iter = map.values().iterator();
+//			while (iter.hasNext()) {
+//				aux = iter.next();
+//				if(aux instanceof Actor) {
+//					System.out.println(((Actor) aux).toString());
+//					
+//				}
+//				
+//						
+//			}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		fail("Not yet implemented");
+//	}
+
+	@Test
+	void testUpdate() {
 //		try {
 //			estado = aDao.update(act);
 //
 //			assertTrue(estado);
-//		} catch (SQLException e) {
+//		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //			fail("Fallo SQL");
 //		}
-//	}
-//
-//	@Test
-//	void testRemove() {
-//		String[] actor = { "1", "terror" };
-//		try {
-//			estado = aDao.remove(actor);
-//
-//			assertTrue(estado);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("Fallo SQL");
-//		}
-//	}
+	}
+
+	@Test
+	void testRemove() {
+
+		try {
+		estado = aDao.remove("13");
+
+			assertTrue(estado);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Fallo SQL");
+		}
+	}
 
 }

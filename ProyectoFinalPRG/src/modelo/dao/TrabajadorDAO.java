@@ -64,7 +64,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	private final String UPDATE = "UPDATE trabajador SET nombre = ?, apellido = ?, numtel = ?, numPremios = ?, direccion = ?, fechaNac = ? WHERE idTrabajador = ?";
 
 	// Eliminar datos
-	private final String DELETE = "DELETE trabajador WHERE idtrabajador = ? ";
+	private final String DELETE = "DELETE FROM trabajador WHERE idtrabajador = ? ";
 
 	// Eliminar un atributo Ej: una especialidad de un actor
 	private final String DELETEATRIBUTO = "CALL deleteAtributo(?)";
@@ -86,12 +86,14 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	 * aquí y en el objecto {@code SQLCon}
 	 **/
 	private void closeConnection() {
-		try {
-			// Cerrar la conexión aquí y en el SQLCon
-			con.close();
-			SQLCon.closeConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (con != null) {
+			try {
+				// Cerrar la conexión aquí y en el SQLCon
+				con.close();
+				SQLCon.closeConnection();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -341,7 +343,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	@Override
 	public Map<Integer, Trabajador> readAll() {
 
-		this.closeConnection();
+		this.openConnection();
 
 		// RS y la clase para recoger los datos, además un map para guardar
 		Map<Integer, Trabajador> trabajadores = new HashMap<>();
@@ -519,7 +521,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	/**
 	 * Este método elimina toda la información relacionada con el trabajador
 	 * 
-	 * @param id id del trabajador que se quiere eliminar 
+	 * @param id id del trabajador que se quiere eliminar
 	 * @return true/false dependiendo de si se ha completado correctamente la
 	 *         consulta
 	 **/
@@ -532,7 +534,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 		try (PreparedStatement stat = con.prepareStatement(DELETE)) {
 
 			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
+			stat.setInt(1, Integer.parseInt(id));
 
 			// Ejecutar consulta
 			return stat.executeUpdate() > 0 ? true : false;

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,46 +13,43 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import controlador.utils.DAOFactory;
 import modelo.clases.Actor;
 import modelo.clases.Director;
+import modelo.clases.Equipamiento;
 import modelo.clases.Trabajador;
-import modelo.dao.DirectorDAO;
-import modelo.dao.TrabajadorDAO;
+import modelo.dao.CaracteristicaDAO;
+import modelo.dao.EquipDAO;
 
-class DirectorDAOTest {
 
-	static Trabajador dir = null;
+class EquipamientoDAOTest {
+
+	static Equipamiento equipa = null;
 	boolean estado;
-	TrabajadorDAO dDao = (TrabajadorDAO) DAOFactory.TRABAJADOR.getInstance();
+	EquipDAO eqpDao = new EquipDAO();
 
+	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		dir = new Director();
-		dir.setIdTrabajador(19);
-		dir.setNombre("anne");
-		dir.setApellido("perez");
-		dir.setNumTel(688612456);
-		dir.setNumPremios(6);
-		dir.setDireccion("Llodio");
-		dir.setTipo("director");
-		dir.setFechaNac(LocalDate.of(1997, 10, 20));
-		
-		((Director) dir).setCategoria("comedia");
-	}
+		equipa = new Equipamiento();
+		equipa.setIdEquip(19);
+		List<String> Caracteristicas = new ArrayList<>();
+		Caracteristicas.add("8K");
+		equipa.setCaracteristicas(Caracteristicas);
 
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
 	}
+//
+//	@AfterAll
+//	static void tearDownAfterClass() throws Exception {
+//	}
 
 //	@Test
 //	void testCreate() {
 //		try {
-//		estado = dDao.create(dir);
+//			estado = eqpDao.create(equipa);
 //
 //			assertTrue(estado);
 //		} catch (Exception e) {
-//		// TODO Auto-generated catch block
+//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //			fail("Fallo SQL");
 //		}
@@ -61,10 +57,9 @@ class DirectorDAOTest {
 
 //	@Test
 //	void testSearch() {
-//		
 //		try {
-//			Director aux = (Director) dDao.search("3");
-//			System.out.println(aux.toString());
+//		Equipamiento aux = eqpDao.search("14");
+//			System.out.println(aux.getCaracteristicas());
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -73,34 +68,29 @@ class DirectorDAOTest {
 //		fail("Not yet implemented");
 //	}
 
+
 //	@Test
 //	void testReadAll() {
 //		try {
-//			Trabajador aux;
-//			Map<Integer, Trabajador> map = dDao.readAll();
-//			System.out.println(map.get(1).toString());
-//			Iterator<Trabajador> iter = map.values().iterator();
+//			Equipamiento aux;
+//		
+//			Map<Integer, Equipamiento> map = eqpDao.readAll();
+//			Iterator<Equipamiento> iter = map.values().iterator();
 //			while (iter.hasNext()) {
 //				aux = iter.next();
-//				if(aux instanceof Director) {
-//					System.out.println(((Director) aux).toString());
-//					
-//				}
-//				
-//		dir.toString();		
-//						
+//				System.out.println(((Equipamiento) aux).toString());
 //			}
+//			
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 //		fail("Not yet implemented");
 //	}
-
 	@Test
 	void testUpdate() {
 		try {
-			estado = dDao.update(dir);
+			estado = eqpDao.update(equipa);
 
 			assertTrue(estado);
 		} catch (Exception e) {
@@ -110,16 +100,20 @@ class DirectorDAOTest {
 		}
 	}
 
-	@Test
+@Test
 	void testRemove() {
-		 try {
-		 estado = dDao.remove("3");
+		
+		try {
+			estado = eqpDao.remove("21");
 
 			assertTrue(estado);
-		 } catch (Exception e) {
-		// TODO Auto-generated catch block
-		 e.printStackTrace();
-		 fail("Fallo SQL");
-		 }
-	}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Fallo SQL");
+		}
+	
 }
+}
+
+

@@ -36,10 +36,10 @@ class GuionistaDAOTest {
 		gui.setIdTrabajador(1);
 		gui.setDni("17090623Y");
 		gui.setNombre("Jon");
-		gui.setApellido("Garcia");
+		gui.setApellido("etxeberria");
 		gui.setNumTel(688612456);
 		gui.setNumPremios(6);
-		gui.setDireccion("sarriena");
+		gui.setDireccion("Serralta");
 		gui.setTipo("Guionista");
 		gui.setFechaNac(LocalDate.of(1997, 10, 20));
 		List<String> Guionista = new ArrayList<>();
@@ -51,19 +51,19 @@ class GuionistaDAOTest {
 	static void tearDownAfterClass() throws Exception {
 	}
 
-	@Test
-	void testCreate() {
-
-		//try {
-			//estado = gDao.create(gui);
-
-//			assertTrue(estado);
-	//	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
-			//fail("Fallo SQL");
+//	@Test
+//	void testCreate() {
+//
+//		try {
+//			estado = gDao.create(gui);
+//
+//		assertTrue(estado);
+//		} catch (Exception e) {
+////			 TODO Auto-generated catch block
+//			e.printStackTrace();
+//			fail("Fallo SQL");
 //		}
-	}
+//	}
 
 //	@Test
 //	void testSearch() {
@@ -78,55 +78,55 @@ class GuionistaDAOTest {
 //		fail("Not yet implemented");
 //	}
 
+//	@Test
+//	void testReadAll() {
+//		try {
+//			Trabajador aux;
+//			Map<Integer, Trabajador> map = gDao.readAll();
+//			Iterator<Trabajador> iter = map.values().iterator();
+//			while (iter.hasNext()) {
+//				aux = iter.next();
+//				if(aux instanceof Guionista) {
+//					System.out.println(((Guionista) aux).toString());
+//					
+//				}
+//				
+//				gui.toString();	
+//			}
+//			
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		fail("Not yet implemented");
+//	}
+
 	@Test
-	void testReadAll() {
+	void testUpdate() {
 		try {
-			Trabajador aux;
-			Map<Integer, Trabajador> map = gDao.readAll();
-			Iterator<Trabajador> iter = map.values().iterator();
-			while (iter.hasNext()) {
-				aux = iter.next();
-				if(aux instanceof Guionista) {
-					System.out.println(((Guionista) aux).toString());
-					
-				}
-				
-				gui.toString();	
-			}
-			
-			
+			estado = gDao.update(gui);
+
+			assertTrue(estado);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			fail("Fallo SQL");
 		}
-		fail("Not yet implemented");
 	}
 
-//	@Test
-//	void testUpdate() {
-//		try {
-//			estado = gDao.update(gui);
-//
-//			assertTrue(estado);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("Fallo SQL");
-//		}
-//	}
+	@Test
+	void testRemove() {
+		
+		try {
+			estado = gDao.remove("1");
 
-//	@Test
-//	void testRemove() {
-//		String[] Guionista = {"1", "terror"};
-//		try {
-//			estado = gDao.remove(Guionista);
-//
-//			assertTrue(estado);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("Fallo SQL");
-//		}
-//	}
+			assertTrue(estado);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Fallo SQL");
+		}
+	}
 
 }
