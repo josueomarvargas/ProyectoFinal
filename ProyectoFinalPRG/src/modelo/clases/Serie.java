@@ -1,47 +1,52 @@
 package modelo.clases;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Esta clase guarda un {@code List<List<String>>}, esto es un arrayList de
+ * Strings de 2 dimensiones<br>
+ * <ol>
+ * <li>El array de afuera guarda la temporada
+ * <li>El array que está dentro guarda el número de capitulo junto con el nombre
+ * </ol>
+ * Un ejemplo más visual:<blockquote>
+ * <table border="1">
+ * <tr>
+ * <th>Capitulo</th>
+ * <th>1</th>
+ * <th>2</th>
+ * <th>3</th>
+ * </tr>
+ * <tr>
+ * <th>Temporada 1</th>
+ * <td>Patata</td>
+ * <td>Zanahoria</td>
+ * <td>Manzana</td>
+ * </tr>
+ * </table>
+ * En esta tabla se muestra un ejemplo, el primer número será la temporada, como
+ * en java los arrays empiezan por 0, la temporada 1 en realidad se guardará en
+ * el índice 0, esto también pasa con los capitulos, y en este ejemplo vemos que
+ * la temporada 1 y el nombre del capítulo 1 se llama "Patata" </blockquote>
+ *
+ * 
+ * @author Henrique Yeguo
+ **/
 public class Serie extends ObraAudiovisual {
 
-	private int numTemporada;
-	private int numCapitulo;
-	private String nombreCap;
+	private List<List<String>> nombreCap;
 
 	public Serie() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.nombreCap = new ArrayList<>();
 	}
 
-	public Serie(int idObra, String nombre, int duracion, LocalDate fechaEstreno, int presupuesto, String tipo,
-			int numTemporada, int numCapitulo, String nombreCap) {
-		super(idObra, nombre, duracion, fechaEstreno, presupuesto, tipo);
-		this.numTemporada = numTemporada;
-		this.numCapitulo = numCapitulo;
-		this.nombreCap = nombreCap;
-	}
-
-	public int getNumTemporada() {
-		return numTemporada;
-	}
-
-	public void setNumTemporada(int numTemporada) {
-		this.numTemporada = numTemporada;
-	}
-
-	public int getNumCapitulo() {
-		return numCapitulo;
-	}
-
-	public void setNumCapitulo(int numCapitulo) {
-		this.numCapitulo = numCapitulo;
-	}
-
-	public String getNombreCap() {
+	public List<List<String>> getNombreCap() {
 		return nombreCap;
 	}
 
-	public void setNombreCap(String nombreCap) {
+	public void setNombreCap(List<List<String>> nombreCap) {
 		this.nombreCap = nombreCap;
 	}
 

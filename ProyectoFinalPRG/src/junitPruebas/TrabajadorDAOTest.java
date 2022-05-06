@@ -53,18 +53,18 @@ class TrabajadorDAOTest {
 	//	}
 	}
 
-	@Test
-	void testSearch() {
-		try {
-			Trabajador aux = tDao.search("1");
-			System.out.println(aux.getDireccion());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void testSearch() {
+//		try {
+//			Trabajador aux = tDao.search("1");
+//			System.out.println(aux.getDireccion());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		fail("Not yet implemented");
+//	}
 
 	@Test
 	void testReadAll() {
@@ -80,31 +80,31 @@ class TrabajadorDAOTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	void testUpdate() {
-		try {
-			estado = tDao.update(tr);
+//	@Test
+//	void testUpdate() {
+//		try {
+//			estado = tDao.update(tr);
+//
+//			assertTrue(estado);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			fail("Fallo SQL");
+//		}
+//	}
 
-			assertTrue(estado);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail("Fallo SQL");
-		}
-	}
-
-	@Test
-	void testRemove() {
-		String[] trabajador = {"4", "sonido"};
-	try {
-		estado = tDao.remove(trabajador);
-
-		assertTrue(estado);
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-		fail("Fallo SQL");
-	}
-}
+//	@Test
+//	void testRemove() {
+//		String[] trabajador = {"4", "sonido"};
+//	try {
+//		estado = tDao.remove(trabajador);
+//
+//		assertTrue(estado);
+//	} catch (SQLException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//		fail("Fallo SQL");
+//	}
+//}
 
 }

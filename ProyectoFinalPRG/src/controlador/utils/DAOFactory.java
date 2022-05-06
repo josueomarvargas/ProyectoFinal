@@ -22,9 +22,10 @@ import modelo.dao.*;
  * llamar al get para que nos devuelva el resultado, que es la instancia del
  * objecto que queremos.
  * <p>
- * Ej: {@code Trabajador tDao = (Trabajador) DAOFactory.Trabajador.getInstance();} esto
- * lo que hará es devolvernos una instancia del {@link modelo.dao.TrabajadorDAO
- * TrabajadorDAO}
+ * Ej:
+ * {@code Trabajador tDao = (Trabajador) DAOFactory.Trabajador.getInstance();}
+ * esto lo que hará es devolvernos una instancia del
+ * {@link modelo.dao.TrabajadorDAO TrabajadorDAO}
  * 
  * @see <a href=
  *      "https://stackoverflow.com/questions/17581310/using-enum-for-factory-in-java-a-best-practice">
@@ -39,10 +40,10 @@ import modelo.dao.*;
  **/
 
 public enum DAOFactory {
-	CARACTERISTICA(CaracteristicaDAO::new), EQUIP(EquipDAO::new), EQUIPOBRA(EquipObraDAO::new), OBRA(ObraDAO::new),
-	PARTICIPA(ParticipaDAO::new), PATROCINADOR(PatrocinadorDAO::new), PELI(PeliDAO::new),
-	PROMOCIONA(PromocionaDAO::new), SERIE(SerieDAO::new), TRABAJADOR(TrabajadorDAO::new), USER(UserDAO::new),
-	TRABAJADORUSER(TrabajadorUserDAO::new), VIEWPELIS(ViewPeliDAO::new), VIEWSERIE(ViewSerieDAO::new);
+	EQUIP(EquipDAO::new), EQUIPOBRA(EquipObraDAO::new), OBRA(ObraDAO::new), PARTICIPA(ParticipaDAO::new),
+	PATROCINADOR(PatrocinadorDAO::new), PROMOCIONA(PromocionaDAO::new), TRABAJADOR(TrabajadorDAO::new),
+	USER(UserDAO::new), TRABAJADORUSER(TrabajadorUserDAO::new), VIEWPELIS(ViewPeliDAO::new),
+	VIEWSERIE(ViewSerieDAO::new);
 
 	private Supplier<?> instantiator;
 

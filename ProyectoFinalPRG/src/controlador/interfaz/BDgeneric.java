@@ -36,8 +36,11 @@ package controlador.interfaz;
  * {@link java.sql.PreparedStatement#addBatch() addBatch()} para agruparlos, una
  * vez acabado de añadirlos se debe de ejecutar el comando
  * {@link java.sql.PreparedStatement#executeBatch() executeBatch()}, este
- * devuelve {@code int[]}
- * 
+ * devuelve {@code int[]} <note>Nota: si en las tablas que tienen el ID como
+ * {@code AUTO_INCREMENT} necesitamos el ID generado, en el
+ * {@code PreparedStatement} debemos de poner junto con la sentencia
+ * {@code PreparedStatement.RETURN_GENERATED_KEYS}, esto nos permite recoger el
+ * ID generado por el servidor MySQL.</note>
  * 
  * @param <T> tipo de objecto genérico, al implementar la interfaz se debe de
  *            especificar en el diamond operator la clase que se utilizará
