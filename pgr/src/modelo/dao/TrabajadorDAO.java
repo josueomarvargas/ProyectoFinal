@@ -62,21 +62,29 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 	// Actualizar datos
 	private final String UPDATE = "UPDATE trabajador SET nombre = ?, apellido = ?, numtel = ?, numPremios = ?, direccion = ?, fechaNac = ? WHERE idTrabajador = ?";
-	private final String UPDATEATRIBUTO = "CALL updateAtributo(?, ?, ?)";
 
 	// Eliminar datos
-	private final String DELETE = "CALL deleteTrabajador(?)";
+	private final String DELETE = "DELETE trabajador WHERE idtrabajador = ? ";
 
 	// Eliminar un atributo Ej: una especialidad de un actor
-	private final String DELETEATRIBUTO = "CALL deleteAtributo(?, ?)";
+	private final String DELETEATRIBUTO = "CALL deleteAtributo(?)";
 
 	// Establecer conexión a la base de datos
 	private static Connection con;
 
+	/**
+	 * Método para abrir la conexión, este método llama al
+	 * {@link SQLCon#openConnection}.
+	 **/
 	private void openConnection() {
 		con = SQLCon.openConnection();
 	}
 
+	/**
+	 * Método para cerrar la conexión, este método llama al
+	 * {@link SQLCon#closeConnection()} y {@code con.Close} para cerra la conexión
+	 * aquí y en el objecto {@code SQLCon}
+	 **/
 	private void closeConnection() {
 		try {
 			// Cerrar la conexión aquí y en el SQLCon
@@ -194,7 +202,6 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 			// Iteramos por cada atributo
 			for (String atributo : atributoList) {
-
 				// Añadir parametros al procedimiento
 				stat.setInt(1, id);
 				stat.setString(2, atributo);
@@ -411,8 +418,9 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	 * para no crear código repetitivo se ha creado un método.
 	 * 
 	 * 
-	 * @param rs ResultSet con la información que necesitamos para añadir los datos
-	 *           al trabajador
+	 * @param rs         ResultSet con la información que necesitamos para añadir
+	 *                   los datos al trabajador
+	 * @param trabajador el objecto al que se le añadirá los datos del RS
 	 * @return objecto trabajador con datos añadidos a la lista
 	 **/
 	private Trabajador addToList(ResultSet rs, Trabajador trabajador) throws SQLException {
@@ -442,13 +450,12 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	/**
 	 * Este método sirve para actualizar la información de un {@code Trabajador}-
 	 * <br>
-	 * <b>Cómo funciona el método:</b><blockquote> Primero buscamos los datos que ya
-	 * están en la base de datos, solo usaremos la lista de sus atributos. En el
-	 * {@code PreparedStatement} introcudimos todos los datos modificables del
+	 * <b>Cómo funciona el método:</b><blockquote> En el
+	 * {@code PreparedStatement stat} introcudimos todos los datos modificables del
 	 * trabajador, ejecutamos la consulta y luego llamamos al método
-	 * {@link #UPDATEATRIBUTO} para actualizar los atributos de esa clase, para más
-	 * detalles de como funciona ir al método mencionado, una vez acabada la
-	 * actualización de los atributos guardamos los cambios llamando al
+	 * {@link #DELETEATRIBUTO} para eliminar los atributos de la tabla, y luego
+	 * llamamos al {@link #INSERTATRIBUTO} para insertar todos los atributos de la
+	 * lista, una vez finalizado aplicamos los cambios llamando al
 	 * {@link java.sql.Connection#commit Commit} </blockquote>
 	 *
 	 * @param clase la clase trabajador con los datos nuevos que quieren actualizar
@@ -459,10 +466,8 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 		this.openConnection();
 
-		try (PreparedStatement stat = con.prepareStatement(UPDATE)) {
-
-			// Datos antiguos del trabjador para comprobar que datos hay que actualizar
-			Trabajador oldData = search(Integer.toString(clase.getIdTrabajador()));
+		try (PreparedStatement stat = con.prepareStatement(UPDATE);
+				CallableStatement procedure = con.prepareCall(DELETEATRIBUTO)) {
 
 			// Inicio de la transacción
 			con.setAutoCommit(false);
@@ -479,7 +484,12 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			// Ejecutar consulta
 			stat.executeUpdate();
 
-			updateAtributo(clase.getIdTrabajador(), clase.getList(), oldData.getList());
+			// Eliminamos los atributos del trabajador
+			procedure.setInt(1, clase.getIdTrabajador());
+			procedure.executeUpdate();
+
+			// Insertamos los nuevos
+			insertAtributos(clase.getIdTrabajador(), clase.getList());
 
 			// Guardar los cambios de la consulta
 			con.commit();
@@ -507,116 +517,9 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	}
 
 	/**
-	 * Método para actualizar los atributos que tenga un trabajador, este
-	 * procedimiento se le pasa por parámetros el ID del trabajador, el atributo
-	 * nuevo, y el atributo antiguo.
-	 * <p>
-	 * <b>Cómo funciona el método:</b><blockquote> Primero creamos dos listas, en
-	 * uno se guardará los datos que no existen en la lista antigua, osea los datos
-	 * nuevos, y en otro los datos que no existan en la lista nueva, en otras
-	 * palabras los datos que se deben de eliminar. <br>
-	 * Luego habrá un {@code ForLoop} para recorrer las listas, en este loop añade
-	 * los datos que necesita el procedimiento y añade el comando a un batch/grupo,
-	 * al finalizar el loop se ejecutará el batch. Posteriormente comprobamos si las
-	 * dos listas són de diferente tamaño, si lo són significa que debemos de hacer
-	 * una inserción o eliminar algún dato que falta o sobre, en el caso de que la
-	 * lista de datos nuevos sea la mayor habrá que insertar nuevos atributos, de lo
-	 * contrario habrá que eliminar los atributos que sobren.</blockquote>
+	 * Este método elimina toda la información relacionada con el trabajador
 	 * 
-	 * 
-	 * 
-	 * @param id      id del trabajador
-	 * @param newList la lista con los datos nuevos
-	 * @param oldList la lista con los datos antiguos
-	 **/
-	private void updateAtributo(Integer id, List<String> newList, List<String> oldList) throws SQLException {
-
-		// Buscar los atributos que no están en la antigua lista
-		List<String> newData = newList;
-		newData.removeAll(oldList);
-
-		// Buscar los atributos que no están en la nueva lista
-		List<String> removedData = oldList;
-		removedData.removeAll(newList);
-
-		// CallableStatement Statement - Update
-		try (CallableStatement stat = con.prepareCall(UPDATEATRIBUTO)) {
-			int i = 0;
-
-			// Iterar por las listas
-			for (i = 0; i < newData.size() && i < removedData.size(); i++) {
-
-				// Añadir datos al CallableStatement
-				stat.setInt(1, id);
-				stat.setString(1, newData.get(i));
-				stat.setString(3, removedData.get(i));
-
-				// Añadimos los comandos al grupo
-				stat.addBatch();
-
-			}
-			// Ejecutar el batch
-			stat.executeBatch();
-
-			// Comprobar si hay más especialidades en una de las dos listas
-			if (newData.size() != removedData.size()) {
-				List<String> aux = null;
-
-				// Datos nuevos que faltan por insertar
-				if (newData.size() > removedData.size()) {
-					aux = newData.subList(removedData.size(), newData.size());
-					insertAtributos(id, aux);
-
-					// Especialidades que se deben eliminar
-				} else {
-					aux = removedData.subList(newData.size(), removedData.size());
-					removeAtributo(id, oldList);
-				}
-
-			}
-		}
-
-	}
-
-	/**
-	 * Este método llama al procedimiento almacenado que sirve para eliminar los
-	 * atributos que tenga un trabajador, pasando por parámetros el ID y un
-	 * atributo.
-	 * 
-	 * @param id           el id del trabajador que tiene ese atributo
-	 * @param atributoList la lista de los atributos que se quieren eliminar
-	 **/
-	private void removeAtributo(Integer id, List<String> atributoList) throws SQLException {
-
-		// Callable Statement - DeleteAtributo
-		try (CallableStatement stat = con.prepareCall(DELETEATRIBUTO)) {
-
-			// Iteramos por cada atributo
-			for (String atributo : atributoList) {
-
-				// Añadir parametros al procedimiento
-				stat.setInt(1, id);
-				stat.setString(2, atributo);
-				// Añadir comando al grupo
-				stat.addBatch();
-			}
-			// Ejecutará el grupo de consultas
-			stat.executeBatch();
-
-		}
-
-	}
-
-	/**
-	 * Este método llama al procedimiento almacenado en la base de datos, este
-	 * procedimiento busca el tipo de trabajador y elimina la información en la
-	 * tabla relacionada, luego en su propia tabla. <br>
-	 * Ej: el procedimiento busca el tipo del trabajador, ei es actor va su tabla
-	 * donde estan las especialidads y eliminará todas las especialidades, luego
-	 * eliminará en la tabla de trabajador.
-	 * 
-	 * @param id en este caso para eliminar al trabajador necesitamos que el ID sea
-	 *           un número
+	 * @param id id del trabajador que se quiere eliminar 
 	 * @return true/false dependiendo de si se ha completado correctamente la
 	 *         consulta
 	 **/
@@ -628,32 +531,15 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 		// PreparedStatement Delete
 		try (PreparedStatement stat = con.prepareStatement(DELETE)) {
 
-			// Inicio de la transacción
-			con.setAutoCommit(false);
-
 			// Añadir datos al Prepare Statement
-			stat.setInt(1, Integer.parseInt(id));
+			stat.setString(1, id);
 
 			// Ejecutar consulta
-			stat.executeUpdate();
-
-			// Aplicamos los cambios al servidor
-			con.commit();
-
-			// Autocommit por defecto
-			con.setAutoCommit(true);
-
-			return true;
+			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
 			System.err.println(e);
-			try {
-				// Si falla volvemos como estabamos antes
-				con.setAutoCommit(true);
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+
 			return false;
 
 		} finally {

@@ -156,15 +156,16 @@ public class EquipObraDAO implements BDgeneric<EquipObra> {
 
 	@Override
 	public boolean update(EquipObra clase) throws SQLException {
-		// Clase para guardar los antiguos datos
-		EquipObra eoAux = this.search(Integer.toString(clase.getIdObra()));
-
-		// Ordenamos las dos listas para que luego comparar con el
-		// que hemos recuperado de la base de datos
-		clase.sortList();
-		eoAux.sortList();
 
 		try {
+			// Clase para guardar los antiguos datos
+			EquipObra eoAux = this.search(Integer.toString(clase.getIdObra()));
+
+			// Ordenamos las dos listas para que luego comparar con el
+			// que hemos recuperado de la base de datos
+			clase.sortList();
+			eoAux.sortList();
+
 			// Prepare Statement - Update
 			stat = con.prepareStatement(UPDATE);
 

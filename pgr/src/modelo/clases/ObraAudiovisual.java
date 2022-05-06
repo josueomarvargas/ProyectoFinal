@@ -2,7 +2,7 @@ package modelo.clases;
 
 import java.time.LocalDate;
 
-public class ObraAudiovisual {
+public abstract class ObraAudiovisual {
 
 	private int idObra;
 	private String nombre;
@@ -10,20 +10,17 @@ public class ObraAudiovisual {
 	private LocalDate fechaEstreno;
 	private int presupuesto;
 	private String tipo;
+	private String imgPath;
 
-	public ObraAudiovisual() {
-		super();
-	}
-
-	public ObraAudiovisual(int idObra, String nombre, int duracion, LocalDate fechaEstreno, int presupuesto,
-			String tipo) {
-		super();
+	public void setDatos(int idObra, String nombre, int duracion, LocalDate fechaEstreno, int presupuesto, String tipo,
+			String imgPath) {
 		this.idObra = idObra;
 		this.nombre = nombre;
 		this.duracion = duracion;
 		this.fechaEstreno = fechaEstreno;
 		this.presupuesto = presupuesto;
 		this.tipo = tipo;
+		this.imgPath = imgPath;
 	}
 
 	public int getIdObra() {
@@ -72,6 +69,15 @@ public class ObraAudiovisual {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
 }
