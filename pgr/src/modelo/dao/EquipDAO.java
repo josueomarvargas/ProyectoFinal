@@ -89,9 +89,8 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 			con.setAutoCommit(false);
 
 			// Añadir datos al Prepare Statement
-			stat.setInt(1, clase.getIdEquip());
-			stat.setString(2, clase.getNombre());
-			stat.setString(3, clase.getTipo());
+			stat.setString(1, clase.getNombre());
+			stat.setString(2, clase.getTipo());
 
 			// Ejecutar consulta y devolver true o false
 			stat.executeUpdate();
@@ -328,8 +327,9 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 			con.setAutoCommit(false);
 
 			// Añadir datos al Prepare Statement
-			stat.setString(2, clase.getNombre());
-			stat.setString(3, clase.getTipo());
+			stat.setString(1, clase.getNombre());
+			stat.setString(2, clase.getTipo());
+			stat.setInt(3, clase.getIdEquip());
 
 			// Ejecutar consulta
 			stat.executeUpdate();

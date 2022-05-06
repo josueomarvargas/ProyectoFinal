@@ -341,7 +341,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	@Override
 	public Map<Integer, Trabajador> readAll() {
 
-		this.closeConnection();
+		this.openConnection();
 
 		// RS y la clase para recoger los datos, además un map para guardar
 		Map<Integer, Trabajador> trabajadores = new HashMap<>();

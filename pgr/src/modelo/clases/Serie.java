@@ -39,7 +39,8 @@ public class Serie extends ObraAudiovisual {
 
 	public Serie() {
 		super();
-		this.nombreCap = new ArrayList<>();
+		this.nombreCap = new ArrayList<List<String>>();
+		this.nombreCap.add(new ArrayList<>());
 	}
 
 	public List<List<String>> getNombreCap() {
@@ -50,4 +51,20 @@ public class Serie extends ObraAudiovisual {
 		this.nombreCap = nombreCap;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + ", nombreCap=" + getInfoData();
+	}
+
+	private String getInfoData() {
+		String aux = "";
+
+		for (int i = 0; i < nombreCap.size(); i++) {
+			for (int j = 0; j < nombreCap.get(i).size(); j++) {
+				aux += "\n\t\tTemporada= " + (i + 1) + "\tCapitulo: " + (j + 1) + " - " + nombreCap.get(i).get(j);
+
+			}
+		}
+		return aux;
+	}
 }

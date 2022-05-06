@@ -80,4 +80,10 @@ public abstract class ObraAudiovisual {
 		this.imgPath = imgPath;
 	}
 
+	@Override
+	public String toString() {
+		return "idObra=" + idObra + ", nombre=" + nombre + ", duracion=" + duracion + ", fechaEstreno=" + fechaEstreno
+				+ ", presupuesto=" + presupuesto + ", tipo=" + tipo + ", imgPath=" + imgPath;
+	}
+
 }

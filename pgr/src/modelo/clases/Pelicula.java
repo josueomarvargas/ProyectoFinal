@@ -12,4 +12,9 @@ public class Pelicula extends ObraAudiovisual {
 		this.esTaquillera = esTaquillera;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + ", esTaquillera=" + esTaquillera;
+	}
+
 }
