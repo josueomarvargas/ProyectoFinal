@@ -6,26 +6,17 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import controlador.interfaz.BDgeneric;
-<<<<<<< HEAD
-import controlador.utils.SQLCon;
-=======
 import controlador.utils.dao.SQLCon;
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 import modelo.clases.ObraAudiovisual;
 import modelo.clases.Pelicula;
 import modelo.clases.Serie;
 
-<<<<<<< HEAD
-=======
 /**
  * Esta clase implementa la interfaz genérica
  * {@link controlador.interfaz.BDgeneric BDgeneric}, el CRUD de este DAO
@@ -44,7 +35,6 @@ import modelo.clases.Serie;
  * 
  * @author Henrique Yeguo
  **/
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 	// MySQL Consultas
@@ -62,11 +52,6 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 	// Leer todas las obras
 	private final String READALL = "CALL showObras()";
-<<<<<<< HEAD
-	private final String UPDATE = "UPDATE obraaudiovisual SET nombre = ?, duracion = ?, FechaEstreno = ?, presupuesto = ?, tipo = ? WHERE idObra = ?";
-	private final String DELETE = "DELETE FROM obraaudiovisual WHERE idObra = ?";
-
-=======
 
 	// Actualizar datos
 	private final String UPDATE = "UPDATE obraaudiovisual SET nombre = ?, duracion = ?, FechaEstreno = ?, presupuesto = ? WHERE idObra = ?";
@@ -78,7 +63,6 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	// Eliminar en la tabla serie
 	private final String DELETESERIE = "DELETE FROM serie WHERE idObra = ?";
 
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 	// Establecer conexión a la base de datos
 	private static Connection con;
 
@@ -106,8 +90,6 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	}
 
 	/**
-<<<<<<< HEAD
-=======
 	 * Método para revertir los cambios
 	 * 
 	 * @param e Se pasa por parámetros la exceptión que recoge el catch,
@@ -126,7 +108,6 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	}
 
 	/**
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 	 * Método para insertar {@code ObrasAudiovisuales}, e información adicional
 	 * dependiendo de si són {@code Peliculas} o {@code Series}. <br>
 	 * <b>Cómo funciona el método:</b> <blockquote> Primero de todo insertaremos en
@@ -134,19 +115,9 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	 * ejecutaremos la consulta y recogemos el ID que se ha generado. <br>
 	 * Comprobamos que el RS nos ha devuelto la clave, y comprobamos si la obra es
 	 * una película o serie. En el caso de que sea una película solo tenemos que
-<<<<<<< HEAD
-	 * añadir si es taquillera o no, en cambio si es una serie debemos de insertar,
-	 * la temporada, el número del capítulo junto con su nombre, esto se hace
-	 * iterando por una lista de 2-dimensiones, la lista de fuera es la que guarda
-	 * las temporadas, y la de dentro el capitulo con el nombre.<br>
-	 * En cada iteración se añade la inserción a un batch, al acabar se ejecuta este
-	 * batch y llamamos al {@link java.sql.Connection#commit()} para aplicar las
-	 * inserciones. </blockquote>
-=======
 	 * añadir si es taquillera o no, en cambio si es una serie llamamos al método
 	 * {@link #insertSerie} y luego llamamos al {@link java.sql.Connection#commit()}
 	 * para aplicar las inserciones. </blockquote>
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 	 * 
 	 * 
 	 * @param clase el objecto con la información para insertar en su tabla
@@ -160,15 +131,9 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 		// Prepare Statement - Create
 		try (PreparedStatement stat = con.prepareStatement(CREATE, PreparedStatement.RETURN_GENERATED_KEYS);
-<<<<<<< HEAD
-				PreparedStatement peli = con.prepareStatement(INSERTPELI);
-				PreparedStatement serie = con.prepareStatement(INSERTSERIE)) {
-
-=======
 				PreparedStatement peli = con.prepareStatement(INSERTPELI)) {
 
 			// Inicio de la transacción
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 			con.setAutoCommit(false);
 
 			// Añadir datos al Prepare Statement
@@ -191,28 +156,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 					peli.setInt(2, ((Pelicula) clase).isEsTaquillera() == true ? 1 : 0);
 					peli.executeUpdate();
 				} else {
-<<<<<<< HEAD
-					Serie aux = ((Serie) clase);
-
-					// Iterar por el array exterior
-					for (int i = 0; i < aux.getNombreCap().size(); i++) {
-						// Iterar por el array interior
-						for (int j = 0; j < aux.getNombreCap().get(i).size(); j++) {
-
-							// Añadir los datos de la serie al STAT
-							serie.setInt(1, rs.getInt(1));
-							serie.setInt(2, i);
-							serie.setInt(3, j);
-							// Recoger el nombre del capitulo
-							serie.setString(4, aux.getNombreCap().get(i).get(j));
-							serie.addBatch();
-						}
-					}
-					serie.executeBatch();
-
-=======
 					insertSerie(rs.getInt(1), clase);
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 				}
 			}
 
@@ -225,22 +169,13 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			return true;
 
 		} catch (SQLException e) {
-<<<<<<< HEAD
-			System.err.println(e);
-
-=======
 			rollback(e);
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 			return false; // Si hay alguna excepcion devolverá false
 		} finally {
 			this.closeConnection();
 		}
 	}
 
-<<<<<<< HEAD
-	@Override
-	public ObraAudiovisual search(String id) {
-=======
 	/**
 	 * Método para insertar la información de una serie, se ha creado este método
 	 * para reducir el código repetitivo.
@@ -298,7 +233,6 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	 **/
 	@Override
 	public ObraAudiovisual search(String[] id) {
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 		this.openConnection();
 
@@ -311,11 +245,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 				ResultSet.CONCUR_READ_ONLY)) {
 
 			// Añadir datos al Prepare Statement
-<<<<<<< HEAD
-			stat.setString(1, id);
-=======
 			stat.setString(1, id[0]);
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 			// Ejecutar consulta y guardarlo en el Result Set
 			rs = stat.executeQuery();
@@ -332,15 +262,10 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 					do {
 						oa = addToList(rs, oa);
 					} while (rs.next());
-<<<<<<< HEAD
-				}
-
-=======
 
 				}
 
 				rs.first();
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 				oa.setIdObra(rs.getInt(1));
 				oa.setNombre(rs.getString(2));
 				oa.setDuracion(rs.getInt(3));
@@ -360,26 +285,6 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 		return oa;
 	}
 
-<<<<<<< HEAD
-	private ObraAudiovisual addToList(ResultSet rs, ObraAudiovisual obra) {
-
-		// Lista 2D
-		List<List<String>> nombreCap;
-
-		return obra;
-	}
-
-	@Override
-	public Map<String, ObraAudiovisual> readAll() {
-		// RS y la clase para recoger los datos, además un map para guardar
-		Map<String, ObraAudiovisual> allUsers = new HashMap<>();
-		ResultSet rs = null;
-		ObraAudiovisual oa = null;
-
-		try {
-			// Prepare Statement - ReadAll
-			stat = con.prepareStatement(READALL);
-=======
 	/**
 	 * Este método es para añadir los datos de una serie, estos datos són; la
 	 * temporada, el número del capítulo y el nombre. <br>
@@ -462,25 +367,12 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 		// Prepare Statement - ReadAll
 		try (CallableStatement stat = con.prepareCall(READALL)) {
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 			// Ejecutar consulta y guardarlo en el result set
 			rs = stat.executeQuery();
 
 			// Mientras que RS sigua teniendo filas con información
 			while (rs.next()) {
-<<<<<<< HEAD
-				// Crearmos una instancia del objecto
-				oa = new ObraAudiovisual();
-				oa.setIdObra(rs.getInt(1));
-				oa.setNombre(rs.getString(2));
-				oa.setDuracion(rs.getInt(3));
-				oa.setFechaEstreno(rs.getDate(4).toLocalDate());
-				oa.setPresupuesto(rs.getInt(5));
-				oa.setTipo(rs.getString(6));
-				// Añadimos la clave y el objecto al map
-				allUsers.put(Integer.toString(oa.getIdObra()), oa);
-=======
 
 				if (obras.containsKey(rs.getInt(1)) && rs.getString("tipo").equalsIgnoreCase("serie")) {
 					oa = obras.get(rs.getInt(1));
@@ -508,53 +400,10 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 				// Añadimos la clave y el objecto al map
 				obras.put(oa.getIdObra(), oa);
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 			}
 
 		} catch (SQLException e) {
 			System.out.println(e);
-<<<<<<< HEAD
-		}
-
-		// Devolverá un map con los datos, o un map vacío
-		return allUsers;
-	}
-
-	@Override
-	public boolean update(ObraAudiovisual clase) {
-		try {
-			// Prepare Statement - Update
-			stat = con.prepareStatement(UPDATE);
-
-			// Añadir datos al Prepare Statement
-			stat.setInt(1, clase.getIdObra());
-			stat.setString(2, clase.getNombre());
-			stat.setInt(3, clase.getDuracion());
-			stat.setDate(4, Date.valueOf(clase.getFechaEstreno()));
-			stat.setInt(5, clase.getPresupuesto());
-			stat.setString(6, clase.getTipo());
-
-			// Ejecutar consulta y devolver true o false
-			return stat.executeUpdate() > 0 ? true : false;
-
-		} catch (SQLException e) {
-			System.err.println(e);
-
-			return false; // Si hay alguna excepcion devolverá false
-		}
-	}
-
-	@Override
-	public boolean remove(String id) {
-
-		try {
-
-			// Prepare Statement - Delete
-			stat = con.prepareStatement(DELETE);
-
-			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
-=======
 		} finally {
 			this.closeConnection();
 		}
@@ -646,21 +495,14 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 			// Añadir datos al Prepare Statement
 			stat.setString(1, id[0]);
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 			// Ejecutar consulta
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
-<<<<<<< HEAD
-			System.err.println(e);
-
-			return false; // Si hay alguna excepcion devolverá false
-=======
 			return false; // Si hay alguna excepcion devolverá false
 		} finally {
 			this.closeConnection();
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 		}
 	}
 

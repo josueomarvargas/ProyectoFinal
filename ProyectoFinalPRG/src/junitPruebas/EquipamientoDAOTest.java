@@ -102,7 +102,7 @@ class EquipamientoDAOTest {
 
 @Test
 	void testRemove() {
-		
+		String[] id;
 		try {
 			estado = eqpDao.remove("21");
 

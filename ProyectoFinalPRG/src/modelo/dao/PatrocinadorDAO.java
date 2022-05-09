@@ -8,30 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import controlador.interfaz.BDgeneric;
-<<<<<<< HEAD
-import controlador.utils.SQLCon;
-import modelo.clases.Patrocinador;
-
-public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
-
-	// MySQL Consultas
-	private final String CREATE = "INSERT INTO patrocinador(idPatro, nombre, cantDinero, condicion) VALUES(?, ?, ?, ?)";
-	private final String SEARCH = "SELECT * FROM patrocinador WHERE idPatro = ?";
-	private final String READALL = "SELECT * FROM patrocinador";
-	private final String UPDATE = "UPDATE patrocinador SET especialidad = ? WHERE idTrabajador = ? AND especialidad = ?";
-	private final String DELETE = "DELETE FROM patrocinador WHERE idTrabajador = ?";
-
-	// Establecer conexión a la base de datos
-	private static Connection con = SQLCon.getConnection();
-	private PreparedStatement stat;
-
-	@Override
-	public boolean create(Patrocinador clase) throws SQLException {
-
-		try {
-			// Prepare Statement - Create
-			stat = con.prepareStatement(CREATE);
-=======
 import controlador.utils.dao.SQLCon;
 import modelo.clases.Patrocinador;
 
@@ -101,7 +77,6 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 
 		// Prepare Statement - Create
 		try (PreparedStatement stat = con.prepareStatement(CREATE);) {
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 			// Añadimos los datos al Prepare Statement
 			stat.setInt(1, clase.getIdPatro());
@@ -113,15 +88,6 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
-<<<<<<< HEAD
-			System.err.println(e);
-			return false;
-		}
-	}
-
-	@Override
-	public Patrocinador search(String id) throws SQLException {
-=======
 			return false;
 		} finally {
 			this.closeConnection();
@@ -138,25 +104,15 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 	public Patrocinador search(String[] id) {
 
 		this.openConnection();
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 		// ResultSet y la clase para recoger los datos de la consulta
 		ResultSet rs = null;
 		Patrocinador patro = null;
 
-<<<<<<< HEAD
-		try {
-			// Prepare Statement - Search
-			stat = con.prepareStatement(SEARCH);
-
-			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
-=======
 		try (PreparedStatement stat = con.prepareStatement(SEARCH);) {
 
 			// Añadir datos al Prepare Statement
 			stat.setString(1, id[0]);
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 			// Ejecutar consulta y guardarlo en el Result Set
 			rs = stat.executeQuery();
@@ -169,38 +125,19 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 				patro.setNombre(rs.getString(2));
 				patro.setCantDinero(rs.getInt(3));
 				patro.setCondicion(rs.getString(4));
-<<<<<<< HEAD
-=======
 				patro.setImgPath(rs.getString(5));
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 			}
 
 		} catch (SQLException e) {
 			System.err.println(e);
-<<<<<<< HEAD
-=======
 		} finally {
 			this.closeConnection();
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 		}
 
 		return patro;
 
 	}
 
-<<<<<<< HEAD
-	@Override
-	public Map<String, Patrocinador> readAll() throws SQLException {
-
-		// RS y la clase para recoger los datos, además un map para guardar
-		Map<String, Patrocinador> allDir = new HashMap<>();
-		ResultSet rs = null;
-		Patrocinador patro = null;
-
-		try {
-			// Prepare Statement - ReadAll
-			stat = con.prepareStatement(READALL);
-=======
 	/**
 	 * Método para recoger la información de todos los patrocinadores
 	 * 
@@ -219,7 +156,6 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 
 		// Prepare Statement - ReadAll
 		try (PreparedStatement stat = con.prepareStatement(READALL);) {
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 			// Ejecutar consulta y guardarlo en el result set
 			rs = stat.executeQuery();
@@ -232,45 +168,22 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 				patro.setNombre(rs.getString(2));
 				patro.setCantDinero(rs.getInt(3));
 				patro.setCondicion(rs.getString(4));
-<<<<<<< HEAD
-
-				// Añadimos la clave y el objecto al map
-				allDir.put(Integer.toString(patro.getIdPatro()), patro);
-=======
 				patro.setImgPath(rs.getString(5));
 
 				// Añadimos la clave y el objecto al map
 				allDir.put(patro.getIdPatro(), patro);
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 			}
 
 		} catch (SQLException e) {
 			System.out.println(e);
-<<<<<<< HEAD
-=======
 		} finally {
 			this.closeConnection();
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 		}
 
 		// Devolverá un map con los datos, o un map vacío
 		return allDir;
 	}
 
-<<<<<<< HEAD
-	@Override
-	public boolean update(Patrocinador clase) throws SQLException {
-
-		try {
-			// Prepare Statement - Update
-			stat = con.prepareStatement(UPDATE);
-
-			// Añadir datos al Prepare Statement
-			stat.setInt(1, clase.getIdPatro());
-			stat.setString(2, clase.getNombre());
-			stat.setInt(3, clase.getCantDinero());
-			stat.setString(4, clase.getCondicion());
-=======
 	/**
 	 * Método para guardar los datos de un patrocinador
 	 * 
@@ -292,33 +205,19 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 			stat.setString(3, clase.getCondicion());
 			stat.setString(4, clase.getImgPath());
 			stat.setInt(5, clase.getIdPatro());
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 			// Ejecutar consulta y devolver true o false
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
-<<<<<<< HEAD
-			System.err.println(e);
-
-			return false; // Si hay alguna excepcion devolverá false
-=======
 			return false; // Si hay alguna excepcion devolverá false
 
 		} finally {
 			this.closeConnection();
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 		}
 
 	}
 
-<<<<<<< HEAD
-	@Override
-	public boolean remove(String[] id) throws SQLException {
-		try {
-			// Prepare Statement - Delete
-			stat = con.prepareStatement(DELETE);
-=======
 	/**
 	 * Método para eliminar un patrocinador
 	 * 
@@ -332,7 +231,6 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 
 		// Prepare Statement - Delete
 		try (PreparedStatement stat = con.prepareStatement(DELETE);) {
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 			// Añadir datos al Prepare Statement
 			stat.setString(1, id[0]);
@@ -341,16 +239,10 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
-<<<<<<< HEAD
-			System.err.println(e);
-
-			return false;
-=======
 			return false;
 
 		} finally {
 			this.closeConnection();
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 		}
 	}
 

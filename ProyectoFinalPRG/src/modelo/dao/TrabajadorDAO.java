@@ -64,7 +64,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	private final String UPDATE = "UPDATE trabajador SET nombre = ?, apellido = ?, numtel = ?, numPremios = ?, direccion = ?, fechaNac = ? WHERE idTrabajador = ?";
 
 	// Eliminar datos
-	private final String DELETE = "DELETE FROM trabajador WHERE idtrabajador = ? ";
+	private final String DELETE = "DELETE trabajador WHERE idtrabajador = ? ";
 
 	// Eliminar un atributo Ej: una especialidad de un actor
 	private final String DELETEATRIBUTO = "CALL deleteAtributo(?)";
@@ -86,14 +86,12 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	 * aquí y en el objecto {@code SQLCon}
 	 **/
 	private void closeConnection() {
-		if (con != null) {
-			try {
-				// Cerrar la conexión aquí y en el SQLCon
-				con.close();
-				SQLCon.closeConnection();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		try {
+			// Cerrar la conexión aquí y en el SQLCon
+			con.close();
+			SQLCon.closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -530,11 +528,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 		try (PreparedStatement stat = con.prepareStatement(DELETE)) {
 
 			// Añadir datos al Prepare Statement
-<<<<<<< HEAD
-			stat.setInt(1, Integer.parseInt(id));
-=======
 			stat.setString(1, id[0]);
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 
 			// Ejecutar consulta
 			return stat.executeUpdate() > 0 ? true : false;

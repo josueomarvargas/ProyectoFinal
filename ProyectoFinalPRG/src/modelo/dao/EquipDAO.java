@@ -341,10 +341,7 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 			stat.setString(1, clase.getNombre());
 			stat.setString(2, clase.getTipo());
 			stat.setInt(3, clase.getIdEquip());
-<<<<<<< HEAD
-=======
 
->>>>>>> be8214910679c26ea801d855a873b706a6d01963
 			// Ejecutar consulta
 			stat.executeUpdate();
 
