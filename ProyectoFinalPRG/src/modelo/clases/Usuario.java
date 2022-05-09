@@ -6,6 +6,16 @@ public class Usuario {
 	private String passwd;
 	private int idTrabajador;
 
+	public Usuario() {
+		super();
+	}
+
+	public Usuario(String idUsuario, String passwd) {
+		super();
+		this.idUsuario = idUsuario;
+		this.passwd = passwd;
+	}
+
 	public String getIdUsuario() {
 		return idUsuario;
 	}
@@ -28,6 +38,11 @@ public class Usuario {
 
 	public void setIdTrabajador(int idTrabajador) {
 		this.idTrabajador = idTrabajador;
+	}
+
+	public void setUserPass(String idUser, String passwd) {
+		this.idUsuario = idUser;
+		this.passwd = passwd;
 	}
 
 }

@@ -1,5 +1,6 @@
 package modelo.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +8,10 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import controlador.interfaz.BDgeneric;
+import controlador.interfaz.BDretrieveData;
+import controlador.utils.dao.GenericFactory;
 import controlador.utils.dao.SQLCon;
+import modelo.clases.Trabajador;
 import modelo.clases.Usuario;
 
 /**
@@ -18,7 +22,7 @@ import modelo.clases.Usuario;
  * @author Henrique Yeguo
  * 
  **/
-public class UserDAO implements BDgeneric<Usuario> {
+public class UserDAO implements BDgeneric<Usuario>, BDretrieveData<Usuario, Trabajador> {
 
 	// MySQL Consultas
 	// Insertar usuarios
@@ -32,6 +36,9 @@ public class UserDAO implements BDgeneric<Usuario> {
 
 	// Eliminar usuario
 	private final String DELETE = "DELETE FROM usuario WHERE idTrabajador = ?";
+
+	// Logging
+	private final String LOGGING = "CALL logging(?, ?)";
 
 	// Establecer conexión a la base de datos
 	private static Connection con;
@@ -205,4 +212,42 @@ public class UserDAO implements BDgeneric<Usuario> {
 			this.closeConnection();
 		}
 	}
+
+	/**
+	 * Método para recuperar la información del trabajador al iniciar sesión,
+	 * 
+	 * 
+	 * @param clase información del usuario para identificarse; user y pass
+	 * @return información del trabajador
+	 **/
+	@Override
+	public Trabajador recogerInfo(Usuario clase) {
+
+		this.openConnection();
+		ResultSet rs = null;
+
+		// Procedimiento para logearse
+		try (CallableStatement stat = con.prepareCall(LOGGING)) {
+
+			stat.setString(1, clase.getIdUsuario());
+			stat.setString(2, clase.getPasswd());
+
+			rs = stat.executeQuery();
+
+			// Si el RS a devuelto información, significa que los datos són correctos
+			if (rs.next()) {
+				String[] id = { rs.getString(1) };
+
+				Trabajador trabajador = (Trabajador) GenericFactory.TRABAJADOR.getInstance().search(id);
+				return trabajador;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return null;
+	}
+
 }

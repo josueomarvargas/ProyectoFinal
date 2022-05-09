@@ -1,6 +1,6 @@
 package main;
 
-import vistas.LogIn;
+import vistas.ventanas.LogIn;
 
 public class Principal {
 
@@ -9,6 +9,7 @@ public class Principal {
 	 */
 	public static void main(String[] args) {
 		LogIn vPrincipal = new LogIn();
+
 		vPrincipal.setVisible(true);
 
 	}

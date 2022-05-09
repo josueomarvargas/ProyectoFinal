@@ -19,6 +19,11 @@ import java.util.Map;
 
 public interface BDview<T> {
 
+	/**
+	 * 
+	 * @return devolverá un map, la clave será un integer, y el valor la clase
+	 *         especificada al implementarlo
+	 */
 	public Map<Integer, T> callView();
 
 }

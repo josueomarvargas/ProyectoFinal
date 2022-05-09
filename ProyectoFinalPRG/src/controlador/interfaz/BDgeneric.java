@@ -91,7 +91,7 @@ public interface BDgeneric<T> {
 	 * @return un Map la clave será un string y la clase que se declaró al
 	 *         implementar la interfaz
 	 **/
-	public java.util.Map<?, T> readAll();
+	public java.util.Map<?, ?> readAll();
 
 	/**
 	 * Para actualizar le pasaremos la clase con los datos ya cambiados
@@ -114,5 +114,6 @@ public interface BDgeneric<T> {
 	 * 
 	 **/
 	public boolean remove(String[] id);
+
 
 }
