@@ -1,4 +1,4 @@
-package controlador.utils;
+package controlador.utils.dao;
 
 import java.io.FileInputStream;
 import java.io.IOException;

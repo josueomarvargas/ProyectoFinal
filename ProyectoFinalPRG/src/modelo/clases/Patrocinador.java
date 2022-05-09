@@ -6,17 +6,19 @@ public class Patrocinador {
 	private String nombre;
 	private int cantDinero;
 	private String condicion;
+	private String imgPath;
 
 	public Patrocinador() {
 		super();
 	}
 
-	public Patrocinador(int idPatro, String nombre, int cantDinero, String condicion) {
+	public Patrocinador(int idPatro, String nombre, int cantDinero, String condicion, String imgPath) {
 		super();
 		this.idPatro = idPatro;
 		this.nombre = nombre;
 		this.cantDinero = cantDinero;
 		this.condicion = condicion;
+		this.imgPath = imgPath;
 	}
 
 	public int getIdPatro() {
@@ -51,4 +53,13 @@ public class Patrocinador {
 		this.condicion = condicion;
 	}
 
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
+	
 }

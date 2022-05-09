@@ -5,25 +5,21 @@ import java.util.List;
 
 public class EquipObra {
 
-	private int idObra;
+	private List<Integer> idObra;
 	private List<Integer> idEquip;
 
 	public EquipObra() {
 		super();
-		idEquip = new ArrayList<>();
+		this.idObra = new ArrayList<>();
+		this.idEquip = new ArrayList<>();
+
 	}
 
-	public EquipObra(int idObra, List<Integer> idEquip) {
-		super();
-		this.idObra = idObra;
-		this.idEquip = idEquip;
-	}
-
-	public int getIdObra() {
+	public List<Integer> getIdObra() {
 		return idObra;
 	}
 
-	public void setIdObra(int idObra) {
+	public void setIdObra(List<Integer> idObra) {
 		this.idObra = idObra;
 	}
 

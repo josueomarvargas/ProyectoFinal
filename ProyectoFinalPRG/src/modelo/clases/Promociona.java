@@ -1,20 +1,18 @@
 package modelo.clases;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Promociona {
 
 	private List<Integer> idPatro;
-	private int idObra;
+	private List<Integer> idObra;
 
 	public Promociona() {
 		super();
-	}
+		this.idPatro = new ArrayList<>();
+		this.idObra = new ArrayList<>();
 
-	public Promociona(List<Integer> idPatro, int idObra) {
-		super();
-		this.idPatro = idPatro;
-		this.idObra = idObra;
 	}
 
 	public List<Integer> getIdPatro() {
@@ -25,11 +23,11 @@ public class Promociona {
 		this.idPatro = idPatro;
 	}
 
-	public int getIdObra() {
+	public List<Integer> getIdObra() {
 		return idObra;
 	}
 
-	public void setIdObra(int idObra) {
+	public void setIdObra(List<Integer> idObra) {
 		this.idObra = idObra;
 	}
 

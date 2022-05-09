@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import controlador.interfaz.BDview;
-import controlador.utils.SQLCon;
+import controlador.utils.dao.SQLCon;
 import modelo.clases.ViewSerie;
 
 public class ViewSerieDAO implements BDview<ViewSerie> {
