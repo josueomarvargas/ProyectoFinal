@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import controlador.interfaz.BDgeneric;
-import controlador.utils.SQLCon;
+import controlador.utils.dao.SQLCon;
 import modelo.clases.Equipamiento;
 
 public class EquipDAO implements BDgeneric<Equipamiento> {
@@ -59,6 +59,24 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Método para revertir los cambios
+	 * 
+	 * @param e Se pasa por parámetros la exceptión que recoge el catch,
+	 **/
+	private void rollback(Exception e) {
+		try {
+			// Revertir los cambios en el objecto Connection
+			con.rollback();
+			con.setAutoCommit(true);
+			System.err.println(e + "\nProcediendo a revertir los cambios, iniciando rollback...");
+		} catch (SQLException e1) {
+			e.printStackTrace();
+
+		}
+
 	}
 
 	/**
@@ -111,14 +129,7 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 			return true;
 
 		} catch (SQLException e) {
-			System.err.println(e);
-			try {
-				// Volver para atrás si hay un error
-				con.rollback();
-				con.setAutoCommit(true);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			rollback(e);
 			return false; // Si hay alguna excepcion devolverá false
 		} finally {
 			this.closeConnection();
@@ -172,7 +183,7 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 	 * @return objecto equipamiento con los datos recogidos de la base de datos
 	 **/
 	@Override
-	public Equipamiento search(String id) {
+	public Equipamiento search(String[] id) {
 
 		this.openConnection();
 
@@ -184,7 +195,7 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 		try (PreparedStatement stat = con.prepareStatement(SEARCH);) {
 
 			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
+			stat.setString(1, id[0]);
 
 			// Ejecutar consulta y guardarlo en el Result Set
 			rs = stat.executeQuery();
@@ -350,8 +361,7 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 			return true;
 
 		} catch (SQLException e) {
-			System.err.println(e);
-
+			rollback(e);
 			return false; // Si hay alguna excepcion devolverá false
 		} finally {
 			this.closeConnection();
@@ -365,21 +375,23 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 	 * @return true si se ha completado la consulta correctamente
 	 **/
 	@Override
-	public boolean remove(String id) {
+	public boolean remove(String[] id) {
+
+		this.openConnection();
 
 		// Prepare Statement - Delete
 		try (PreparedStatement stat = con.prepareStatement(DELETE)) {
 
 			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
+			stat.setString(1, id[0]);
 
 			// Ejecutar consulta
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
-			System.err.println(e);
-
 			return false; // Si hay alguna excepcion devolverá false
+		} finally {
+			this.closeConnection();
 		}
 	}
 

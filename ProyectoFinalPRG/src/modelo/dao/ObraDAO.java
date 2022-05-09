@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import controlador.interfaz.BDgeneric;
-import controlador.utils.SQLCon;
+import controlador.utils.dao.SQLCon;
 import modelo.clases.ObraAudiovisual;
 import modelo.clases.Pelicula;
 import modelo.clases.Serie;
@@ -90,6 +90,24 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	}
 
 	/**
+	 * Método para revertir los cambios
+	 * 
+	 * @param e Se pasa por parámetros la exceptión que recoge el catch,
+	 **/
+	private void rollback(Exception e) {
+		try {
+			// Revertir los cambios en el objecto Connection
+			con.rollback();
+			con.setAutoCommit(true);
+			System.err.println(e + "\nProcediendo a revertir los cambios, iniciando rollback...");
+		} catch (SQLException e1) {
+			e.printStackTrace();
+
+		}
+
+	}
+
+	/**
 	 * Método para insertar {@code ObrasAudiovisuales}, e información adicional
 	 * dependiendo de si són {@code Peliculas} o {@code Series}. <br>
 	 * <b>Cómo funciona el método:</b> <blockquote> Primero de todo insertaremos en
@@ -151,8 +169,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			return true;
 
 		} catch (SQLException e) {
-			System.err.println(e);
-
+			rollback(e);
 			return false; // Si hay alguna excepcion devolverá false
 		} finally {
 			this.closeConnection();
@@ -165,34 +182,38 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	 * 
 	 * Para inserter una serie debemos de añadir, la temporada, el número del
 	 * capítulo junto con su nombre, esto se hace iterando por una lista de
-	 * 2-dimensiones, la lista de fuera es la que guarda las temporadas, y la de
-	 * dentro el capitulo con el nombre. En cada iteración se añade la inserción a
-	 * un batch, al acabar se ejecuta este batch.
+	 * 2-dimensiones, por el índice de las listas sabemos el número de la
+	 * temporadas, y el número del capitulo con el nombre, java empieza por cero las
+	 * listas por lo que hay que sumar uno para mostrar los números correctos. En
+	 * cada iteración se añade la inserción a un batch, al acabar se ejecuta este
+	 * batch. <br>
+	 * Ej: En el índice 0 de la lista de fuera será la temporada 1, y en la lista
+	 * interior indice 0 será el capítulo 1 con su nombre.
 	 * 
 	 * 
 	 * @param id    Id de la obra
 	 * @param clase el objecto clase con la información que se añadirá
 	 **/
 	private void insertSerie(Integer id, ObraAudiovisual clase) throws SQLException {
-		Serie aux = ((Serie) clase);
+		List<List<String>> aux = ((Serie) clase).getNombreCap();
 
-		try (PreparedStatement serie = con.prepareStatement(INSERTSERIE)) {
+		try (PreparedStatement serieStat = con.prepareStatement(INSERTSERIE)) {
 
 			// Iterar por el array exterior
-			for (int i = 0; i < aux.getNombreCap().size(); i++) {
+			for (int i = 0; i < aux.size(); i++) {
 				// Iterar por el array interior
-				for (int j = 0; j < aux.getNombreCap().get(i).size(); j++) {
+				for (int j = 0; j < aux.get(i).size(); j++) {
 
 					// Añadir los datos de la serie al STAT
-					serie.setInt(1, id);
-					serie.setInt(2, i);
-					serie.setInt(3, j);
+					serieStat.setInt(1, id);
+					serieStat.setInt(2, i + 1);
+					serieStat.setInt(3, j + 1);
 					// Recoger el nombre del capitulo
-					serie.setString(4, aux.getNombreCap().get(i).get(j));
-					serie.addBatch();
+					serieStat.setString(4, aux.get(i).get(j));
+					serieStat.addBatch();
 				}
 			}
-			serie.executeBatch();
+			serieStat.executeBatch();
 
 		}
 	}
@@ -211,7 +232,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	 * @return objecto con la información de una obra audiovisual, ya sea
 	 **/
 	@Override
-	public ObraAudiovisual search(String id) {
+	public ObraAudiovisual search(String[] id) {
 
 		this.openConnection();
 
@@ -224,7 +245,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 				ResultSet.CONCUR_READ_ONLY)) {
 
 			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
+			stat.setString(1, id[0]);
 
 			// Ejecutar consulta y guardarlo en el Result Set
 			rs = stat.executeQuery();
@@ -244,6 +265,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 				}
 
+				rs.first();
 				oa.setIdObra(rs.getInt(1));
 				oa.setNombre(rs.getString(2));
 				oa.setDuracion(rs.getInt(3));
@@ -274,11 +296,13 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	 * diferente temporada por lo que añadimos a la lista una nueva sublista.
 	 * Después añadimos a la sublista el nombre del capítulo. <br>
 	 * </blockquote> <note>Nota: La lista es una lista de 2-dimensiones, la exterior
-	 * guarda las temporadas, y la interior guardará los nombres de los
-	 * capítulos.<note>
+	 * guarda las temporadas, y la interior guardará los nombres de los capítulos,
+	 * por el índice de estas listas sabemos el número de temporada y el número de
+	 * capítulo.<note>
 	 * 
 	 * @param rs   ResultSet con los datos a insertar
 	 * @param obra la obra a donde se van a insertar los datos
+	 * @return devuelve la obra con los datos insertados
 	 * 
 	 **/
 	private ObraAudiovisual addToList(ResultSet rs, ObraAudiovisual obra) throws SQLException {
@@ -323,9 +347,8 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	 * obra sea, si es una serie añadimos los datos de la serie en su lista llamando
 	 * al método mencionado anteriormente, en el caso de que sea una película solo
 	 * se añade si es taquillera.<br>
-	 * Guardamos los datos de la obra y lo guardamos en el map junto con su ID.
-	 * 
-	 * </blockquote>
+	 * Y al finalzar guardamos los datos de la obra y lo guardamos en el map junto
+	 * con su ID. </blockquote>
 	 * 
 	 * 
 	 * 
@@ -389,6 +412,20 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 		return obras;
 	}
 
+	/**
+	 * Método para actualizar los datos de una obra. <br>
+	 * <b>Cómo funciona este método:</b><blockquote> Primero de todo actualizamos
+	 * los datos de la obra, luego dependiendo de si es una película también
+	 * actualizaremos su información, en el caso de que sea una serie, eliminaremos
+	 * los datos de esa esa serie y luego insertaremos los datos nuevos, al
+	 * finalizar aplicamos los cambios llamando al
+	 * {@link java.sql.Connection#commit}.</blockquote>
+	 * 
+	 * 
+	 * 
+	 * @param clase la obra con la nueva información que se quiere actualizar
+	 * @return true si se ha ejecutado correctamente la consulta
+	 **/
 	@Override
 	public boolean update(ObraAudiovisual clase) {
 
@@ -435,8 +472,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			return true;
 
 		} catch (SQLException e) {
-			System.err.println(e);
-
+			rollback(e);
 			return false; // Si hay alguna excepcion devolverá false
 		} finally {
 			this.closeConnection();
@@ -450,21 +486,23 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	 * @return true si se a ejecutado correctamente la consulta
 	 **/
 	@Override
-	public boolean remove(String id) {
+	public boolean remove(String[] id) {
+
+		this.openConnection();
 
 		// Prepare Statement - Delete
 		try (PreparedStatement stat = con.prepareStatement(DELETE)) {
 
 			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
+			stat.setString(1, id[0]);
 
 			// Ejecutar consulta
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
-			System.err.println(e);
-
 			return false; // Si hay alguna excepcion devolverá false
+		} finally {
+			this.closeConnection();
 		}
 	}
 

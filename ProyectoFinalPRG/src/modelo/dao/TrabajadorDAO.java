@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import controlador.interfaz.BDgeneric;
-import controlador.utils.SQLCon;
+import controlador.utils.dao.SQLCon;
 import modelo.clases.Actor;
 import modelo.clases.Director;
 import modelo.clases.Guionista;
@@ -96,6 +96,24 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	}
 
 	/**
+	 * Método para revertir los cambios
+	 * 
+	 * @param e Se pasa por parámetros la exceptión que recoge el catch,
+	 **/
+	private void rollback(Exception e) {
+		try {
+			// Revertir los cambios en el objecto Connection
+			con.rollback();
+			con.setAutoCommit(true);
+			System.err.println(e + "\nProcediendo a revertir los cambios, iniciando rollback...");
+		} catch (SQLException e1) {
+			e.printStackTrace();
+
+		}
+
+	}
+
+	/**
 	 * Inserción de la tabla {@code Trabajador} y de sus hijos:
 	 * {@code Actor, Director, Guionista, TecnicoAudiovisual}.
 	 * <p>
@@ -162,15 +180,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			return true;
 
 		} catch (SQLException e) {
-			System.err.println(e);
-
-			try {
-				con.rollback();
-				con.setAutoCommit(true);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
+			rollback(e);
 			return false; // Si hay alguna excepcion devolverá false
 
 		} finally {
@@ -236,7 +246,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	 *         {@code Actor, Director, Guionista, TecnicoAudiovisual}
 	 **/
 	@Override
-	public Trabajador search(String id) {
+	public Trabajador search(String[] id) {
 
 		this.openConnection();
 		// ResultSet y la clase para recoger los datos de la consulta
@@ -248,7 +258,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 				ResultSet.CONCUR_READ_ONLY)) {
 
 			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
+			stat.setString(1, id[0]);
 
 			// Ejecutar consulta y guardarlo en el Result Set
 			rs = stat.executeQuery();
@@ -302,12 +312,6 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 		} catch (SQLException e) {
 			System.err.println(e);
-			try {
-				con.rollback();
-				con.setAutoCommit(true);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		} finally {
 			this.closeConnection();
 		}
@@ -500,17 +504,9 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			return true;
 
 		} catch (SQLException e) {
-			System.err.println(e);
-
-			try {
-				// Revertir los cambios
-				con.rollback();
-				con.setAutoCommit(true);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
+			rollback(e);
 			return false; // Si hay alguna excepcion devolverá false
+
 		} finally {
 			this.closeConnection();
 		}
@@ -519,12 +515,12 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	/**
 	 * Este método elimina toda la información relacionada con el trabajador
 	 * 
-	 * @param id id del trabajador que se quiere eliminar 
+	 * @param id id del trabajador que se quiere eliminar
 	 * @return true/false dependiendo de si se ha completado correctamente la
 	 *         consulta
 	 **/
 	@Override
-	public boolean remove(String id) {
+	public boolean remove(String[] id) {
 
 		this.openConnection();
 
@@ -532,14 +528,12 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 		try (PreparedStatement stat = con.prepareStatement(DELETE)) {
 
 			// Añadir datos al Prepare Statement
-			stat.setString(1, id);
+			stat.setString(1, id[0]);
 
 			// Ejecutar consulta
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
-			System.err.println(e);
-
 			return false;
 
 		} finally {

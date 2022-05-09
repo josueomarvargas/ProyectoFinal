@@ -6,19 +6,15 @@ import java.util.List;
 public class Participa {
 
 	private List<Integer> idTrabajador;
-	private int idObra;
+	private List<Integer> idObra;
 
 	public Participa() {
 		super();
-		idTrabajador = new ArrayList<>();
+		this.idTrabajador = new ArrayList<>();
+		this.idObra = new ArrayList<>();
 	}
 
-	public Participa(List<Integer> idTrabajador, int idObra) {
-		super();
-		this.idTrabajador = idTrabajador;
-		this.idObra = idObra;
 
-	}
 
 	public List<Integer> getIdTrabajador() {
 		return idTrabajador;
@@ -28,11 +24,11 @@ public class Participa {
 		this.idTrabajador = idTrabajador;
 	}
 
-	public int getIdObra() {
+	public List<Integer> getIdObra() {
 		return idObra;
 	}
 
-	public void setIdObra(int idObra) {
+	public void setIdObra(List<Integer> idObra) {
 		this.idObra = idObra;
 	}
 

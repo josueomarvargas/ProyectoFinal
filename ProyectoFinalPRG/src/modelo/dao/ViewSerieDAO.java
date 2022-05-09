@@ -8,42 +8,42 @@ import java.util.HashMap;
 import java.util.Map;
 
 import controlador.interfaz.BDview;
-import controlador.utils.SQLCon;
-import modelo.clases.ViewPeli;
+import controlador.utils.dao.SQLCon;
+import modelo.clases.ViewSerie;
 
-public class ViewPeliDAO implements BDview<ViewPeli> {
+public class ViewSerieDAO implements BDview<ViewSerie> {
 
 	private final String viewPeli = "SELECT * FROM viewpelis";
 
 	@Override
-	public Map<Integer, ViewPeli> callView() {
-
+	public Map<Integer, ViewSerie> callView() {
 		// Recoger la conexión
 		Connection con = SQLCon.openConnection();
 		ResultSet rs;
-		Map<Integer, ViewPeli> pelis = new HashMap<>();
-		ViewPeli vp = null;
+		Map<Integer, ViewSerie> series = new HashMap<>();
+		ViewSerie vs = null;
 
 		// Prepare Statement - ViewPelis
-		try (PreparedStatement stat = con.prepareStatement(viewPeli);) {
+		try (PreparedStatement stat = con.prepareStatement(viewPeli)) {
 
 			// Recuperar los datos con el RS
 			rs = stat.executeQuery();
 
 			// Guardar los datos en el objecto
 			while (rs.next()) {
-				vp = new ViewPeli();
-				vp.setId(rs.getInt(1));
-				vp.setNombre(rs.getString(2));
-				vp.setDirector(rs.getString(3));
-				vp.setGuionista(rs.getString(4));
-				vp.setNumTrabajadores(rs.getInt(5));
-				vp.setPresupuesto(rs.getInt(6));
-				vp.setFechaEstreno(rs.getDate(7).toLocalDate());
-				vp.setEsTaquillero(rs.getString(8));
+				vs = new ViewSerie();
+				vs.setId(rs.getInt(1));
+				vs.setNombre(rs.getString(2));
+				vs.setDirector(rs.getString(3));
+				vs.setGuionista(rs.getString(4));
+				vs.setNumTrabajadores(rs.getInt(5));
+				vs.setPresupuesto(rs.getInt(6));
+				vs.setFechaEstreno(rs.getDate(7).toLocalDate());
+				vs.setTemporadas(rs.getInt(8));
+				vs.setCapitulos(rs.getInt(9));
 
 				// Guardar las pelis en el map
-				pelis.put(vp.getId(), vp);
+				series.put(vs.getId(), vs);
 
 			}
 
@@ -60,8 +60,7 @@ public class ViewPeliDAO implements BDview<ViewPeli> {
 			}
 		}
 
-		return pelis;
-
+		return series;
 	}
 
 }

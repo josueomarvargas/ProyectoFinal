@@ -75,12 +75,14 @@ public interface BDgeneric<T> {
 	 * sea clave compuesta, una de las claves guardarlas en una lista y usar la otra
 	 * para buscar.
 	 * 
-	 * @param id String con el ID para buscar en la base de datos
+	 * @param id String con el ID para buscar en la base de datos, se ha puesto como
+	 *           un string de array, ya que hay tablas que están compuestas de
+	 *           varias claves
 	 * @return <T> el método devuelve un objecto, este debe de ser el mismo que se
 	 *         declaró al implementar la interfaz
 	 * 
 	 **/
-	public T search(String id);
+	public T search(String[] id);
 
 	/**
 	 * Para leer todo de una tabla no será necesario ningún parámetro, lo que nos
@@ -104,21 +106,13 @@ public interface BDgeneric<T> {
 	/**
 	 * Para eliminar la información, pasaremos por parámetro el ID de la tabla
 	 * 
-	 * @param id ID del objecto a eliminar en la base de datos
+	 * @param id ID del objecto a eliminar en la base de datos, se ha puesto como un
+	 *           string de array, ya que hay tablas que están compuestas de varias
+	 *           claves
 	 * @return un boolean que será true o false dependiendo de si se ha ejecutado
 	 *         con éxito la consulta
 	 * 
 	 **/
-	public boolean remove(String id);
-
-	// Intentar hacer rollback cuando se trata de una transaccion
-//	if (con.getAutoCommit() == false) {
-//		try {
-//			System.err.println("Fallo en la transaccion, ejecutando un rollback");
-//			con.rollback();
-//		} catch (SQLException e2) {
-//			System.out.println(e2);
-//		}
-//	}
+	public boolean remove(String[] id);
 
 }

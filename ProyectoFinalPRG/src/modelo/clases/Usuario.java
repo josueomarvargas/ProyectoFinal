@@ -4,16 +4,7 @@ public class Usuario {
 
 	private String idUsuario;
 	private String passwd;
-
-	public Usuario() {
-		super();
-	}
-
-	public Usuario(String idUsuario, String passwd) {
-		super();
-		this.idUsuario = idUsuario;
-		this.passwd = passwd;
-	}
+	private int idTrabajador;
 
 	public String getIdUsuario() {
 		return idUsuario;
@@ -29,6 +20,14 @@ public class Usuario {
 
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
+	}
+
+	public int getIdTrabajador() {
+		return idTrabajador;
+	}
+
+	public void setIdTrabajador(int idTrabajador) {
+		this.idTrabajador = idTrabajador;
 	}
 
 }

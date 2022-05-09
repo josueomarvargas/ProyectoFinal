@@ -1,4 +1,4 @@
-package controlador.utils;
+package controlador.utils.dao;
 
 import java.util.function.Supplier;
 
@@ -42,8 +42,7 @@ import modelo.dao.*;
 public enum DAOFactory {
 	EQUIP(EquipDAO::new), EQUIPOBRA(EquipObraDAO::new), OBRA(ObraDAO::new), PARTICIPA(ParticipaDAO::new),
 	PATROCINADOR(PatrocinadorDAO::new), PROMOCIONA(PromocionaDAO::new), TRABAJADOR(TrabajadorDAO::new),
-	USER(UserDAO::new), TRABAJADORUSER(TrabajadorUserDAO::new), VIEWPELIS(ViewPeliDAO::new),
-	VIEWSERIE(ViewSerieDAO::new);
+	USER(UserDAO::new), VIEWPELIS(ViewPeliDAO::new), VIEWSERIE(ViewSerieDAO::new);
 
 	private Supplier<?> instantiator;
 
