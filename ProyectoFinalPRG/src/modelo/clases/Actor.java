@@ -3,6 +3,13 @@ package modelo.clases;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * 
+ * 
+ * @author Henrique Yeguo
+ *
+ */
 public class Actor extends Trabajador {
 
 	private List<String> especialidades;
@@ -29,6 +36,5 @@ public class Actor extends Trabajador {
 	public List<String> getList() {
 		return especialidades;
 	}
-
 
 }
