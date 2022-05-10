@@ -66,32 +66,33 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 				));
 		table.getColumnModel().getColumn(2).setPreferredWidth(100);
 		scrollPane.setViewportView(table);
-		
+
 		panel = new JPanel();
 		panel.setBackground(SystemColor.textHighlight);
 		panel.setBounds(0, 383, 550, 37);
 		contentPanel.add(panel);
-		
-				textField = new JTextField();
-				panel.add(textField);
-				textField.setColumns(10);
-				
-						btnBuscar = new JButton("Buscar");
-						panel.add(btnBuscar);
-						
-								btnAnadir = new JButton("A\u00F1adir");
-								panel.add(btnAnadir);
-								
-										btnVolver = new JButton("Volver");
-										panel.add(btnVolver);
-										btnVolver.addActionListener(this);
-								btnAnadir.addActionListener(this);
-						btnBuscar.addActionListener(this);
-						btnCerrarSystem = new JButton("X");
-						btnCerrarSystem.setForeground(Color.RED);
-						btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
-						btnCerrarSystem.setBounds(512, 0, 39, 25);
-						contentPanel.add(btnCerrarSystem);
+
+		textField = new JTextField();
+		panel.add(textField);
+		textField.setColumns(10);
+
+		btnBuscar = new JButton("Buscar");
+		panel.add(btnBuscar);
+
+		btnAnadir = new JButton("A\u00F1adir");
+		panel.add(btnAnadir);
+
+		btnVolver = new JButton("Volver");
+		panel.add(btnVolver);
+		btnVolver.addActionListener(this);
+		btnAnadir.addActionListener(this);
+		btnBuscar.addActionListener(this);
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(496, 0, 55, 29);
+		btnCerrarSystem.addActionListener(this);
+		contentPanel.add(btnCerrarSystem);
 	}
 
 
@@ -105,6 +106,9 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 		else if(e.getSource().equals(btnVolver)) {
 			this.dispose();
 
+		}
+		else if (e.getSource().equals(btnCerrarSystem)) {
+			System.exit(0);
 		}
 	}
 

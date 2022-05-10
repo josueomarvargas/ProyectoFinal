@@ -64,7 +64,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	private final String UPDATE = "UPDATE trabajador SET nombre = ?, apellido = ?, numtel = ?, numPremios = ?, direccion = ?, fechaNac = ? WHERE idTrabajador = ?";
 
 	// Eliminar datos
-	private final String DELETE = "DELETE trabajador WHERE idtrabajador = ? ";
+	private final String DELETE = "DELETE FROM trabajador WHERE idtrabajador = ? ";
 
 	// Eliminar un atributo Ej: una especialidad de un actor
 	private final String DELETEATRIBUTO = "CALL deleteAtributo(?)";
@@ -551,6 +551,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 
 		} finally {

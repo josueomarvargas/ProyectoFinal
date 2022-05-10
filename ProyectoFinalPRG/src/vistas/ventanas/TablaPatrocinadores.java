@@ -46,7 +46,7 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(20, 30, 498, 168);
+			scrollPane.setBounds(26, 40, 498, 168);
 			contentPanel.add(scrollPane);
 			{
 				table = new JTable();
@@ -69,7 +69,8 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		btnCerrarSystem = new JButton("X");
 		btnCerrarSystem.setForeground(Color.RED);
 		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		btnCerrarSystem.setBounds(496, 0, 55, 29);
+		btnCerrarSystem.addActionListener(this);
 		contentPanel.add(btnCerrarSystem);
 
 		panel = new JPanel();
@@ -103,7 +104,9 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		else if(e.getSource().equals(btnVolver)) {
 			this.dispose();
 		}
-
+		else if (e.getSource().equals(btnCerrarSystem)) {
+			System.exit(0);
+		}
 	}
 
 }

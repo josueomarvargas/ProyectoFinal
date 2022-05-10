@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 
 import java.awt.SystemColor;
 import java.awt.Font;
+import java.awt.ScrollPane;
+
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -23,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import java.awt.Component;
+import java.awt.Dimension;
 //import com.toedter.calendar.JDateChooser;
 
 public class AddDatosPersonal extends JDialog implements ActionListener {
@@ -41,18 +44,21 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	private JButton btnVolver;
 	private JButton btnBorrarDatos;
 	private JButton btnCerrarSystem;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Create the dialog.
 	 */
 	public AddDatosPersonal() {
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(5, 10, 100, 150);
 
 		this.setUndecorated(true);
 		setBounds(100, 100, 550, 420);
-		getContentPane().setLayout(new BorderLayout());
+		// getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		// getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JTextField textField = new JTextField();
@@ -290,8 +296,12 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		btnCerrarSystem = new JButton("X");
 		btnCerrarSystem.setForeground(Color.RED);
 		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		btnCerrarSystem.setBounds(496, 0, 55, 29);
+		btnCerrarSystem.addActionListener(this);
 		contentPanel.add(btnCerrarSystem);
+		contentPanel.setPreferredSize(new Dimension(510, 610));
+		scrollPane.setViewportView(contentPanel);
+		getContentPane().add(scrollPane);
 	}
 
 	@Override
@@ -299,7 +309,8 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		if (e.getSource().equals(btnVolver)) {
 			this.dispose();
 		}
-		if (e.getSource().equals(btnModificar)) {
+
+		else if (e.getSource().equals(btnModificar)) {
 			int resp = JOptionPane.showConfirmDialog(null, "¿Quieres Modificar Los Datos?", "Alerta!",
 					JOptionPane.YES_NO_OPTION);
 			if (resp == 0) {
@@ -310,6 +321,8 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 				GestionDatos vGDatos = new GestionDatos();
 
 			}
+		} else if (e.getSource().equals(btnCerrarSystem)) {
+			System.exit(0);
 		}
 	}
 }
