@@ -78,7 +78,8 @@ public class LogIn extends JFrame implements ActionListener {
 		btnCerrarSystem = new JButton("X");
 		btnCerrarSystem.setForeground(Color.RED);
 		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnCerrarSystem.setBounds(512, 0, 39, 39);
+		btnCerrarSystem.setBounds(496, 0, 55, 29);
+		btnCerrarSystem.addActionListener(this);
 		contentPane.add(btnCerrarSystem);
 		{
 			buttonPane = new JPanel();
@@ -114,6 +115,9 @@ public class LogIn extends JFrame implements ActionListener {
 				System.exit(0);
 				
 			}
+		}
+		else if (e.getSource().equals(btnCerrarSystem)) {
+			System.exit(0);
 		}
 	}
 }

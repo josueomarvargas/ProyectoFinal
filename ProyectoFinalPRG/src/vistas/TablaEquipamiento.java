@@ -47,7 +47,7 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 		{
 			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setBackground(SystemColor.activeCaption);
-			scrollPane.setBounds(10, 26, 499, 265);
+			scrollPane.setBounds(10, 47, 499, 265);
 			contentPanel.add(scrollPane);
 			{
 				table = new JTable();
@@ -68,7 +68,8 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 			btnCerrarSystem = new JButton("X");
 			btnCerrarSystem.setForeground(Color.RED);
 			btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
-			btnCerrarSystem.setBounds(512, 0, 39, 25);
+			btnCerrarSystem.setBounds(496, 0, 55, 29);
+			btnCerrarSystem.addActionListener(this);
 			contentPanel.add(btnCerrarSystem);
 		}
 		
@@ -103,6 +104,9 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 		}
 		else if(e.getSource().equals(btnVolver)) {
 			this.dispose();
+		}
+		else if (e.getSource().equals(btnCerrarSystem)) {
+			System.exit(0);
 		}
 	}
 

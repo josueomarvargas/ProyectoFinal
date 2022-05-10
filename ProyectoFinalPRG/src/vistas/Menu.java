@@ -90,7 +90,8 @@ public class Menu extends JDialog implements ActionListener {
 		btnCerrarSystem = new JButton("X");
 		btnCerrarSystem.setForeground(Color.RED);
 		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnCerrarSystem.setBounds(512, 0, 39, 25);
+		btnCerrarSystem.setBounds(496, 0, 55, 29);
+		btnCerrarSystem.addActionListener(this);
 		contentPanel.add(btnCerrarSystem);
 	}
 	@Override
@@ -116,6 +117,9 @@ public class Menu extends JDialog implements ActionListener {
 				this.dispose();
 				
 			}
+		}
+		else if (e.getSource().equals(btnCerrarSystem)) {
+			System.exit(0);
 		}
 
 
