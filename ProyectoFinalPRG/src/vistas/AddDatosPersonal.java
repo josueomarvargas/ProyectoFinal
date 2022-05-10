@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -45,16 +46,21 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	private JButton btnBorrarDatos;
 	private JButton btnCerrarSystem;
 	private JScrollPane scrollPane;
+	private ButtonGroup grupo1;
+	private ButtonGroup grupoGuion;
+	private ButtonGroup grupoEspecialidad;
+	private ButtonGroup grupoAreaTrabajo;
+
 
 	/**
 	 * Create the dialog.
 	 */
 	public AddDatosPersonal() {
-scrollPane= new JScrollPane();
-scrollPane.setBounds(5,10,100,150);
+		scrollPane= new JScrollPane();
+		scrollPane.setBounds(5,10,100,150);
 
-		this.setUndecorated(true);
-		setBounds(100, 100, 550, 420);
+		//this.setUndecorated(true);
+		setBounds(100, 100, 550, 677);
 		//getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -164,21 +170,7 @@ scrollPane.setBounds(5,10,100,150);
 		textField_3.setBounds(251, 209, 148, 19);
 		contentPanel.add(textField_3);
 
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("DIRECTOR");
-		rdbtnNewRadioButton.setBounds(150, 346, 109, 23);
-		contentPanel.add(rdbtnNewRadioButton);
 
-		JRadioButton rdbtnActor = new JRadioButton("ACTOR");
-		rdbtnActor.setBounds(150, 376, 109, 23);
-		contentPanel.add(rdbtnActor);
-
-		JRadioButton rdbtnGuionista = new JRadioButton("GUIONISTA");
-		rdbtnGuionista.setBounds(290, 346, 109, 23);
-		contentPanel.add(rdbtnGuionista);
-
-		JRadioButton rdbtnTecnicoAudiovisual = new JRadioButton("TECNICO AUDIOVISUAL");
-		rdbtnTecnicoAudiovisual.setBounds(290, 376, 148, 23);
-		contentPanel.add(rdbtnTecnicoAudiovisual);
 
 		JLabel lblNewLabel_1_2 = new JLabel("Categoria :");
 		lblNewLabel_1_2.setFont(new Font("Calibri", Font.PLAIN, 12));
@@ -190,68 +182,102 @@ scrollPane.setBounds(5,10,100,150);
 		contentPanel.add(textField_4);
 		textField_4.setColumns(10);
 
+		grupo1=new ButtonGroup();
+		
+
+		JRadioButton rdbDirector = new JRadioButton("DIRECTOR");
+		rdbDirector.setBounds(150, 346, 109, 23);
+		contentPanel.add(rdbDirector);
+		grupo1.add(rdbDirector);
+		rdbDirector.setVisible(false);
+
+		JRadioButton rdbtnActor = new JRadioButton("ACTOR");
+		rdbtnActor.setBounds(150, 376, 109, 23);
+		contentPanel.add(rdbtnActor);
+		grupo1.add(rdbtnActor);
+		JRadioButton rdbtnGuionista = new JRadioButton("GUIONISTA");
+		rdbtnGuionista.setBounds(290, 346, 109, 23);
+		contentPanel.add(rdbtnGuionista);
+		grupo1.add(rdbtnGuionista);
+		JRadioButton rdbtnTecnicoAudiovisual = new JRadioButton("TECNICO AUDIOVISUAL");
+		rdbtnTecnicoAudiovisual.setBounds(290, 376, 148, 23);
+		contentPanel.add(rdbtnTecnicoAudiovisual);
+		grupo1.add(rdbtnTecnicoAudiovisual);
+
 		JLabel lblNewLabel_1_1_1 = new JLabel("Tipo Guion :");
 		lblNewLabel_1_1_1.setFont(new Font("Calibri", Font.PLAIN, 12));
 		lblNewLabel_1_1_1.setBounds(236, 406, 88, 19);
 		contentPanel.add(lblNewLabel_1_1_1);
 
+		grupoGuion= new ButtonGroup();
 		JRadioButton rdbtnAccion = new JRadioButton("Acci\u00F3n ");
 		rdbtnAccion.setBounds(221, 431, 79, 23);
 		contentPanel.add(rdbtnAccion);
+		grupoGuion.add(rdbtnAccion);
 
 		JRadioButton rdbtnMisterio = new JRadioButton("Misterio");
 		rdbtnMisterio.setBounds(221, 457, 79, 23);
 		contentPanel.add(rdbtnMisterio);
-
+		grupoGuion.add(rdbtnMisterio);
 		JRadioButton rdbtnCienciaFiccion = new JRadioButton("Ciencia Ficci\u00F3n");
 		rdbtnCienciaFiccion.setBounds(307, 431, 109, 23);
 		contentPanel.add(rdbtnCienciaFiccion);
-
+		grupoGuion.add(rdbtnCienciaFiccion);
 		JRadioButton rdbtnMiedo = new JRadioButton("Miedo");
 		rdbtnMiedo.setBounds(307, 457, 101, 23);
 		contentPanel.add(rdbtnMiedo);
+		grupoGuion.add(rdbtnMiedo);
 
 		JLabel lblNewLabel_1_1_1_1 = new JLabel("Especialidad :");
 		lblNewLabel_1_1_1_1.setFont(new Font("Calibri", Font.PLAIN, 12));
 		lblNewLabel_1_1_1_1.setBounds(29, 477, 88, 19);
 		contentPanel.add(lblNewLabel_1_1_1_1);
+		grupoEspecialidad= new ButtonGroup();
 
 		JRadioButton rdbtnAccion_1 = new JRadioButton("Acci\u00F3n ");
 		rdbtnAccion_1.setBounds(16, 500, 64, 23);
 		contentPanel.add(rdbtnAccion_1);
+		grupoEspecialidad.add(rdbtnAccion_1);
 
 		JRadioButton rdbtnDoble = new JRadioButton("Doble");
 		rdbtnDoble.setBounds(16, 526, 69, 23);
 		contentPanel.add(rdbtnDoble);
+		grupoEspecialidad.add(rdbtnDoble);
 
 		JRadioButton rdbtnDoblaje = new JRadioButton("Doblaje");
 		rdbtnDoblaje.setBounds(86, 500, 109, 23);
 		contentPanel.add(rdbtnDoblaje);
+		grupoEspecialidad.add(rdbtnDoblaje);
 
 		JRadioButton rdbtnComedia = new JRadioButton("Comedia");
 		rdbtnComedia.setBounds(86, 526, 109, 23);
 		contentPanel.add(rdbtnComedia);
+		grupoEspecialidad.add(rdbtnComedia);
 
 		JLabel lblNewLabel_1_1_1_2 = new JLabel("Area Trabajo :");
 		lblNewLabel_1_1_1_2.setFont(new Font("Calibri", Font.PLAIN, 12));
 		lblNewLabel_1_1_1_2.setBounds(236, 487, 88, 19);
 		contentPanel.add(lblNewLabel_1_1_1_2);
+		grupoAreaTrabajo=new ButtonGroup();
 
 		JRadioButton rdbtnAccion_1_1 = new JRadioButton("Coordinador");
 		rdbtnAccion_1_1.setBounds(236, 500, 94, 23);
 		contentPanel.add(rdbtnAccion_1_1);
-
+		grupoAreaTrabajo.add(rdbtnAccion_1_1);
 		JRadioButton rdbtnAccion_1_2 = new JRadioButton("Audio");
 		rdbtnAccion_1_2.setBounds(236, 530, 64, 23);
 		contentPanel.add(rdbtnAccion_1_2);
+		grupoAreaTrabajo.add(rdbtnAccion_1_2);
 
 		JRadioButton rdbtnAccion_1_3 = new JRadioButton("Camara");
 		rdbtnAccion_1_3.setBounds(335, 500, 64, 23);
 		contentPanel.add(rdbtnAccion_1_3);
+		grupoAreaTrabajo.add(rdbtnAccion_1_3);
 
 		JRadioButton rdbtnAccion_1_4 = new JRadioButton("Efectos especiales");
 		rdbtnAccion_1_4.setBounds(335, 526, 118, 23);
 		contentPanel.add(rdbtnAccion_1_4);
+		grupoAreaTrabajo.add(rdbtnAccion_1_4);
 
 		//	JDateChooser dateChooser = new JDateChooser();
 		//dateChooser.setBounds(251, 273, 148, 20);
@@ -295,6 +321,10 @@ scrollPane.setBounds(5,10,100,150);
 		contentPanel.setPreferredSize(new Dimension(510,610));
 		scrollPane.setViewportView(contentPanel);
 		getContentPane().add(scrollPane); 
+		
+
+		
+	
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
