@@ -13,7 +13,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import controlador.utils.DAOFactory;
+import controlador.utils.dao.DAOFactory;
 import modelo.clases.Actor;
 import modelo.clases.Trabajador;
 import modelo.dao.TrabajadorDAO;
@@ -33,7 +33,7 @@ class ActorDAOTest {
 		act.setApellido("Garcia");
 		act.setNumTel(688612456);
 		act.setNumPremios(6);
-		act.setDireccion("sarriena");
+		act.setDireccion("Loiu");
 		act.setTipo("actor");
 		act.setFechaNac(LocalDate.of(1997, 10, 20));
 		List<String> especialidades = new ArrayList<>();
@@ -60,9 +60,9 @@ class ActorDAOTest {
 
 //	@Test
 //	void testSearch() {
-//
+//		String [] id = {"1"};
 //		try {
-//			Trabajador aux = aDao.search("1");
+//			Trabajador aux = aDao.search(id);
 //			
 //			System.out.println(aux.toString());
 //			
@@ -96,8 +96,8 @@ class ActorDAOTest {
 //		fail("Not yet implemented");
 //	}
 
-	@Test
-	void testUpdate() {
+//	@Test
+//	void testUpdate() {
 //		try {
 //			estado = aDao.update(act);
 //
@@ -107,13 +107,13 @@ class ActorDAOTest {
 //			e.printStackTrace();
 //			fail("Fallo SQL");
 //		}
-	}
+//	}
 
 	@Test
 	void testRemove() {
-
+		String[] idTrabajador = { "13" };
 		try {
-		estado = aDao.remove("13");
+			estado = aDao.remove(idTrabajador);
 
 			assertTrue(estado);
 		} catch (Exception e) {

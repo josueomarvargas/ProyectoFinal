@@ -529,11 +529,11 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 			// Añadir datos al Prepare Statement
 			stat.setString(1, id[0]);
-
 			// Ejecutar consulta
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 
 		} finally {

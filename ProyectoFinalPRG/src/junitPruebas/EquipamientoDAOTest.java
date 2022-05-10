@@ -31,9 +31,11 @@ class EquipamientoDAOTest {
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		equipa = new Equipamiento();
-		equipa.setIdEquip(19);
+		equipa.setIdEquip(21);
+		equipa.setNombre("sony");
+		equipa.setTipo("Microfono");
 		List<String> Caracteristicas = new ArrayList<>();
-		Caracteristicas.add("8K");
+		Caracteristicas.add("24374");
 		equipa.setCaracteristicas(Caracteristicas);
 
 	}
@@ -41,7 +43,7 @@ class EquipamientoDAOTest {
 //	@AfterAll
 //	static void tearDownAfterClass() throws Exception {
 //	}
-
+//
 //	@Test
 //	void testCreate() {
 //		try {
@@ -57,8 +59,9 @@ class EquipamientoDAOTest {
 
 //	@Test
 //	void testSearch() {
+//		String [] id = {"15"};
 //		try {
-//		Equipamiento aux = eqpDao.search("14");
+//		Equipamiento aux = eqpDao.search(id);
 //			System.out.println(aux.getCaracteristicas());
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
@@ -68,7 +71,7 @@ class EquipamientoDAOTest {
 //		fail("Not yet implemented");
 //	}
 
-
+//    RSPUESTA: modelo.clases.Equipamiento@1e44b638
 //	@Test
 //	void testReadAll() {
 //		try {
@@ -87,33 +90,33 @@ class EquipamientoDAOTest {
 //		}
 //		fail("Not yet implemented");
 //	}
-	@Test
-	void testUpdate() {
-		try {
-			estado = eqpDao.update(equipa);
+//	@Test
+//	void testUpdate() {
+//		try {
+//			estado = eqpDao.update(equipa);
+//
+//			assertTrue(estado);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			fail("Fallo SQL");
+//		}
+//	}
 
-			assertTrue(estado);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail("Fallo SQL");
-		}
-	}
-
-@Test
-	void testRemove() {
-		String[] id;
-		try {
-			estado = eqpDao.remove("21");
-
-			assertTrue(estado);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail("Fallo SQL");
-		}
-	
-}
+//@Test
+//	void testRemove() {
+//		String[] id = {"21"};
+//		try {
+//			estado = eqpDao.remove(id);
+//
+//			assertTrue(estado);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			fail("Fallo SQL");
+//		}
+//	
+//}
 }
 
 

@@ -14,11 +14,10 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import controlador.utils.DAOFactory;
+import controlador.utils.dao.DAOFactory;
 import modelo.clases.Actor;
 import modelo.clases.Director;
 import modelo.clases.Trabajador;
-import modelo.dao.DirectorDAO;
 import modelo.dao.TrabajadorDAO;
 
 class DirectorDAOTest {
@@ -35,7 +34,7 @@ class DirectorDAOTest {
 		dir.setApellido("perez");
 		dir.setNumTel(688612456);
 		dir.setNumPremios(6);
-		dir.setDireccion("Llodio");
+		dir.setDireccion("Bergara");
 		dir.setTipo("director");
 		dir.setFechaNac(LocalDate.of(1997, 10, 20));
 		
@@ -61,9 +60,9 @@ class DirectorDAOTest {
 
 //	@Test
 //	void testSearch() {
-//		
+//		String[] id = {"14"};
 //		try {
-//			Director aux = (Director) dDao.search("3");
+//			Director aux = (Director) dDao.search(id);
 //			System.out.println(aux.toString());
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
@@ -97,23 +96,24 @@ class DirectorDAOTest {
 //		fail("Not yet implemented");
 //	}
 
-	@Test
-	void testUpdate() {
-		try {
-			estado = dDao.update(dir);
-
-			assertTrue(estado);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail("Fallo SQL");
-		}
-	}
-
+//	@Test
+//	void testUpdate() {
+//		try {
+//			estado = dDao.update(dir);
+//
+//			assertTrue(estado);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			fail("Fallo SQL");
+//		}
+//	}
+//
 	@Test
 	void testRemove() {
+		String [] id = {"14"};
 		 try {
-		 estado = dDao.remove("3");
+		 estado = dDao.remove(id);
 
 			assertTrue(estado);
 		 } catch (Exception e) {
