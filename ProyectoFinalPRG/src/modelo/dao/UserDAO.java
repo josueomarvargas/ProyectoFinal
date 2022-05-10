@@ -18,6 +18,11 @@ import modelo.clases.Usuario;
  * La clase {@code UsuarioDAO} es una clase que implementa la interfaz genérica
  * {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea métodos
  * CRUD necesarios para gestionar la clase {@link modelo.clases.Usuario Usuario}
+ * <p>
+ * Esta clase también implementa la interfaz {@link BDretrieveData}
+ * especificando las clases {@link Usuario} y {@link Trabajador} para hacer uso
+ * del método {@link #recogerInfo} que nos servirá para el login.
+ * 
  * 
  * @author Henrique Yeguo
  * 
@@ -38,7 +43,7 @@ public class UserDAO implements BDgeneric<Usuario>, BDretrieveData<Usuario, Trab
 	private final String DELETE = "DELETE FROM usuario WHERE idTrabajador = ?";
 
 	// Logging
-	private final String LOGGING = "CALL logging(?, ?)";
+	private final String LOGGING = "CALL login(?, ?)";
 
 	// Establecer conexión a la base de datos
 	private static Connection con;
@@ -214,7 +219,7 @@ public class UserDAO implements BDgeneric<Usuario>, BDretrieveData<Usuario, Trab
 	}
 
 	/**
-	 * Método para recuperar la información del trabajador al iniciar sesión,
+	 * Método para recuperar la información del trabajador al iniciar sesión.
 	 * 
 	 * 
 	 * @param clase información del usuario para identificarse; user y pass
@@ -239,6 +244,7 @@ public class UserDAO implements BDgeneric<Usuario>, BDretrieveData<Usuario, Trab
 				String[] id = { rs.getString(1) };
 
 				Trabajador trabajador = (Trabajador) GenericFactory.TRABAJADOR.getInstance().search(id);
+				
 				return trabajador;
 			}
 

@@ -25,7 +25,8 @@ public class Login implements UIcontrol<Trabajador> {
 	/**
 	 * Este método será el encarcado de llamar al método
 	 * {@link UserDAO#recogerInfo}, para recoger la información del
-	 * {@link Trabajador} que ha encontrado al pasarle el usuario y contraseña.
+	 * {@link Trabajador} que ha encontrado con el usuario y contraseña que le hemos
+	 * pasado por parámetros.
 	 * 
 	 * 
 	 * 
@@ -41,7 +42,9 @@ public class Login implements UIcontrol<Trabajador> {
 			@SuppressWarnings("unchecked")
 			BDretrieveData<Usuario, Trabajador> aux = (BDretrieveData<Usuario, Trabajador>) GenericFactory.USER
 					.getUserLogin();
+			// Recoger información del trabajador
 			tData = aux.recogerInfo(new Usuario(list.get(0), list.get(1)));
+			
 		}
 		return tData;
 	}
@@ -51,14 +54,12 @@ public class Login implements UIcontrol<Trabajador> {
 	 * {@code tData}, que es el encargado a guardar la información del trabajador
 	 * iniciado, lo pondremos a null.
 	 * 
-	 * @return true si se ha cerrado sesión
 	 **/
-	public boolean logOut() {
+	public static void logOut() {
 		if (tData != null) {
 			tData = null;
-			return true;
 		}
-		return false;
+
 	}
 
 }

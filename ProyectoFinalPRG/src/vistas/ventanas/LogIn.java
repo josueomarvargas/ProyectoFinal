@@ -2,7 +2,6 @@ package vistas.ventanas;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -17,11 +16,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controlador.interfaz.BDretrieveData;
 import controlador.utils.dao.GenericFactory;
 import controlador.utils.messages.UIMessages;
 import modelo.clases.Trabajador;
-import modelo.clases.Usuario;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -104,16 +101,15 @@ public class LogIn extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnAcceder)) {
-			// Recuperar
+			// Comprobar que el usuario y contraseña
 			Trabajador tData = (Trabajador) GenericFactory.LOGIN.getUIcontroller()
-					.check(Arrays.asList(username.getText(), passwd.getPassword().toString()));
+					.check(Arrays.asList(username.getText(), String.valueOf(passwd.getPassword())));
 
 			if (tData == null) {
 				new UIMessages(this, "El usuario y/o contraseña són incorrectos, vuelva a intentarlo.",
 						"Permiso denegado");
 			} else {
-
-				Menu vMenu = new Menu();
+				Menu vMenu = new Menu(this);
 				vMenu.setVisible(true);
 
 			}

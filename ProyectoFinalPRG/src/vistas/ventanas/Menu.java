@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,6 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.utils.dao.GenericFactory;
+import modelo.clases.Trabajador;
+import vistas.dao.Login;
 
 public class Menu extends JDialog implements ActionListener {
 
@@ -31,7 +36,8 @@ public class Menu extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public Menu() {
+	public Menu(LogIn parent) {
+		super(parent);
 		this.setUndecorated(true);
 		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
@@ -110,6 +116,7 @@ public class Menu extends JDialog implements ActionListener {
 					JOptionPane.YES_NO_OPTION);
 			if (resp == 0) {
 				this.dispose();
+				Login.logOut();
 
 			}
 		}

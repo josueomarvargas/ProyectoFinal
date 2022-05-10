@@ -260,8 +260,11 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			// Añadir datos al Prepare Statement
 			stat.setString(1, id[0]);
 
-			// Ejecutar consulta y guardarlo en el Result Set
-			rs = stat.executeQuery();
+			// Ejecutar consulta
+			stat.execute();
+
+			// Guardarlo en el Result Set
+			rs = stat.getResultSet();
 
 			// Comprobar que RS a recuperado informacion del executeQuery
 			if (rs.next()) {
@@ -299,14 +302,28 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 						trabajador = addToList(rs, trabajador);
 					} while (rs.next());
 					break;
+				case "administrador":
+					/**
+					 * Clase {@code Administrador} que extiende de Trabajador anidada en el switch,
+					 * como no necesitamos una clase específica para los administradores, ya que no
+					 * guardamos ningún dato adicional, solo guardaremos el tipo y devolvemos el
+					 * objecto.
+					 *
+					 * @author yeguo
+					 **/
+					class Administrador extends Trabajador {
+					}
+					trabajador = new Administrador();
+					trabajador.setTipo(rs.getString(1));
+					return trabajador;
 
 				}
-
 				// Volver al primer RS para recoger la información que nos falta
 				rs.first();
 				// Añadir los valores del RS al objecto
 				trabajador.setDatos(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),
-						rs.getInt(6), rs.getString(7), rs.getString(8), rs.getDate(9).toLocalDate());
+						rs.getInt(6), rs.getString(7), rs.getString(8),
+						rs.getDate(9) != null ? rs.getDate(9).toLocalDate() : null);
 
 			}
 
