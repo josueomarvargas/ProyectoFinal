@@ -57,11 +57,11 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	private JPanel panelActor;
 	private JPanel panelGuionista;
 	private JPanel panelAudiovisual;
-
-
-
-
-
+	private JRadioButton rdbDirector;
+	private JRadioButton rdbtnActor;
+	private JRadioButton rdbtnGuionista;
+	private JRadioButton rdbtnTecnicoAudiovisual;
+	private JButton btnMostrar;
 	/**
 	 * Create the dialog.
 	 */
@@ -158,7 +158,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
-			JButton btnMostrar = new JButton("Mostrar");
+			btnMostrar = new JButton("Mostrar");
 			btnMostrar.setBounds(340, 88, 79, 23);
 			contentPanel.add(btnMostrar);
 		}
@@ -185,21 +185,26 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		grupo1=new ButtonGroup();
 
 
-		JRadioButton rdbDirector = new JRadioButton("DIRECTOR");
+		rdbDirector = new JRadioButton("DIRECTOR");
 		rdbDirector.addActionListener(this);
 		rdbDirector.setBounds(150, 346, 109, 23);
 		contentPanel.add(rdbDirector);
 		grupo1.add(rdbDirector);
 
-		JRadioButton rdbtnActor = new JRadioButton("ACTOR");
+		rdbtnActor = new JRadioButton("ACTOR");
+		rdbtnActor.addActionListener(this);
 		rdbtnActor.setBounds(150, 376, 109, 23);
 		contentPanel.add(rdbtnActor);
 		grupo1.add(rdbtnActor);
-		JRadioButton rdbtnGuionista = new JRadioButton("GUIONISTA");
+		
+		rdbtnGuionista = new JRadioButton("GUIONISTA");
+		rdbtnGuionista.addActionListener(this);
 		rdbtnGuionista.setBounds(290, 346, 109, 23);
 		contentPanel.add(rdbtnGuionista);
 		grupo1.add(rdbtnGuionista);
-		JRadioButton rdbtnTecnicoAudiovisual = new JRadioButton("TECNICO AUDIOVISUAL");
+		
+		rdbtnTecnicoAudiovisual = new JRadioButton("TECNICO AUDIOVISUAL");
+		rdbtnTecnicoAudiovisual.addActionListener(this);
 		rdbtnTecnicoAudiovisual.setBounds(290, 376, 148, 23);
 		contentPanel.add(rdbtnTecnicoAudiovisual);
 		grupo1.add(rdbtnTecnicoAudiovisual);
@@ -278,7 +283,6 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		rdbtnAccion_1_4.setBounds(135, 63, 118, 23);
 		panelAudiovisual.add(rdbtnAccion_1_4);
 		grupoAreaTrabajo.add(rdbtnAccion_1_4);
-		rdbDirector.setSelected(true);
 
 
 		panelDirector=new JPanel();
@@ -356,42 +360,12 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		rdbtnMiedo.setBounds(104, 68, 101, 23);
 		panelGuionista.add(rdbtnMiedo);
 		grupoGuion.add(rdbtnMiedo);
-		if(rdbDirector.isSelected()) {
-			panelDirector.setVisible(true);
-			panelActor.setVisible(false);
-			panelGuionista.setVisible(false);
-			panelAudiovisual.setVisible(false);
-			rdbtnActor.setSelected(false);
-			rdbtnGuionista.setSelected(false);
-			rdbtnTecnicoAudiovisual.setSelected(false);
-		}
-		else if(rdbtnActor.isSelected()) {
-			panelDirector.setVisible(false);
-			panelActor.setVisible(true);
-			panelGuionista.setVisible(false);
-			panelAudiovisual.setVisible(false);
-			rdbDirector.setSelected(false);
-			rdbtnGuionista.setSelected(false);
-			rdbtnTecnicoAudiovisual.setSelected(false);
-		}
-		else if(rdbtnGuionista.isSelected()) {
-			panelDirector.setVisible(false);
-			panelActor.setVisible(false);
-			panelGuionista.setVisible(true);
-			panelAudiovisual.setVisible(false);
-			rdbtnActor.setSelected(false);
-			rdbDirector.setSelected(false);
-			rdbtnTecnicoAudiovisual.setSelected(false);
-		}
-		else if(rdbtnTecnicoAudiovisual.isSelected()) {
-			panelDirector.setVisible(false);
-			panelActor.setVisible(false);
-			panelGuionista.setVisible(false);
-			panelAudiovisual.setVisible(true);
-			rdbtnActor.setSelected(false);
-			rdbtnGuionista.setSelected(false);
-			rdbDirector.setSelected(false);
-		}
+		panelDirector.setVisible(false);
+		panelActor.setVisible(false);
+		panelGuionista.setVisible(false);
+		panelAudiovisual.setVisible(false);		
+
+
 		getContentPane().add(scrollPane, BorderLayout.EAST); 
 
 
@@ -415,6 +389,33 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		}
 		else if (e.getSource().equals(btnCerrarSystem)) {
 			System.exit(0);
+		}
+
+		if(e.getSource().equals(rdbDirector)) {
+			panelDirector.setVisible(true);
+			panelActor.setVisible(false);
+			panelGuionista.setVisible(false);
+			panelAudiovisual.setVisible(false);
+
+		}
+		else if(e.getSource().equals(rdbtnActor)) {
+			panelDirector.setVisible(false);
+			panelActor.setVisible(true);
+			panelGuionista.setVisible(false);
+			panelAudiovisual.setVisible(false);
+
+		}
+		else if(e.getSource().equals(rdbtnGuionista)){
+			panelDirector.setVisible(false);
+			panelActor.setVisible(false);
+			panelGuionista.setVisible(true);
+			panelAudiovisual.setVisible(false);	
+		}
+		else if (e.getSource().equals(rdbtnTecnicoAudiovisual)) {
+			panelDirector.setVisible(false);
+			panelActor.setVisible(false);
+			panelGuionista.setVisible(false);
+			panelAudiovisual.setVisible(true);	
 		}
 		//else if(e.getSource().equals(btnDirector)) {
 		//panelDirector.setVisible(true);

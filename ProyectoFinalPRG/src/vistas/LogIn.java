@@ -7,10 +7,15 @@ import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import imagenes.FondoPanel;
+
 import javax.swing.JTextArea;
 import javax.swing.JPasswordField;
 import javax.swing.JEditorPane;
 import java.awt.Font;
+import java.awt.Panel;
+
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
@@ -32,14 +37,17 @@ public class LogIn extends JFrame implements ActionListener {
 	private JTextField textField;
 	private JButton btnCancelar;
 	private JButton btnAceptar;
-	private JPanel buttonPane;
 	private JButton btnCerrarSystem;
-
+	private FondoPanel panel=new FondoPanel();
+	private JPanel buttonPane;
 
 	/**
 	 * Create the frame.
 	 */
 	public LogIn() {
+		this.setTitle("Ventana");
+		this.setSize(new Dimension(700,700));
+		this.setLocationRelativeTo(null);
 		this.setUndecorated(true);
 		//this.setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,31 +58,31 @@ public class LogIn extends JFrame implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		passwordField = new JPasswordField();
 		passwordField.setBounds(171, 202, 173, 20);
 		contentPane.add(passwordField);
-		
+
 		JLabel lblIniciarSesin = new JLabel("Iniciar sesi\u00F3n");
 		lblIniciarSesin.setBounds(160, 57, 173, 29);
 		lblIniciarSesin.setFont(new Font("Calibri", Font.PLAIN, 28));
 		contentPane.add(lblIniciarSesin);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Contrase\u00F1a :");
 		lblNewLabel_1.setBounds(60, 201, 79, 26);
 		lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 14));
 		contentPane.add(lblNewLabel_1);
-		
+
 		JLabel lblNewLabel_1_1 = new JLabel("Usuario :");
 		lblNewLabel_1_1.setBounds(60, 133, 56, 23);
 		lblNewLabel_1_1.setFont(new Font("Calibri", Font.PLAIN, 14));
 		contentPane.add(lblNewLabel_1_1);
-		
+
 		textField = new JTextField();
 		textField.setBounds(171, 132, 173, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		
+
 		btnCerrarSystem = new JButton("X");
 		btnCerrarSystem.setForeground(Color.RED);
 		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -88,7 +96,7 @@ public class LogIn extends JFrame implements ActionListener {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane);
 			{
-				
+
 				btnCancelar = new JButton("Cancelar");
 				btnCancelar.addActionListener(this);
 				btnAceptar = new JButton("Aceptar");
@@ -105,7 +113,7 @@ public class LogIn extends JFrame implements ActionListener {
 		if(e.getSource().equals(btnAceptar)) {
 			Menu vMenu=new Menu();
 			vMenu.setVisible(true);
-		
+
 		}
 		else if(e.getSource().equals(btnCancelar)) {
 			//SalirPrograma vSalir=new SalirPrograma();
@@ -113,7 +121,7 @@ public class LogIn extends JFrame implements ActionListener {
 			int resp =JOptionPane.showConfirmDialog(null,"¿Quieres Salir del programa?","Alerta!",JOptionPane.YES_NO_OPTION);
 			if (resp==0) {
 				System.exit(0);
-				
+
 			}
 		}
 		else if (e.getSource().equals(btnCerrarSystem)) {
