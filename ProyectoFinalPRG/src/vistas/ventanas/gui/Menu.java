@@ -96,10 +96,11 @@ public class Menu extends JDialog implements ActionListener {
 		btnCerrarSystem = new JButton("X");
 		btnCerrarSystem.setForeground(Color.RED);
 		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnCerrarSystem.setBounds(496, 0, 55, 29);
+		btnCerrarSystem.setBounds(490, 0, 60, 37);
 		btnCerrarSystem.addActionListener(this);
 		contentPanel.add(btnCerrarSystem);
 		setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
+
 		if (user.getTipo().equals("Administrador")) {
 			btnMDatos.setEnabled(false);
 		}
