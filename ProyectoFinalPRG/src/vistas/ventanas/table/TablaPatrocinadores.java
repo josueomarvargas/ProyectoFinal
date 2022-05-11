@@ -100,7 +100,7 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		Utilidades.resizeColumnWidth(table); // Redimensionar columnas
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table); // Añadir la tabla al scroll panel
-		contentPanel.add(scrollPane);
+//		contentPanel.add(scrollPane);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controlador.utils.dao.GenericFactory;
-import controlador.utils.messages.UIMessages;
+import controlador.utils.exceptions.UIexceptions;
 import modelo.clases.Trabajador;
 
 public class LogIn extends JFrame implements ActionListener {
@@ -113,7 +113,7 @@ public class LogIn extends JFrame implements ActionListener {
 					.check(Arrays.asList(username.getText(), String.valueOf(passwd.getPassword())));
 
 			if (tData == null) {
-				new UIMessages(this, "El usuario y/o contraseña són incorrectos, vuelva a intentarlo.",
+				new UIexceptions(this, "El usuario y/o contraseña són incorrectos, vuelva a intentarlo.",
 						"Permiso denegado");
 			} else {
 				Menu vMenu = new Menu(this, size, tData);

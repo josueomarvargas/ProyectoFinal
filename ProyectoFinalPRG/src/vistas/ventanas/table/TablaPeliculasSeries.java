@@ -24,6 +24,9 @@ import javax.swing.table.DefaultTableModel;
 import controlador.utils.dao.GenericFactory;
 import controlador.utils.views.Utilidades;
 import vistas.dao.GetData;
+import vistas.ventanas.custom.CustomTab;
+
+import java.awt.Color;
 
 public class TablaPeliculasSeries extends JDialog {
 
@@ -48,6 +51,7 @@ public class TablaPeliculasSeries extends JDialog {
 	 * Create the dialog.
 	 */
 	public TablaPeliculasSeries() {
+		getContentPane().setBackground(Color.WHITE);
 		addWindowStateListener(new WindowStateListener() {
 			public void windowStateChanged(WindowEvent e) {
 				System.out.println("aa");
@@ -55,12 +59,16 @@ public class TablaPeliculasSeries extends JDialog {
 		});
 		this.setUndecorated(false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setMinimumSize(new Dimension(600, 450));
-		setBounds(100, 100, 600, 450);
+		setMinimumSize(new Dimension(600, 475));
+		setBounds(100, 100, 600, 475);
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setLayout(null);
 
-		JTabbedPane tabs = new JTabbedPane();
+		CustomTab tabs = new CustomTab();
+		tabs.setBackground(Color.WHITE);
+		peliPanel.setBackground(Color.WHITE);
 		tabs.add("Pelicula", peliPanel);
+		seriePanel.setBackground(Color.WHITE);
 		tabs.add("Serie", seriePanel);
 		peliPanel.setLayout(null);
 		seriePanel.setLayout(null);
@@ -189,6 +197,7 @@ public class TablaPeliculasSeries extends JDialog {
 
 		// Crear una tabla
 		table = new JTable();
+		table.setBackground(new Color(255, 255, 255));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(new DefaultTableModel(data, column)); // Añadir los datos a la tabla
 		Utilidades.resizeColumnWidth(table); // Redimensionar columnas

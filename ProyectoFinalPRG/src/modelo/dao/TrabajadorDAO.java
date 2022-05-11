@@ -160,7 +160,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			trabajadorStat.setInt(5, clase.getNumPremios());
 			trabajadorStat.setString(6, clase.getDireccion());
 			trabajadorStat.setString(7, clase.getTipo());
-			trabajadorStat.setDate(8, Date.valueOf(clase.getFechaNac()));
+			trabajadorStat.setDate(8, clase.getFechaNac() != null ? Date.valueOf(clase.getFechaNac()) : null);
 
 			// Ejecutar consulta
 			trabajadorStat.executeUpdate();
@@ -416,7 +416,8 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 					}
 					// Añadimos los datos del trabajador
 					trabajador.setDatos(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),
-							rs.getInt(6), rs.getString(7), rs.getString(8), rs.getDate(9).toLocalDate());
+							rs.getInt(6), rs.getString(7), rs.getString(8),
+							rs.getDate(9) != null ? rs.getDate(9).toLocalDate() : null);
 				}
 
 				// Añadimos al map el key-ID, value-Trabajador
@@ -499,7 +500,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			stat.setInt(3, clase.getNumTel());
 			stat.setInt(4, clase.getNumPremios());
 			stat.setString(5, clase.getDireccion());
-			stat.setDate(6, Date.valueOf(clase.getFechaNac()));
+			stat.setDate(6, clase.getFechaNac() != null ? Date.valueOf(clase.getFechaNac()) : null);
 			stat.setInt(7, clase.getIdTrabajador());
 
 			// Ejecutar consulta

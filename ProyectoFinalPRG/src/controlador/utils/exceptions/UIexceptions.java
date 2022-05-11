@@ -1,4 +1,4 @@
-package controlador.utils.messages;
+package controlador.utils.exceptions;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  * 
  * 
  **/
-public class UIMessages extends Throwable {
+public class UIexceptions extends Throwable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,7 +23,7 @@ public class UIMessages extends Throwable {
 	 * @param title   titulo de la ventana
 	 * 
 	 **/
-	public <E extends JDialog> UIMessages(E parent, String message, String title) {
+	public <E extends JDialog> UIexceptions(E parent, String message, String title) {
 		super(message);
 		JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
 
@@ -37,7 +37,7 @@ public class UIMessages extends Throwable {
 	 * @param message mensaje de error que saldrá en la ventana
 	 * @param title   titulo de la ventana
 	 **/
-	public <E extends JFrame> UIMessages(E parent, String message, String title) {
+	public <E extends JFrame> UIexceptions(E parent, String message, String title) {
 		super(message);
 		JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
 

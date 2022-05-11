@@ -39,7 +39,7 @@ public class ViewPeliDAO implements BDview<ViewPeli> {
 				vp.setGuionista(rs.getString(4));
 				vp.setNumTrabajadores(rs.getInt(5));
 				vp.setPresupuesto(rs.getInt(6));
-				vp.setFechaEstreno(rs.getDate(7).toLocalDate());
+				vp.setFechaEstreno(rs.getDate(7) != null ? rs.getDate(7).toLocalDate() : null);
 				vp.setEsTaquillero(rs.getString(8));
 
 				// Guardar las pelis en el map

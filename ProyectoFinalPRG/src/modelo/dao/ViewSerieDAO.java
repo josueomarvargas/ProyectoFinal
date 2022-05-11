@@ -38,7 +38,7 @@ public class ViewSerieDAO implements BDview<ViewSerie> {
 				vs.setGuionista(rs.getString(4));
 				vs.setNumTrabajadores(rs.getInt(5));
 				vs.setPresupuesto(rs.getInt(6));
-				vs.setFechaEstreno(rs.getDate(7).toLocalDate());
+				vs.setFechaEstreno(rs.getDate(7) != null ? rs.getDate(7).toLocalDate() : null);
 				vs.setTemporadas(rs.getInt(8));
 				vs.setCapitulos(rs.getInt(9));
 

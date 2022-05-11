@@ -139,7 +139,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			// Añadir datos al Prepare Statement
 			stat.setString(1, clase.getNombre());
 			stat.setInt(2, clase.getDuracion());
-			stat.setDate(3, Date.valueOf(clase.getFechaEstreno()));
+			stat.setDate(3, clase.getFechaEstreno() != null ? Date.valueOf(clase.getFechaEstreno()) : null);
 			stat.setInt(4, clase.getPresupuesto());
 			stat.setString(5, clase.getTipo());
 			stat.setString(6, clase.getImgPath());
@@ -269,7 +269,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 				oa.setIdObra(rs.getInt(1));
 				oa.setNombre(rs.getString(2));
 				oa.setDuracion(rs.getInt(3));
-				oa.setFechaEstreno(rs.getDate(4).toLocalDate());
+				oa.setFechaEstreno(rs.getDate(4) != null ? rs.getDate(4).toLocalDate() : null);
 				oa.setPresupuesto(rs.getInt(5));
 				oa.setTipo(rs.getString(6));
 				oa.setImgPath(rs.getString(7));
@@ -319,13 +319,17 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			nomCap = rs.getString("nombreCap");
 		}
 
-		// EJ: el RS nos devuelve la temporada 3 y el tamaño de la lista es de 2 crear
-		// una nueva temporada/lista
-		if (numTemporada != nombreCap.size()) {
+		/**
+		 * Ejemplo: En el caso del que RS nos de la temporada 3 y el tamaño de la lista
+		 * es de 1, por X razones no han añadido la temporada 2, se creará listas hasta
+		 * que el tamaño de la lista sea igual al número de temporada.
+		 **/
+		while (numTemporada != nombreCap.size()) {
 			// Crear una nueva lista
 			nombreCap.add(new ArrayList<>());
 		}
-		// Añadir a la temporada, el capítulo y su nombre
+		// Añadir a la temporada (-1 porque las listas empiezan por el índice 0) y el
+		// nombre del capítulo
 		nombreCap.get(numTemporada - 1).add(nomCap);
 
 		// Guardar la lista a la obra
@@ -391,7 +395,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 					oa.setIdObra(rs.getInt(1));
 					oa.setNombre(rs.getString(2));
 					oa.setDuracion(rs.getInt(3));
-					oa.setFechaEstreno(rs.getDate(4).toLocalDate());
+					oa.setFechaEstreno(rs.getDate(4) != null ? rs.getDate(4).toLocalDate() : null);
 					oa.setPresupuesto(rs.getInt(5));
 					oa.setTipo(rs.getString(6));
 				}
@@ -440,7 +444,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			// Añadir datos al Prepare Statement
 			stat.setString(1, clase.getNombre());
 			stat.setInt(2, clase.getDuracion());
-			stat.setDate(3, Date.valueOf(clase.getFechaEstreno()));
+			stat.setDate(3, clase.getFechaEstreno() != null ? Date.valueOf(clase.getFechaEstreno()) : null);
 			stat.setInt(4, clase.getPresupuesto());
 			stat.setInt(5, clase.getIdObra());
 
