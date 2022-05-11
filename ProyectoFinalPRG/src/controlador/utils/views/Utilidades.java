@@ -1,23 +1,37 @@
 package controlador.utils.views;
 
+import java.awt.Component;
+
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
+
 public class Utilidades {
 
-	public static final int DOCUMENTO=0;
-	public static final int NOMBRE=1;
-	public static final int DIRECCION=2;
-	public static final int TELEFONO=3;
-	public static final int PROFESION=4;
-	public static final int EDAD=5;
-	public static final int NOTA1=6;
-	public static final int NOTA2=7;
-	public static final int NOTA3=8;
-	public static final int PROMEDIO=9;
-	public static final int PERFIL=10;
-	public static final int EVENTO=11;
-	
-	public static int filaSeleccionada;
-	
-	
-	
-	
+	/**
+	 * Redimensionar las columnas según el valor más largo de la columna.
+	 * 
+	 * 
+	 * @param table la tabla que queremos redimensionar su columna
+	 */
+	public static void resizeColumnWidth(JTable table) {
+		// Recoger el modelo da las columnas
+		final TableColumnModel columnModel = table.getColumnModel();
+		// Iterar por las columnas
+		for (int column = 0; column < table.getColumnCount(); column++) {
+			// La anchura mínima de la columna
+			int width = 100;
+			// Iterar por las filas
+			for (int row = 0; row < table.getRowCount(); row++) {
+				// Recogemos la información de la celda en esa fila-columna
+				TableCellRenderer renderer = table.getCellRenderer(row, column);
+				Component comp = table.prepareRenderer(renderer, row, column);
+				// Comparamos si el tamaño del contenido es más grande que el mínimo que hemos
+				// establecido anteriormente y pondrá la anchura el número más grande
+				width = Math.max(comp.getPreferredSize().width + 10, width);
+			}
+			columnModel.getColumn(column).setPreferredWidth(width);
+		}
+	}
+
 }

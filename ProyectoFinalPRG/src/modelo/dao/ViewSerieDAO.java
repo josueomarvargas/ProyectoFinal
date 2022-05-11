@@ -32,7 +32,6 @@ public class ViewSerieDAO implements BDview<ViewSerie> {
 			// Guardar los datos en el objecto
 			while (rs.next()) {
 				vs = new ViewSerie();
-				System.out.println(rs.getDate(7));
 				vs.setId(rs.getInt(1));
 				vs.setNombre(rs.getString(2));
 				vs.setDirector(rs.getString(3));

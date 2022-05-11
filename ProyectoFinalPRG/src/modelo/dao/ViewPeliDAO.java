@@ -44,7 +44,6 @@ public class ViewPeliDAO implements BDview<ViewPeli> {
 
 				// Guardar las pelis en el map
 				pelis.put(vp.getId(), vp);
-
 			}
 
 		} catch (SQLException e) {

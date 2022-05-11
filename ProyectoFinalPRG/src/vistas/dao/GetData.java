@@ -1,5 +1,6 @@
 package vistas.dao;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,12 @@ import modelo.clases.ViewSerie;
  * @author Henrique Yeguo
  */
 public class GetData implements UIcontrol<Object[][]> {
+
+	public static final List<String> PELICULA = Arrays.asList("peli");
+	public static final List<String> SERIE = Arrays.asList("serie");
+	public static final List<String> EQUIPAMIENTO = Arrays.asList("equipamiento");
+	public static final List<String> PATROCINADOR = Arrays.asList("patrocinador");
+	public static final List<String> TRABAJADOR = Arrays.asList("trabajador");
 
 	/**
 	 * Estos atributos guardarán maps con la información completa de las tablas,
@@ -85,7 +92,6 @@ public class GetData implements UIcontrol<Object[][]> {
 			return toObjectArray(trabajador, "trabajador");
 
 		}
-
 		return null;
 	}
 
@@ -117,7 +123,6 @@ public class GetData implements UIcontrol<Object[][]> {
 		Object[][] array2D = null;
 		Iterator<?> iterObra;
 		iterObra = map.values().iterator();
-
 		switch (tipo) {
 		case "peli":
 			array2D = new Object[map.size()][8];
@@ -181,7 +186,6 @@ public class GetData implements UIcontrol<Object[][]> {
 				array2D[i][8] = aux.getFechaNac();
 			}
 		}
-
 		return array2D;
 	}
 

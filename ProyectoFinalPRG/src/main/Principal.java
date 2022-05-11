@@ -1,7 +1,6 @@
 package main;
 
 import vistas.ventanas.gui.LogIn;
-import vistas.ventanas.table.TablaPeliculasSeries;
 
 public class Principal {
 
@@ -10,13 +9,9 @@ public class Principal {
 	 */
 	public static void main(String[] args) {
 
-//		LogIn vprincipal = new LogIn();
-//		vprincipal.setVisible(true);
+		LogIn vprincipal = new LogIn();
+		vprincipal.setVisible(true);
 
-		TablaPeliculasSeries test = new TablaPeliculasSeries();
-		test.setVisible(true);
-		
-		
 	}
 
 }
