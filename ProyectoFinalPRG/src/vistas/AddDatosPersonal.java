@@ -27,6 +27,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 //import com.toedter.calendar.JDateChooser;
 
 public class AddDatosPersonal extends JDialog implements ActionListener {
@@ -50,6 +53,13 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	private ButtonGroup grupoGuion;
 	private ButtonGroup grupoEspecialidad;
 	private ButtonGroup grupoAreaTrabajo;
+	private JPanel panelDirector;
+	private JPanel panelActor;
+	private JPanel panelGuionista;
+	private JPanel panelAudiovisual;
+
+
+
 
 
 	/**
@@ -66,6 +76,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		//getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+
 		{
 			JTextField textField = new JTextField();
 			textField.setBounds(251, 58, 148, 19);
@@ -171,25 +182,14 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		contentPanel.add(textField_3);
 
 
-
-		JLabel lblNewLabel_1_2 = new JLabel("Categoria :");
-		lblNewLabel_1_2.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblNewLabel_1_2.setBounds(29, 413, 79, 19);
-		contentPanel.add(lblNewLabel_1_2);
-
-		textField_4 = new JTextField();
-		textField_4.setBounds(29, 432, 128, 20);
-		contentPanel.add(textField_4);
-		textField_4.setColumns(10);
-
 		grupo1=new ButtonGroup();
-		
+
 
 		JRadioButton rdbDirector = new JRadioButton("DIRECTOR");
+		rdbDirector.addActionListener(this);
 		rdbDirector.setBounds(150, 346, 109, 23);
 		contentPanel.add(rdbDirector);
 		grupo1.add(rdbDirector);
-		rdbDirector.setVisible(false);
 
 		JRadioButton rdbtnActor = new JRadioButton("ACTOR");
 		rdbtnActor.setBounds(150, 376, 109, 23);
@@ -203,81 +203,9 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		rdbtnTecnicoAudiovisual.setBounds(290, 376, 148, 23);
 		contentPanel.add(rdbtnTecnicoAudiovisual);
 		grupo1.add(rdbtnTecnicoAudiovisual);
-
-		JLabel lblNewLabel_1_1_1 = new JLabel("Tipo Guion :");
-		lblNewLabel_1_1_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblNewLabel_1_1_1.setBounds(236, 406, 88, 19);
-		contentPanel.add(lblNewLabel_1_1_1);
-
 		grupoGuion= new ButtonGroup();
-		JRadioButton rdbtnAccion = new JRadioButton("Acci\u00F3n ");
-		rdbtnAccion.setBounds(221, 431, 79, 23);
-		contentPanel.add(rdbtnAccion);
-		grupoGuion.add(rdbtnAccion);
-
-		JRadioButton rdbtnMisterio = new JRadioButton("Misterio");
-		rdbtnMisterio.setBounds(221, 457, 79, 23);
-		contentPanel.add(rdbtnMisterio);
-		grupoGuion.add(rdbtnMisterio);
-		JRadioButton rdbtnCienciaFiccion = new JRadioButton("Ciencia Ficci\u00F3n");
-		rdbtnCienciaFiccion.setBounds(307, 431, 109, 23);
-		contentPanel.add(rdbtnCienciaFiccion);
-		grupoGuion.add(rdbtnCienciaFiccion);
-		JRadioButton rdbtnMiedo = new JRadioButton("Miedo");
-		rdbtnMiedo.setBounds(307, 457, 101, 23);
-		contentPanel.add(rdbtnMiedo);
-		grupoGuion.add(rdbtnMiedo);
-
-		JLabel lblNewLabel_1_1_1_1 = new JLabel("Especialidad :");
-		lblNewLabel_1_1_1_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblNewLabel_1_1_1_1.setBounds(29, 477, 88, 19);
-		contentPanel.add(lblNewLabel_1_1_1_1);
 		grupoEspecialidad= new ButtonGroup();
-
-		JRadioButton rdbtnAccion_1 = new JRadioButton("Acci\u00F3n ");
-		rdbtnAccion_1.setBounds(16, 500, 64, 23);
-		contentPanel.add(rdbtnAccion_1);
-		grupoEspecialidad.add(rdbtnAccion_1);
-
-		JRadioButton rdbtnDoble = new JRadioButton("Doble");
-		rdbtnDoble.setBounds(16, 526, 69, 23);
-		contentPanel.add(rdbtnDoble);
-		grupoEspecialidad.add(rdbtnDoble);
-
-		JRadioButton rdbtnDoblaje = new JRadioButton("Doblaje");
-		rdbtnDoblaje.setBounds(86, 500, 109, 23);
-		contentPanel.add(rdbtnDoblaje);
-		grupoEspecialidad.add(rdbtnDoblaje);
-
-		JRadioButton rdbtnComedia = new JRadioButton("Comedia");
-		rdbtnComedia.setBounds(86, 526, 109, 23);
-		contentPanel.add(rdbtnComedia);
-		grupoEspecialidad.add(rdbtnComedia);
-
-		JLabel lblNewLabel_1_1_1_2 = new JLabel("Area Trabajo :");
-		lblNewLabel_1_1_1_2.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblNewLabel_1_1_1_2.setBounds(236, 487, 88, 19);
-		contentPanel.add(lblNewLabel_1_1_1_2);
 		grupoAreaTrabajo=new ButtonGroup();
-
-		JRadioButton rdbtnAccion_1_1 = new JRadioButton("Coordinador");
-		rdbtnAccion_1_1.setBounds(236, 500, 94, 23);
-		contentPanel.add(rdbtnAccion_1_1);
-		grupoAreaTrabajo.add(rdbtnAccion_1_1);
-		JRadioButton rdbtnAccion_1_2 = new JRadioButton("Audio");
-		rdbtnAccion_1_2.setBounds(236, 530, 64, 23);
-		contentPanel.add(rdbtnAccion_1_2);
-		grupoAreaTrabajo.add(rdbtnAccion_1_2);
-
-		JRadioButton rdbtnAccion_1_3 = new JRadioButton("Camara");
-		rdbtnAccion_1_3.setBounds(335, 500, 64, 23);
-		contentPanel.add(rdbtnAccion_1_3);
-		grupoAreaTrabajo.add(rdbtnAccion_1_3);
-
-		JRadioButton rdbtnAccion_1_4 = new JRadioButton("Efectos especiales");
-		rdbtnAccion_1_4.setBounds(335, 526, 118, 23);
-		contentPanel.add(rdbtnAccion_1_4);
-		grupoAreaTrabajo.add(rdbtnAccion_1_4);
 
 		//	JDateChooser dateChooser = new JDateChooser();
 		//dateChooser.setBounds(251, 273, 148, 20);
@@ -320,11 +248,153 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		contentPanel.add(btnCerrarSystem);
 		contentPanel.setPreferredSize(new Dimension(510,610));
 		scrollPane.setViewportView(contentPanel);
-		getContentPane().add(scrollPane); 
-		
 
-		
-	
+		panelAudiovisual=new JPanel();
+		contentPanel.add(panelAudiovisual);
+		panelAudiovisual.setBackground(Color.CYAN);
+		panelAudiovisual.setBounds(160,420,278,98);
+		panelAudiovisual.setLayout(null);														
+
+		JLabel lblNewLabel_1_1_1_2 = new JLabel("Area Trabajo :");
+		lblNewLabel_1_1_1_2.setBounds(10, 11, 88, 19);
+		panelAudiovisual.add(lblNewLabel_1_1_1_2);
+		lblNewLabel_1_1_1_2.setFont(new Font("Calibri", Font.PLAIN, 12));
+
+		JRadioButton rdbtnAccion_1_1 = new JRadioButton("Coordinador");
+		rdbtnAccion_1_1.setBounds(20, 37, 94, 23);
+		panelAudiovisual.add(rdbtnAccion_1_1);
+		grupoAreaTrabajo.add(rdbtnAccion_1_1);
+
+		JRadioButton rdbtnAccion_1_3 = new JRadioButton("Camara");
+		rdbtnAccion_1_3.setBounds(135, 37, 64, 23);
+		panelAudiovisual.add(rdbtnAccion_1_3);
+		grupoAreaTrabajo.add(rdbtnAccion_1_3);
+		JRadioButton rdbtnAccion_1_2 = new JRadioButton("Audio");
+		rdbtnAccion_1_2.setBounds(20, 68, 64, 23);
+		panelAudiovisual.add(rdbtnAccion_1_2);
+		grupoAreaTrabajo.add(rdbtnAccion_1_2);
+
+		JRadioButton rdbtnAccion_1_4 = new JRadioButton("Efectos especiales");
+		rdbtnAccion_1_4.setBounds(135, 63, 118, 23);
+		panelAudiovisual.add(rdbtnAccion_1_4);
+		grupoAreaTrabajo.add(rdbtnAccion_1_4);
+		rdbDirector.setSelected(true);
+
+
+		panelDirector=new JPanel();
+		panelDirector.setBounds(164, 420, 148, 79);
+		contentPanel.add(panelDirector);
+		panelDirector.setBackground(Color.CYAN);
+		panelDirector.setLayout(null);
+		panelDirector.setVisible(false);
+		JLabel lblNewLabel_1_2 = new JLabel("Categoria :");
+		lblNewLabel_1_2.setBounds(22, 11, 79, 19);
+		panelDirector.add(lblNewLabel_1_2);
+		lblNewLabel_1_2.setFont(new Font("Calibri", Font.PLAIN, 12));
+		panelDirector.add(lblNewLabel_1_2);
+
+		textField_4 = new JTextField();
+		textField_4.setBounds(10, 41, 128, 20);
+		panelDirector.add(textField_4);
+		textField_4.setColumns(10);
+
+		panelActor=new JPanel();
+		panelActor.setBounds(142, 420, 244, 98);
+		contentPanel.add(panelActor);
+		panelActor.setBackground(Color.CYAN);
+		panelActor.setLayout(null);
+
+		JLabel lblNewLabel_1_1_1_1 = new JLabel("Especialidad :");
+		lblNewLabel_1_1_1_1.setBounds(22, 11, 88, 19);
+		panelActor.add(lblNewLabel_1_1_1_1);
+		lblNewLabel_1_1_1_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+
+		JRadioButton rdbtnAccion_1 = new JRadioButton("Acci\u00F3n ");
+		rdbtnAccion_1.setBounds(22, 37, 64, 23);
+		panelActor.add(rdbtnAccion_1);
+		grupoEspecialidad.add(rdbtnAccion_1);
+
+		JRadioButton rdbtnDoblaje = new JRadioButton("Doblaje");
+		rdbtnDoblaje.setBounds(129, 37, 109, 23);
+		panelActor.add(rdbtnDoblaje);
+		grupoEspecialidad.add(rdbtnDoblaje);
+
+		JRadioButton rdbtnDoble = new JRadioButton("Doble");
+		rdbtnDoble.setBounds(22, 63, 69, 23);
+		panelActor.add(rdbtnDoble);
+		grupoEspecialidad.add(rdbtnDoble);
+
+		JRadioButton rdbtnComedia = new JRadioButton("Comedia");
+		rdbtnComedia.setBounds(129, 63, 109, 23);
+		panelActor.add(rdbtnComedia);
+		grupoEspecialidad.add(rdbtnComedia);
+
+		panelGuionista=new JPanel();
+		panelGuionista.setBounds(155, 420, 244, 98);
+		contentPanel.add(panelGuionista);
+		panelGuionista.setBackground(Color.CYAN);
+		panelGuionista.setLayout(null);
+
+		JLabel lblNewLabel_1_1_1 = new JLabel("Tipo Guion :");
+		lblNewLabel_1_1_1.setBounds(20, 11, 88, 19);
+		panelGuionista.add(lblNewLabel_1_1_1);
+		lblNewLabel_1_1_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+		JRadioButton rdbtnAccion = new JRadioButton("Acci\u00F3n ");
+		rdbtnAccion.setBounds(6, 37, 79, 23);
+		panelGuionista.add(rdbtnAccion);
+		grupoGuion.add(rdbtnAccion);
+		JRadioButton rdbtnCienciaFiccion = new JRadioButton("Ciencia Ficci\u00F3n");
+		rdbtnCienciaFiccion.setBounds(104, 37, 109, 23);
+		panelGuionista.add(rdbtnCienciaFiccion);
+		grupoGuion.add(rdbtnCienciaFiccion);
+
+		JRadioButton rdbtnMisterio = new JRadioButton("Misterio");
+		rdbtnMisterio.setBounds(10, 68, 79, 23);
+		panelGuionista.add(rdbtnMisterio);
+		grupoGuion.add(rdbtnMisterio);
+		JRadioButton rdbtnMiedo = new JRadioButton("Miedo");
+		rdbtnMiedo.setBounds(104, 68, 101, 23);
+		panelGuionista.add(rdbtnMiedo);
+		grupoGuion.add(rdbtnMiedo);
+		if(rdbDirector.isSelected()) {
+			panelDirector.setVisible(true);
+			panelActor.setVisible(false);
+			panelGuionista.setVisible(false);
+			panelAudiovisual.setVisible(false);
+			rdbtnActor.setSelected(false);
+			rdbtnGuionista.setSelected(false);
+			rdbtnTecnicoAudiovisual.setSelected(false);
+		}
+		else if(rdbtnActor.isSelected()) {
+			panelDirector.setVisible(false);
+			panelActor.setVisible(true);
+			panelGuionista.setVisible(false);
+			panelAudiovisual.setVisible(false);
+			rdbDirector.setSelected(false);
+			rdbtnGuionista.setSelected(false);
+			rdbtnTecnicoAudiovisual.setSelected(false);
+		}
+		else if(rdbtnGuionista.isSelected()) {
+			panelDirector.setVisible(false);
+			panelActor.setVisible(false);
+			panelGuionista.setVisible(true);
+			panelAudiovisual.setVisible(false);
+			rdbtnActor.setSelected(false);
+			rdbDirector.setSelected(false);
+			rdbtnTecnicoAudiovisual.setSelected(false);
+		}
+		else if(rdbtnTecnicoAudiovisual.isSelected()) {
+			panelDirector.setVisible(false);
+			panelActor.setVisible(false);
+			panelGuionista.setVisible(false);
+			panelAudiovisual.setVisible(true);
+			rdbtnActor.setSelected(false);
+			rdbtnGuionista.setSelected(false);
+			rdbDirector.setSelected(false);
+		}
+		getContentPane().add(scrollPane, BorderLayout.EAST); 
+
+
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -346,5 +416,10 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		else if (e.getSource().equals(btnCerrarSystem)) {
 			System.exit(0);
 		}
+		//else if(e.getSource().equals(btnDirector)) {
+		//panelDirector.setVisible(true);
+
+		//	}
 	}
+
 }
