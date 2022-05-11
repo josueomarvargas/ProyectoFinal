@@ -1,4 +1,4 @@
-package vistas.ventanas;
+package vistas.ventanas.data;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,6 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vistas.ventanas.gui.GestionDatos;
+import vistas.ventanas.table.TablaPatrocinadores;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -18,7 +22,7 @@ import java.awt.Font;
 import javax.swing.JScrollBar;
 import javax.swing.JLabel;
 
-public class AddPelicula extends JDialog implements ActionListener{
+public class DatosPelicula extends JDialog implements ActionListener{
 
 	/**
 	 * 
@@ -35,7 +39,7 @@ public class AddPelicula extends JDialog implements ActionListener{
 	/**
 	 * Create the dialog.
 	 */
-	public AddPelicula() {
+	public DatosPelicula() {
 		this.setUndecorated(true);
 		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());

@@ -1,4 +1,4 @@
-package vistas.ventanas;
+package vistas.ventanas.data;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,7 +18,7 @@ import java.awt.Font;
 import javax.swing.JScrollBar;
 import javax.swing.JLabel;
 
-public class AddEquipamiento extends JDialog implements ActionListener {
+public class DatosEquipamiento extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -35,7 +35,7 @@ public class AddEquipamiento extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public AddEquipamiento() {
+	public DatosEquipamiento() {
 		this.setUndecorated(true);
 		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());

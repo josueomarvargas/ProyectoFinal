@@ -1,4 +1,4 @@
-package vistas.ventanas;
+package vistas.ventanas.table;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,9 +15,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import vistas.ventanas.data.DatosPatrocinador;
+
 import java.awt.SystemColor;
 
-public class TablaEquipamiento extends JDialog implements ActionListener {
+public class TablaPatrocinadores extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -36,7 +39,7 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public TablaEquipamiento() {
+	public TablaPatrocinadores() {
 		this.setUndecorated(true);
 		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
@@ -46,8 +49,7 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBackground(SystemColor.activeCaption);
-			scrollPane.setBounds(10, 47, 499, 265);
+			scrollPane.setBounds(26, 40, 498, 168);
 			contentPanel.add(scrollPane);
 			{
 				table = new JTable();
@@ -58,49 +60,49 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 							{null, null, null, null},
 							{null, null, null, null},
 							{null, null, null, null},
+							{null, null, null, null},
 						},
 						new String[] {
-								"ID", "Nombre", "Tipo", "Caracter\u00EDstica"
+								"ID", "Nombre", "Cantidad(mill)", "Condicion"
 						}
 						));
 				scrollPane.setViewportView(table);
 			}
-			btnCerrarSystem = new JButton("X");
-			btnCerrarSystem.setForeground(Color.RED);
-			btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
-			btnCerrarSystem.setBounds(496, 0, 55, 29);
-			btnCerrarSystem.addActionListener(this);
-			contentPanel.add(btnCerrarSystem);
 		}
-		
+		btnCerrarSystem = new JButton("X");
+		btnCerrarSystem.setForeground(Color.RED);
+		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCerrarSystem.setBounds(496, 0, 55, 29);
+		btnCerrarSystem.addActionListener(this);
+		contentPanel.add(btnCerrarSystem);
+
 		panel = new JPanel();
 		panel.setBackground(SystemColor.textHighlight);
-		panel.setBounds(0, 382, 550, 38);
+		panel.setBounds(0, 384, 550, 36);
 		contentPanel.add(panel);
-						textField = new JTextField();
-						panel.add(textField);
-						textField.setColumns(10);
-		
-						btnBuscar = new JButton("Buscar");
-						panel.add(btnBuscar);
-						
-										btnAnadir = new JButton("A\u00F1adir");
-										panel.add(btnAnadir);
-										
-														btnVolver = new JButton("Volver");
-														panel.add(btnVolver);
-														btnVolver.addActionListener(this);
-										btnAnadir.addActionListener(this);
-						btnBuscar.addActionListener(this);
+
+		textField = new JTextField();
+		panel.add(textField);
+		textField.setColumns(10);
+
+		btnBuscar = new JButton("Buscar");
+		panel.add(btnBuscar);
+
+		btnAnadir = new JButton("A\u00F1adir");
+		panel.add(btnAnadir);
+
+		btnVolver = new JButton("Volver");
+		panel.add(btnVolver);
+		btnVolver.addActionListener(this);
+		btnAnadir.addActionListener(this);
+		btnBuscar.addActionListener(this);
 	}
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(btnAnadir)) {
-			AddEquipamiento vEquipamiento= new AddEquipamiento();
-			vEquipamiento.setVisible(true);
-
+		if(e.getSource().equals(btnAnadir)) {	
+			DatosPatrocinador vPatrocinador= new DatosPatrocinador();
+			vPatrocinador.setVisible(true);
 		}
 		else if(e.getSource().equals(btnVolver)) {
 			this.dispose();

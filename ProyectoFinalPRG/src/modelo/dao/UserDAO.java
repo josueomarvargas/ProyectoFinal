@@ -17,7 +17,9 @@ import modelo.clases.Usuario;
 /**
  * La clase {@code UsuarioDAO} es una clase que implementa la interfaz genérica
  * {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea métodos
- * CRUD necesarios para gestionar la clase {@link modelo.clases.Usuario Usuario}
+ * CRUD necesarios para gestionar la clase {@link modelo.clases.Usuario
+ * Usuario}, también usaremos la interfaz {@link BDretrieveData} para recoger
+ * los datos de un trabajador mediante su {@link Usuario}.
  * <p>
  * Esta clase también implementa la interfaz {@link BDretrieveData}
  * especificando las clases {@link Usuario} y {@link Trabajador} para hacer uso
@@ -31,7 +33,7 @@ public class UserDAO implements BDgeneric<Usuario>, BDretrieveData<Usuario, Trab
 
 	// MySQL Consultas
 	// Insertar usuarios
-	private final String CREATE = "INSERT INTO usuario(idUsuario, passwd, idTrabajdor) VALUES(?, ?, ?)";
+	private final String CREATE = "INSERT INTO usuario VALUES(?, ?, ?)";
 
 	// Buscar buscar info del usuario
 	private final String SEARCH = "SELECT * FROM usuario WHERE idTrabajador = ?";
@@ -244,7 +246,7 @@ public class UserDAO implements BDgeneric<Usuario>, BDretrieveData<Usuario, Trab
 				String[] id = { rs.getString(1) };
 
 				Trabajador trabajador = (Trabajador) GenericFactory.TRABAJADOR.getInstance().search(id);
-				
+
 				return trabajador;
 			}
 

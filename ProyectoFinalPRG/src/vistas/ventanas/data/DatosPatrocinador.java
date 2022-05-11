@@ -1,4 +1,4 @@
-package vistas.ventanas;
+package vistas.ventanas.data;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Color;
 
-public class AddDatosPatrocinador extends JDialog implements ActionListener {
+public class DatosPatrocinador extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class AddDatosPatrocinador extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public AddDatosPatrocinador() {
+	public DatosPatrocinador() {
 		setUndecorated(true);
 		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());

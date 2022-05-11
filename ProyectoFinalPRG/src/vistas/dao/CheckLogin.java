@@ -18,7 +18,7 @@ import modelo.dao.UserDAO;
  * @author Henrique Yeguo
  *
  */
-public class Login implements UIcontrol<Trabajador> {
+public class CheckLogin implements UIcontrol<Trabajador> {
 
 	private static Trabajador tData;
 
@@ -44,7 +44,7 @@ public class Login implements UIcontrol<Trabajador> {
 					.getUserLogin();
 			// Recoger información del trabajador
 			tData = aux.recogerInfo(new Usuario(list.get(0), list.get(1)));
-			
+
 		}
 		return tData;
 	}

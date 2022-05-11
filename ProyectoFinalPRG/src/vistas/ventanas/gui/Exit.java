@@ -1,4 +1,4 @@
-package vistas.ventanas;
+package vistas.ventanas.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

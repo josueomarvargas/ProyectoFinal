@@ -13,7 +13,7 @@ import modelo.clases.ViewSerie;
 
 public class ViewSerieDAO implements BDview<ViewSerie> {
 
-	private final String viewPeli = "SELECT * FROM viewpelis";
+	private final String viewPeli = "SELECT * FROM viewseries";
 
 	@Override
 	public Map<Integer, ViewSerie> callView() {
@@ -32,6 +32,7 @@ public class ViewSerieDAO implements BDview<ViewSerie> {
 			// Guardar los datos en el objecto
 			while (rs.next()) {
 				vs = new ViewSerie();
+				System.out.println(rs.getDate(7));
 				vs.setId(rs.getInt(1));
 				vs.setNombre(rs.getString(2));
 				vs.setDirector(rs.getString(3));
@@ -48,7 +49,8 @@ public class ViewSerieDAO implements BDview<ViewSerie> {
 			}
 
 		} catch (SQLException e) {
-			System.err.println(e);
+			e.printStackTrace();
+
 		} finally {
 			if (con != null) {
 				try {

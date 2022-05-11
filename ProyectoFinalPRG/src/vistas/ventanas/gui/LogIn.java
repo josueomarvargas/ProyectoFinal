@@ -1,11 +1,15 @@
-package vistas.ventanas;
+package vistas.ventanas.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,9 +23,6 @@ import javax.swing.border.EmptyBorder;
 import controlador.utils.dao.GenericFactory;
 import controlador.utils.messages.UIMessages;
 import modelo.clases.Trabajador;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.Arrays;
 
 public class LogIn extends JFrame implements ActionListener {
 
@@ -34,12 +35,14 @@ public class LogIn extends JFrame implements ActionListener {
 	private JTextField username;
 	private JButton btnAcceder;
 	private JButton btnCerrar;
+	private Dimension size = null;
 
 	/**
 	 * Create the frame.
 	 */
 	public LogIn() {
 		this.setUndecorated(true);
+
 		// this.setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 420);
@@ -88,13 +91,17 @@ public class LogIn extends JFrame implements ActionListener {
 		btnCerrar.addActionListener(this);
 		btnCerrar.setForeground(Color.RED);
 		btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnCerrar.setBounds(512, 0, 39, 39);
+		btnCerrar.setBounds(501, 0, 50, 39);
 		contentPane.add(btnCerrar);
 		btnAcceder = new JButton("Acceder");
 		btnAcceder.setBounds(171, 297, 173, 23);
 		contentPane.add(btnAcceder);
 		btnAcceder.addActionListener(this);
 		btnAcceder.setEnabled(false);
+
+		Toolkit toolKit = getToolkit();
+		size = toolKit.getScreenSize();
+		setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
 
 	}
 
@@ -109,15 +116,14 @@ public class LogIn extends JFrame implements ActionListener {
 				new UIMessages(this, "El usuario y/o contraseña són incorrectos, vuelva a intentarlo.",
 						"Permiso denegado");
 			} else {
-				Menu vMenu = new Menu(this);
+				Menu vMenu = new Menu(this, size, tData);
 				vMenu.setVisible(true);
-
+				username.setText("");
+				passwd.setText("");
 			}
 
 		}
 		if (e.getSource().equals(btnCerrar)) {
-			// SalirPrograma vSalir=new SalirPrograma();
-			// vSalir.setVisible(true);
 			int resp = JOptionPane.showConfirmDialog(null, "¿Quieres Salir del programa?", "Alerta!",
 					JOptionPane.YES_NO_OPTION);
 			if (resp == 0) {
@@ -128,7 +134,7 @@ public class LogIn extends JFrame implements ActionListener {
 	}
 
 	public void checkField() {
-		if (username.getText().length() > 5 && passwd.getPassword().length > 8) {
+		if (username.getText().length() > 4 && passwd.getPassword().length > 8) {
 			btnAcceder.setEnabled(true);
 		} else {
 			btnAcceder.setEnabled(false);

@@ -16,7 +16,8 @@ import modelo.dao.TrabajadorDAO;
 import modelo.dao.UserDAO;
 import modelo.dao.ViewPeliDAO;
 import modelo.dao.ViewSerieDAO;
-import vistas.dao.Login;
+import vistas.dao.GetData;
+import vistas.dao.CheckLogin;
 
 /**
  * <h1>Factoria de las clases</h1>
@@ -55,7 +56,8 @@ import vistas.dao.Login;
 public enum GenericFactory {
 	EQUIP(EquipDAO::new), EQUIPOBRA(EquipObraDAO::new), OBRA(ObraDAO::new), PARTICIPA(ParticipaDAO::new),
 	PATROCINADOR(PatrocinadorDAO::new), PROMOCIONA(PromocionaDAO::new), TRABAJADOR(TrabajadorDAO::new),
-	USER(UserDAO::new), VIEWPELIS(ViewPeliDAO::new), VIEWSERIE(ViewSerieDAO::new), LOGIN(Login::new);
+	USER(UserDAO::new), VIEWPELIS(ViewPeliDAO::new), VIEWSERIE(ViewSerieDAO::new), LOGIN(CheckLogin::new),
+	GETDATA(GetData::new);
 
 	private Supplier<?> instantiator;
 

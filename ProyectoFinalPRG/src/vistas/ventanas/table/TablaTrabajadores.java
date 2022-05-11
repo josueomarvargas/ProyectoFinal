@@ -1,4 +1,4 @@
-package vistas.ventanas;
+package vistas.ventanas.table;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,6 +14,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import vistas.ventanas.data.DatosPersonal;
+
 import javax.swing.JTextField;
 import java.awt.SystemColor;
 
@@ -100,7 +103,7 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(btnAnadir)) {
-			AddDatosPersonal vPersonal = new AddDatosPersonal();
+			DatosPersonal vPersonal = new DatosPersonal();
 			vPersonal.setVisible(true);
 		}
 		else if(e.getSource().equals(btnVolver)) {

@@ -1,4 +1,4 @@
-package vistas.ventanas;
+package vistas.ventanas.data;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,6 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vistas.ventanas.gui.GestionDatos;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -28,7 +31,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 //import com.toedter.calendar.JDateChooser;
 
-public class AddDatosPersonal extends JDialog implements ActionListener {
+public class DatosPersonal extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -49,7 +52,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public AddDatosPersonal() {
+	public DatosPersonal() {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(5, 10, 100, 150);
 

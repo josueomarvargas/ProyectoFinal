@@ -1,13 +1,13 @@
-package vistas.ventanas;
+package vistas.ventanas.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,9 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controlador.utils.dao.GenericFactory;
 import modelo.clases.Trabajador;
-import vistas.dao.Login;
+import vistas.dao.CheckLogin;
+import vistas.ventanas.data.DatosPersonal;
+import vistas.ventanas.table.TablaPeliculasSeries;
 
 public class Menu extends JDialog implements ActionListener {
 
@@ -32,13 +33,15 @@ public class Menu extends JDialog implements ActionListener {
 	private JButton btnConsultarObra;
 	private JButton btnCerrar;
 	private JButton btnCerrarSystem;
+	private static Trabajador user;
 
 	/**
 	 * Create the dialog.
 	 */
-	public Menu(LogIn parent) {
+	public Menu(LogIn parent, Dimension size, Trabajador usuario) {
 		super(parent);
 		this.setUndecorated(true);
+		user = usuario;
 		setBounds(100, 100, 550, 420);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
@@ -96,12 +99,16 @@ public class Menu extends JDialog implements ActionListener {
 		btnCerrarSystem.setBounds(496, 0, 55, 29);
 		btnCerrarSystem.addActionListener(this);
 		contentPanel.add(btnCerrarSystem);
+		setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
+		if (user.getTipo().equals("Administrador")) {
+			btnMDatos.setEnabled(false);
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnMDatos)) {
-			AddDatosPersonal vMDatos = new AddDatosPersonal();
+			DatosPersonal vMDatos = new DatosPersonal();
 			vMDatos.setVisible(true);
 		} else if (e.getSource().equals(btnGDatos)) {
 			GestionDatos vGDatos = new GestionDatos();
@@ -117,11 +124,10 @@ public class Menu extends JDialog implements ActionListener {
 					JOptionPane.YES_NO_OPTION);
 			if (resp == 0) {
 				this.dispose();
-				Login.logOut();
+				CheckLogin.logOut();
 
 			}
-		}
-		else if (e.getSource().equals(btnCerrarSystem)) {
+		} else if (e.getSource().equals(btnCerrarSystem)) {
 			System.exit(0);
 		}
 

@@ -309,7 +309,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 		// Recoger la lista de 2Dimensiones
 		List<List<String>> nombreCap = ((Serie) obra).getNombreCap();
-		int numTemporada = rs.getInt("NumTemporada");
+		int numTemporada = rs.getInt("Temporada");
 		String nomCap = "";
 
 		// Comprobar si el capitulo tiene nombre
@@ -325,9 +325,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			// Crear una nueva lista
 			nombreCap.add(new ArrayList<>());
 		}
-
 		// Añadir a la temporada, el capítulo y su nombre
-		// Ej: temporada 1 el índice en la lista será la 0
 		nombreCap.get(numTemporada - 1).add(nomCap);
 
 		// Guardar la lista a la obra

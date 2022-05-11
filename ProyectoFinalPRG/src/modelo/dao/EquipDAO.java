@@ -26,7 +26,7 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 	private final String SEARCH = "SELECT e.*, c.caracteristica FROM equipamiento e INNER JOIN caracteristica c ON c.idEquip = e.idEquip WHERE e.idequip = ?";
 
 	// Leer todo de la tabla equipamiento junto con sus caracteristicas
-	private final String READALL = "select e.*, c.caracteristica from equipamiento e INNER JOIN caracteristica c ON c.idEquip = e.idEquip;";
+	private final String READALL = "select e.*, c.caracteristica from equipamiento e INNER JOIN caracteristica c ON c.idEquip = e.idEquip";
 
 	// Actualización de datos
 	private final String UPDATE = "UPDATE equipamiento SET nombre = ?, tipo = ? WHERE idEquip = ?";
