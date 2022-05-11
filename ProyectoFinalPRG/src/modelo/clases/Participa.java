@@ -32,4 +32,13 @@ public class Participa {
 		this.idObra = idObra;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "Participa [idTrabajador=" + idTrabajador + ", idObra=" + idObra + "]";
+	}
+	
+	
+
 }

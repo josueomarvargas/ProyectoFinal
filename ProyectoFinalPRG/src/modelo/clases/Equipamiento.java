@@ -55,4 +55,10 @@ public class Equipamiento {
 		this.caracteristicas = caracteristicas;
 	}
 
+	@Override
+	public String toString() {
+		return "Equipamiento [idEquip=" + idEquip + ", nombre=" + nombre + ", tipo=" + tipo + ", caracteristicas="
+				+ caracteristicas + "]";
+	}
+
 }

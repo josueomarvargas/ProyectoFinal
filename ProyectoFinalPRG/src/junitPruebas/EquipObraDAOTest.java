@@ -54,19 +54,19 @@ class EquipObraDAOTest {
 //
 //	}
 
-//	@Test
-//	void testSearch() {
-//		String [] id = {"15"};	
-//		try {
-//			EquipObra aux = eqoDao.search(id);
-//			System.out.println(aux.getIdEquip());
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		fail("Not yet implemented");
-//	}
+	@Test
+	void testSearch() {
+		String [] id = {"15"};	
+		try {
+			EquipObra aux = eqoDao.search(id);
+			System.out.println(aux.getIdEquip());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		fail("Not yet implemented");
+	}
 //	@Test
 //	void testReadAll() {
 //		try {

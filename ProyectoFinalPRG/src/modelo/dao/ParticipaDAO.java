@@ -164,7 +164,7 @@ public class ParticipaDAO implements BDgeneric<Participa> {
 				PreparedStatement trabajadorStat = con.prepareStatement(SEARCHTRABAJADOR)) {
 
 			// Si hay ID en el índice 0, buscar por obra
-			if (id[0].isBlank()) {
+			if (!id[0].isBlank()) {
 				obraStat.setString(1, id[0]);
 				rs = obraStat.executeQuery();
 				searchObra = true;
@@ -177,6 +177,7 @@ public class ParticipaDAO implements BDgeneric<Participa> {
 
 			// Comprobar que RS a recuperado informacion del executeQuery
 			while (rs.next()) {
+
 				// Creamos una instancia del objecto
 				if (part == null) {
 					part = new Participa();

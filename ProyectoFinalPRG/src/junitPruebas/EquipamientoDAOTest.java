@@ -44,18 +44,18 @@ class EquipamientoDAOTest {
 //	static void tearDownAfterClass() throws Exception {
 //	}
 //
-//	@Test
-//	void testCreate() {
-//		try {
-//			estado = eqpDao.create(equipa);
-//
-//			assertTrue(estado);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("Fallo SQL");
-//		}
-//	}
+	@Test
+	void testCreate() {
+		try {
+			estado = eqpDao.create(equipa);
+
+			assertTrue(estado);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Fallo SQL");
+		}
+	}
 
 //	@Test
 //	void testSearch() {
@@ -71,7 +71,7 @@ class EquipamientoDAOTest {
 //		fail("Not yet implemented");
 //	}
 
-//    RSPUESTA: modelo.clases.Equipamiento@1e44b638
+
 //	@Test
 //	void testReadAll() {
 //		try {
@@ -90,33 +90,33 @@ class EquipamientoDAOTest {
 //		}
 //		fail("Not yet implemented");
 //	}
-//	@Test
-//	void testUpdate() {
-//		try {
-//			estado = eqpDao.update(equipa);
-//
-//			assertTrue(estado);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("Fallo SQL");
-//		}
-//	}
+	@Test
+	void testUpdate() {
+		try {
+			estado = eqpDao.update(equipa);
 
-//@Test
-//	void testRemove() {
-//		String[] id = {"21"};
-//		try {
-//			estado = eqpDao.remove(id);
-//
-//			assertTrue(estado);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("Fallo SQL");
-//		}
-//	
-//}
+			assertTrue(estado);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Fallo SQL");
+		}
+	}
+
+@Test
+	void testRemove() {
+		String[] id = {"21"};
+		try {
+			estado = eqpDao.remove(id);
+
+			assertTrue(estado);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Fallo SQL");
+		}
+	
+}
 }
 
 
