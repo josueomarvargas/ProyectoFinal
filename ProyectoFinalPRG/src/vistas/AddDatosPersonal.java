@@ -40,7 +40,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JPasswordField passwordField;
-	private JTextField textField_2;
+	private JTextField textTelefono;
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JButton btnModificar;
@@ -62,6 +62,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	private JRadioButton rdbtnGuionista;
 	private JRadioButton rdbtnTecnicoAudiovisual;
 	private JButton btnMostrar;
+	private JTextField textDni;
 	/**
 	 * Create the dialog.
 	 */
@@ -103,9 +104,10 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 			contentPanel.add(textField);
 		}
 		{
-			JTextField textField = new JTextField();
-			textField.setBounds(251, 119, 148, 19);
-			contentPanel.add(textField);
+			textDni = new JTextField();
+			textDni.setBounds(251, 119, 148, 19);
+			
+			contentPanel.add(textDni);
 		}
 
 
@@ -173,9 +175,9 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		lblNewLabel_1_1.setBounds(145, 304, 64, 19);
 		contentPanel.add(lblNewLabel_1_1);
 
-		textField_2 = new JTextField();
-		textField_2.setBounds(251, 301, 148, 19);
-		contentPanel.add(textField_2);
+		textTelefono = new JTextField();
+		textTelefono.setBounds(251, 301, 148, 19);
+		contentPanel.add(textTelefono);
 
 		textField_3 = new JTextField();
 		textField_3.setBounds(251, 209, 148, 19);
@@ -384,6 +386,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 			}
 			else if(e.getSource().equals(btnAceptar)){
 				GestionDatos vGDatos = new GestionDatos();
+				
 
 			}
 		}
@@ -422,5 +425,17 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 
 		//	}
 	}
-
+	
+	private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {
+	     String [] v = {"0","1","2","3","4","5","6","7","8","9"};
+	     char c =evt.getKeyChar();
+	     String s = "%" + c ;
+	      s=s.replace("%", "");
+	     if (s.equals(v[0])||s.equals(v[1])||s.equals(v[2])||s.equals(v[3])||s.equals(v[4])||s.equals(v[5])){}
+	     else  if (s.equals(v[6])||s.equals(v[7])||s.equals(v[8])||s.equals(v[9])){}
+	     else{
+	         int k = textTelefono.getText().length()-1;
+	         String n = textTelefono.getText().substring(0,k);
+	         textTelefono.setText (n);}
+	}
 }

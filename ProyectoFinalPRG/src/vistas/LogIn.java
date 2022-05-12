@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import imagenes.FondoPanel;
+
 
 import javax.swing.JTextArea;
 import javax.swing.JPasswordField;
@@ -38,16 +38,13 @@ public class LogIn extends JFrame implements ActionListener {
 	private JButton btnCancelar;
 	private JButton btnAceptar;
 	private JButton btnCerrarSystem;
-	private FondoPanel panel=new FondoPanel();
 	private JPanel buttonPane;
 
 	/**
 	 * Create the frame.
 	 */
 	public LogIn() {
-		this.setTitle("Ventana");
-		this.setSize(new Dimension(700,700));
-		this.setLocationRelativeTo(null);
+		
 		this.setUndecorated(true);
 		//this.setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
