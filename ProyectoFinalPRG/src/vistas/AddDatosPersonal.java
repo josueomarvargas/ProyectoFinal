@@ -18,6 +18,8 @@ import java.awt.ScrollPane;
 
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JTable;
@@ -106,7 +108,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		{
 			textDni = new JTextField();
 			textDni.setBounds(251, 119, 148, 19);
-			
+
 			contentPanel.add(textDni);
 		}
 
@@ -198,13 +200,13 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		rdbtnActor.setBounds(150, 376, 109, 23);
 		contentPanel.add(rdbtnActor);
 		grupo1.add(rdbtnActor);
-		
+
 		rdbtnGuionista = new JRadioButton("GUIONISTA");
 		rdbtnGuionista.addActionListener(this);
 		rdbtnGuionista.setBounds(290, 346, 109, 23);
 		contentPanel.add(rdbtnGuionista);
 		grupo1.add(rdbtnGuionista);
-		
+
 		rdbtnTecnicoAudiovisual = new JRadioButton("TECNICO AUDIOVISUAL");
 		rdbtnTecnicoAudiovisual.addActionListener(this);
 		rdbtnTecnicoAudiovisual.setBounds(290, 376, 148, 23);
@@ -377,65 +379,80 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		if(e.getSource().equals(btnVolver)) {
 			this.dispose();
 		}
-		else if(e.getSource().equals(btnModificar)) {
-			int resp =JOptionPane.showConfirmDialog(null,"¿Quieres Modificar Los Datos?","Alerta!",JOptionPane.YES_NO_OPTION);
-			if (resp==0) {
-				JOptionPane.showMessageDialog(null, "Se ha modificado correctamente", "Titulo", JOptionPane.DEFAULT_OPTION);
-
-
-			}
-			else if(e.getSource().equals(btnAceptar)){
-				GestionDatos vGDatos = new GestionDatos();
+	
+			if(e.getSource().equals(btnModificar)) {
+				if (!validarNumeros(textTelefono.getText().trim())) {
+					JOptionPane.showMessageDialog(rootPane, "Los datos del telefono no son corretos");
+					}
+				else {
 				
+				int resp =JOptionPane.showConfirmDialog(null,"¿Quieres Modificar Los Datos?","Alerta!",JOptionPane.YES_NO_OPTION);
+				if (resp==0) {
+					JOptionPane.showMessageDialog(null, "Se ha modificado correctamente", "Titulo", JOptionPane.DEFAULT_OPTION);
+
+
+				}
+				}
+			}
+			if(e.getSource().equals(btnAceptar)){
+				JOptionPane.showMessageDialog(rootPane, "Son Corretos");
+
 
 			}
-		}
-		else if (e.getSource().equals(btnCerrarSystem)) {
-			System.exit(0);
-		}
 
-		if(e.getSource().equals(rdbDirector)) {
-			panelDirector.setVisible(true);
-			panelActor.setVisible(false);
-			panelGuionista.setVisible(false);
-			panelAudiovisual.setVisible(false);
 
-		}
-		else if(e.getSource().equals(rdbtnActor)) {
-			panelDirector.setVisible(false);
-			panelActor.setVisible(true);
-			panelGuionista.setVisible(false);
-			panelAudiovisual.setVisible(false);
+		
 
-		}
-		else if(e.getSource().equals(rdbtnGuionista)){
-			panelDirector.setVisible(false);
-			panelActor.setVisible(false);
-			panelGuionista.setVisible(true);
-			panelAudiovisual.setVisible(false);	
-		}
-		else if (e.getSource().equals(rdbtnTecnicoAudiovisual)) {
-			panelDirector.setVisible(false);
-			panelActor.setVisible(false);
-			panelGuionista.setVisible(false);
-			panelAudiovisual.setVisible(true);	
-		}
-		//else if(e.getSource().equals(btnDirector)) {
-		//panelDirector.setVisible(true);
+	
+	if (e.getSource().equals(btnCerrarSystem)) {
+		System.exit(0);
+	}
 
-		//	}
+	if(e.getSource().equals(rdbDirector)) {
+		panelDirector.setVisible(true);
+		panelActor.setVisible(false);
+		panelGuionista.setVisible(false);
+		panelAudiovisual.setVisible(false);
+
+	}
+	else if(e.getSource().equals(rdbtnActor)) {
+		panelDirector.setVisible(false);
+		panelActor.setVisible(true);
+		panelGuionista.setVisible(false);
+		panelAudiovisual.setVisible(false);
+
+	}
+	else if(e.getSource().equals(rdbtnGuionista)){
+		panelDirector.setVisible(false);
+		panelActor.setVisible(false);
+		panelGuionista.setVisible(true);
+		panelAudiovisual.setVisible(false);	
+	}
+	else if (e.getSource().equals(rdbtnTecnicoAudiovisual)) {
+		panelDirector.setVisible(false);
+		panelActor.setVisible(false);
+		panelGuionista.setVisible(false);
+		panelAudiovisual.setVisible(true);	
+	}
+	//else if(e.getSource().equals(btnDirector)) {
+	//panelDirector.setVisible(true);
+
+	//	}
+}
+
+
+private void  num(JTextField a) {
+a.addKeyListener(new KeyAdapter() {
+	public void keyTyped(KeyEvent e) {
+		char c=e.getKeyChar();
+		if(!Character.isDigit(c)&&c!='.') {
+			e.consume();
+		}
+		if(c=='.' &&textTelefono.getText().contains(".")) {
+			e.consume();
+		}
 	}
 	
-	private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {
-	     String [] v = {"0","1","2","3","4","5","6","7","8","9"};
-	     char c =evt.getKeyChar();
-	     String s = "%" + c ;
-	      s=s.replace("%", "");
-	     if (s.equals(v[0])||s.equals(v[1])||s.equals(v[2])||s.equals(v[3])||s.equals(v[4])||s.equals(v[5])){}
-	     else  if (s.equals(v[6])||s.equals(v[7])||s.equals(v[8])||s.equals(v[9])){}
-	     else{
-	         int k = textTelefono.getText().length()-1;
-	         String n = textTelefono.getText().substring(0,k);
-	         textTelefono.setText (n);}
-	}
+});
+}
 }
