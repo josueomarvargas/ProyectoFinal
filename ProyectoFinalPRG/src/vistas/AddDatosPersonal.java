@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import com.toedter.calendar.JCalendar;
+
 import Atxy2k.CustomTextField.RestrictedTextField;
 
 import javax.swing.JTextArea;
@@ -38,6 +40,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
+import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
+import java.beans.PropertyChangeEvent;
 //import com.toedter.calendar.JDateChooser;
 
 public class AddDatosPersonal extends JDialog implements ActionListener {
@@ -65,6 +71,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	private JPanel panelActor;
 	private JPanel panelGuionista;
 	private JPanel panelAudiovisual;
+	private JPanel panelCalendar;
 	private JRadioButton rdbDirector;
 	private JRadioButton rdbtnActor;
 	private JRadioButton rdbtnGuionista;
@@ -73,6 +80,10 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	private JTextField textDni;
 	private Pattern pattern;
 	private Matcher matcher;
+	private JCalendar calendar;
+	private JTextField textFecha;
+	private JButton botonCalendar;
+	private boolean entra=false;
 	
 	/**
 	 * Create the dialog.
@@ -178,10 +189,34 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 			contentPanel.add(btnMostrar);
 		}
 
-		JLabel lblNewLabel_1 = new JLabel("Fecha nacimiento :");
-		lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(93, 274, 111, 19);
-		contentPanel.add(lblNewLabel_1);
+		JLabel labelFecha = new JLabel("Fecha nacimiento :");
+		labelFecha.setFont(new Font("Calibri", Font.PLAIN, 12));
+		labelFecha.setBounds(93, 274, 111, 19);
+		textFecha = new JTextField();
+		textFecha.setBounds(251, 269, 123, 20);
+		contentPanel.add(textFecha);
+		textFecha.setColumns(10);
+		contentPanel.add(labelFecha);
+		panelCalendar=new JPanel();
+		contentPanel.add(panelCalendar);
+		panelCalendar.setBackground(Color.CYAN);
+		panelCalendar.setBounds(161,259,210,169);
+		panelCalendar.setLayout(null);
+		entra=false;
+		panelCalendar.setVisible(entra);
+		
+		
+		calendar=new JCalendar();
+		calendar.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getOldValue()!=null) {
+					SimpleDateFormat ff=new SimpleDateFormat("dd/MM/yyyy");
+					textFecha.setText(ff.format(calendar.getCalendar().getTime()));
+				}
+			}
+		});
+		calendar.setBounds(1, 1, 210, 169);
+		panelCalendar.add(calendar);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Num Tel :");
 		lblNewLabel_1_1.setFont(new Font("Calibri", Font.PLAIN, 12));
@@ -380,10 +415,18 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		rdbtnMiedo.setBounds(104, 68, 101, 23);
 		panelGuionista.add(rdbtnMiedo);
 		grupoGuion.add(rdbtnMiedo);
+		
+		
+		
+		botonCalendar = new JButton("New button");
+		botonCalendar.setIcon(new ImageIcon("C:\\Users\\josue\\Desktop\\ProyectoCompleto\\ProyectoFinal\\ProyectoFinalPRG\\Calendar-icon.png"));
+		botonCalendar.addActionListener(this);
+		botonCalendar.setBounds(373, 259, 41, 40);
+		contentPanel.add(botonCalendar);
 		panelDirector.setVisible(false);
 		panelActor.setVisible(false);
 		panelGuionista.setVisible(false);
-		panelAudiovisual.setVisible(false);		
+		panelAudiovisual.setVisible(false);	
 
 
 		getContentPane().add(scrollPane, BorderLayout.EAST); 	
@@ -438,10 +481,20 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 			panelGuionista.setVisible(false);
 			panelAudiovisual.setVisible(true);	
 		}
+		if(e.getSource().equals(botonCalendar)) {
+			if(!entra) {
+			panelCalendar.setVisible(true);
+			entra=true;
+			}
+			else {
+				
+				panelCalendar.setVisible(false);
+				entra=false;
+			}
+		}
 		//else if(e.getSource().equals(btnDirector)) {
 		//panelDirector.setVisible(true);
 
 		//	}
 	}
-	
 }
