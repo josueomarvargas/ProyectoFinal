@@ -9,6 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+
+import Atxy2k.CustomTextField.RestrictedTextField;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -30,6 +34,10 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 //import com.toedter.calendar.JDateChooser;
 
 public class AddDatosPersonal extends JDialog implements ActionListener {
@@ -63,6 +71,9 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	private JRadioButton rdbtnTecnicoAudiovisual;
 	private JButton btnMostrar;
 	private JTextField textDni;
+	private Pattern pattern;
+	private Matcher matcher;
+	
 	/**
 	 * Create the dialog.
 	 */
@@ -106,6 +117,8 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		{
 			textDni = new JTextField();
 			textDni.setBounds(251, 119, 148, 19);
+			RestrictedTextField r=new RestrictedTextField(textDni);
+			r.setLimit(9);
 			
 			contentPanel.add(textDni);
 		}
@@ -174,10 +187,15 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		lblNewLabel_1_1.setFont(new Font("Calibri", Font.PLAIN, 12));
 		lblNewLabel_1_1.setBounds(145, 304, 64, 19);
 		contentPanel.add(lblNewLabel_1_1);
+		
+	
+		textTelefono = new JTextField(8);
 
-		textTelefono = new JTextField();
 		textTelefono.setBounds(251, 301, 148, 19);
 		contentPanel.add(textTelefono);
+		RestrictedTextField r=new RestrictedTextField(textTelefono);
+		r.setLimit(9);
+		r.setOnlyNums(true);
 
 		textField_3 = new JTextField();
 		textField_3.setBounds(251, 209, 148, 19);
@@ -368,7 +386,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		panelAudiovisual.setVisible(false);		
 
 
-		getContentPane().add(scrollPane, BorderLayout.EAST); 
+		getContentPane().add(scrollPane, BorderLayout.EAST); 	
 
 
 	}
@@ -426,16 +444,4 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		//	}
 	}
 	
-	private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {
-	     String [] v = {"0","1","2","3","4","5","6","7","8","9"};
-	     char c =evt.getKeyChar();
-	     String s = "%" + c ;
-	      s=s.replace("%", "");
-	     if (s.equals(v[0])||s.equals(v[1])||s.equals(v[2])||s.equals(v[3])||s.equals(v[4])||s.equals(v[5])){}
-	     else  if (s.equals(v[6])||s.equals(v[7])||s.equals(v[8])||s.equals(v[9])){}
-	     else{
-	         int k = textTelefono.getText().length()-1;
-	         String n = textTelefono.getText().substring(0,k);
-	         textTelefono.setText (n);}
-	}
 }

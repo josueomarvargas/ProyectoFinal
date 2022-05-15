@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="miglayout15-swing.jar"/>
 	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="Atxy2k.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
