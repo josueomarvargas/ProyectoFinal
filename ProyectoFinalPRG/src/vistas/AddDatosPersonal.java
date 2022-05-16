@@ -130,13 +130,10 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		{
 			textDni = new JTextField();
 			textDni.setBounds(251, 119, 148, 19);
-<<<<<<< HEAD
 
-=======
 			RestrictedTextField r=new RestrictedTextField(textDni);
 			r.setLimit(9);
 			
->>>>>>> 441f3c54f2bd5f4ab82cfabcb75812d9f6618892
 			contentPanel.add(textDni);
 		}
 
@@ -425,7 +422,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		
 		
 		botonCalendar = new JButton("New button");
-		botonCalendar.setIcon(new ImageIcon("C:\\Users\\josue\\Desktop\\ProyectoCompleto\\ProyectoFinal\\ProyectoFinalPRG\\Calendar-icon.png"));
+		botonCalendar.setIcon(new ImageIcon("C:\\Users\\1dam\\Desktop\\ProyectoFinalMayo\\ProyectoFinal\\ProyectoFinalPRG\\Calendar-icon.png"));
 		botonCalendar.addActionListener(this);
 		botonCalendar.setBounds(373, 259, 41, 40);
 		contentPanel.add(botonCalendar);
@@ -446,18 +443,7 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		}
 	
 			if(e.getSource().equals(btnModificar)) {
-				if (!validarNumeros(textTelefono.getText().trim())) {
-					JOptionPane.showMessageDialog(rootPane, "Los datos del telefono no son corretos");
-					}
-				else {
 				
-				int resp =JOptionPane.showConfirmDialog(null,"¿Quieres Modificar Los Datos?","Alerta!",JOptionPane.YES_NO_OPTION);
-				if (resp==0) {
-					JOptionPane.showMessageDialog(null, "Se ha modificado correctamente", "Titulo", JOptionPane.DEFAULT_OPTION);
-
-
-				}
-				}
 			}
 			if(e.getSource().equals(btnAceptar)){
 				JOptionPane.showMessageDialog(rootPane, "Son Corretos");
@@ -467,14 +453,13 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 
 
 		
-
-<<<<<<< HEAD
+	
 	
 	if (e.getSource().equals(btnCerrarSystem)) {
 		System.exit(0);
 	}
-=======
-		}
+
+		
 		else if(e.getSource().equals(rdbtnGuionista)){
 			panelDirector.setVisible(false);
 			panelActor.setVisible(false);
@@ -500,7 +485,6 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 		}
 		//else if(e.getSource().equals(btnDirector)) {
 		//panelDirector.setVisible(true);
->>>>>>> 441f3c54f2bd5f4ab82cfabcb75812d9f6618892
 
 	if(e.getSource().equals(rdbDirector)) {
 		panelDirector.setVisible(true);
@@ -532,24 +516,9 @@ public class AddDatosPersonal extends JDialog implements ActionListener {
 	//panelDirector.setVisible(true);
 
 	//	}
-}
 
 
-private void  num(JTextField a) {
-a.addKeyListener(new KeyAdapter() {
-	public void keyTyped(KeyEvent e) {
-		char c=e.getKeyChar();
-		if(!Character.isDigit(c)&&c!='.') {
-			e.consume();
-		}
-		if(c=='.' &&textTelefono.getText().contains(".")) {
-			e.consume();
-		}
-	}
-<<<<<<< HEAD
-	
-});
+
+
 }
-=======
->>>>>>> 441f3c54f2bd5f4ab82cfabcb75812d9f6618892
 }
