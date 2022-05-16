@@ -1,7 +1,8 @@
 package main;
 
-import vistas.ventanas.gui.LogIn;
-import vistas.ventanas.table.TablaPatrocinadores;
+import vistas.ventanas.LogIn;
+import vistas.ventanas.data.DatosEquipamiento;
+import vistas.ventanas.data.DatosObra;
 import vistas.ventanas.table.TablaPeliculasSeries;
 
 public class Principal {
@@ -14,11 +15,12 @@ public class Principal {
 //		LogIn vprincipal = new LogIn();
 //		vprincipal.setVisible(true);
 
-//		TablaPatrocinadores test = new TablaPatrocinadores();
+		TablaPeliculasSeries tps = new TablaPeliculasSeries(null, true);
+		tps.setVisible(true);
 
-		TablaPeliculasSeries test = new TablaPeliculasSeries();
+//		DatosObra datosObra = new DatosObra();
+//		datosObra.setVisible(true);
 
-		test.setVisible(true);
 	}
 
 }

@@ -17,7 +17,7 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 
 	// MySQL Consultas
 	// Insert Equip
-	private final String CREATE = "INSERT INTO equipamiento(nombre, tipo) VALUES( ?, ?)";
+	private final String CREATE = "INSERT INTO equipamiento(nombre, tipo, imgPath) VALUES(?, ?, ?)";
 
 	// Insert atributos
 	private final String INSERTATRIBUTO = "INSERT INTO caracteristica(idEquip, caracteristica) VALUES(?, ?)";
@@ -29,7 +29,7 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 	private final String READALL = "select e.*, c.caracteristica from equipamiento e INNER JOIN caracteristica c ON c.idEquip = e.idEquip";
 
 	// Actualización de datos
-	private final String UPDATE = "UPDATE equipamiento SET nombre = ?, tipo = ? WHERE idEquip = ?";
+	private final String UPDATE = "UPDATE equipamiento SET nombre = ?, tipo = ?, imgPath = ? WHERE idEquip = ?";
 
 	// Eliminar datos
 	private final String DELETE = "DELETE FROM equipamiento WHERE idEquip = ?";

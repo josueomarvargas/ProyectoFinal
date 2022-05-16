@@ -8,6 +8,7 @@ public class Equipamiento {
 	private int idEquip;
 	private String nombre;
 	private String tipo;
+	private String imgPath;
 	private List<String> caracteristicas;
 
 	public Equipamiento() {
@@ -53,6 +54,14 @@ public class Equipamiento {
 
 	public void setCaracteristicas(List<String> caracteristicas) {
 		this.caracteristicas = caracteristicas;
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
 }

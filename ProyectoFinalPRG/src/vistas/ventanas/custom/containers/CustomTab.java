@@ -1,4 +1,4 @@
-package vistas.ventanas.custom;
+package vistas.ventanas.custom.containers;
 
 import java.awt.Color;
 import java.awt.Graphics;

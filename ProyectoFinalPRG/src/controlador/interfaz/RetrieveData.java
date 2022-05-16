@@ -1,7 +1,7 @@
 package controlador.interfaz;
 
 /**
- * <h1>Interfaz para recoger datos específicos</h1>
+ * <h1>Interfaz para recoger datos y/o comprobar datos</h1>
  * <p>
  * En esta interfaz declara un solo método, que servirá para devolver datos de
  * una clase diferente a la que se le pasa por parámetros. <br>
@@ -14,14 +14,14 @@ package controlador.interfaz;
  * @param <T> objeto que se pasará por parametros en el método
  * @param <U> objeto que devolverá el método
  */
-public interface BDretrieveData<T, U> {
+public interface RetrieveData<T, U> {
 
 	/**
 	 * 
 	 * @param clase objecto que se ha especificado al implementar y que pasará por
 	 *              parametros
-	 * @return devolverá el tipo que se ha especificado al implementarlko
+	 * @return devolverá el tipo que se ha especificado al implementarlo
 	 */
-	public U recogerInfo(T clase);
+	public U checkInfo(T clase);
 
 }

@@ -3,7 +3,6 @@ package vistas.ventanas.table;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,19 +14,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controlador.utils.dao.GenericFactory;
+import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
 import vistas.dao.GetData;
 import vistas.ventanas.data.DatosPatrocinador;
 
 public class TablaPatrocinadores extends JDialog implements ActionListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
@@ -35,20 +30,20 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	private JButton btnBuscar;
 	private JButton btnAnadir;
 	private JButton btnVolver;
-	private JPanel panel;
 	private JButton btnCerrarSystem;
+	private int x = 780;
+	private int y = 20;
 
 	/**
 	 * Create the dialog.
 	 */
 	public TablaPatrocinadores() {
 		this.setUndecorated(true);
-		setBounds(100, 100, 550, 420);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(SystemColor.activeCaption);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		setSize(Utilidades.resizeWindow(this));
+		Utilidades.centerWindow(this);
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setLayout(null);
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		tabla();
 
@@ -59,23 +54,21 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		btnCerrarSystem.addActionListener(this);
 		contentPanel.add(btnCerrarSystem);
 
-		panel = new JPanel();
-		panel.setBackground(SystemColor.textHighlight);
-		panel.setBounds(0, 384, 550, 36);
-		contentPanel.add(panel);
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.setBounds(x, 352, 100, 23);
+		contentPanel.add(btnBuscar);
+
+		btnAnadir = new JButton("+");
+		btnAnadir.setBounds(x, 386, 42, 23);
+		contentPanel.add(btnAnadir);
+
+		btnVolver = new JButton("\u2190");
+		btnVolver.setBounds(x, 386, 43, 23);
+		contentPanel.add(btnVolver);
 
 		textField = new JTextField();
-		panel.add(textField);
-		textField.setColumns(10);
-
-		btnBuscar = new JButton("Buscar");
-		panel.add(btnBuscar);
-
-		btnAnadir = new JButton("A\u00F1adir");
-		panel.add(btnAnadir);
-
-		btnVolver = new JButton("Volver");
-		panel.add(btnVolver);
+		textField.setBounds(x, 317, 100, 20);
+		contentPanel.add(textField);
 		btnVolver.addActionListener(this);
 		btnAnadir.addActionListener(this);
 		btnBuscar.addActionListener(this);
@@ -84,14 +77,14 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	private void tabla() {
 
 		// Recoger los datos de los trabajdores
-		Object[][] data = (Object[][]) GenericFactory.GETDATA.getUIcontroller().check(GetData.PATROCINADOR);
+		Object[][] data = FactoryDAO.getGetData().checkInfo(GetData.PATROCINADOR);
 		String[] column = new String[] { "ID", "Nombre", "Dinero" };
 
 		// Scroll panel
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(0, 0, 475, 380);
+		scrollPane.setBounds(25, 25, 600, 400);
 
 		// Crear una tabla
 		table = new JTable();
@@ -100,7 +93,7 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		Utilidades.resizeColumnWidth(table); // Redimensionar columnas
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table); // Añadir la tabla al scroll panel
-//		contentPanel.add(scrollPane);
+		contentPanel.add(scrollPane);
 	}
 
 	@Override

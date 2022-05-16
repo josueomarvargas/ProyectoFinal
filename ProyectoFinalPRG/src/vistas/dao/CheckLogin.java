@@ -1,10 +1,7 @@
 package vistas.dao;
 
-import java.util.List;
-
-import controlador.interfaz.BDretrieveData;
-import controlador.interfaz.UIcontrol;
-import controlador.utils.dao.GenericFactory;
+import controlador.interfaz.RetrieveData;
+import controlador.utils.dao.FactoryDAO;
 import modelo.clases.Trabajador;
 import modelo.clases.Usuario;
 import modelo.dao.UserDAO;
@@ -18,7 +15,7 @@ import modelo.dao.UserDAO;
  * @author Henrique Yeguo
  *
  */
-public class CheckLogin implements UIcontrol<Trabajador> {
+public class CheckLogin implements RetrieveData<Usuario, Trabajador> {
 
 	private static Trabajador tData;
 
@@ -36,17 +33,19 @@ public class CheckLogin implements UIcontrol<Trabajador> {
 	 *         usuario y/o contraseña són inválidas.
 	 **/
 	@Override
-	public Trabajador check(List<String> list) {
+	public Trabajador checkInfo(Usuario user) {
 		if (tData == null) {
-			// Controlador UI
-			@SuppressWarnings("unchecked")
-			BDretrieveData<Usuario, Trabajador> aux = (BDretrieveData<Usuario, Trabajador>) GenericFactory.USER
-					.getUserLogin();
 			// Recoger información del trabajador
-			tData = aux.recogerInfo(new Usuario(list.get(0), list.get(1)));
-
+			tData = FactoryDAO.getUsuario().checkInfo(user);
 		}
 		return tData;
+	}
+
+	public static Trabajador getLogin() {
+		if (tData != null) {
+			return tData;
+		}
+		return null;
 	}
 
 	/**

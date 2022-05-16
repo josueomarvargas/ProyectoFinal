@@ -2,11 +2,15 @@ package vistas.ventanas.data;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Window;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.utils.views.Utilidades;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -34,9 +38,10 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public DatosPatrocinador() {
+	public DatosPatrocinador(Window parent) {
 		setUndecorated(true);
-		setBounds(100, 100, 550, 420);
+		setSize(Utilidades.resizeWindow(this));
+		Utilidades.centerWindow(parent, this);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -122,7 +127,7 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 		btnCerrarSystem = new JButton("X");
 		btnCerrarSystem.setForeground(Color.RED);
 		btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
-		
+
 		btnCerrarSystem.setBounds(496, 0, 55, 29);
 		btnCerrarSystem.addActionListener(this);
 		contentPanel.add(btnCerrarSystem);
@@ -130,13 +135,11 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(btnVolver)) {
+		if (e.getSource().equals(btnVolver)) {
 			this.dispose();
-		}
-		else if(e.getSource().equals(btnAceptar)) {
+		} else if (e.getSource().equals(btnAceptar)) {
 			this.dispose();
-		}
-		else if (e.getSource().equals(btnCerrarSystem)) {
+		} else if (e.getSource().equals(btnCerrarSystem)) {
 			System.exit(0);
 		}
 	}

@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import controlador.interfaz.BDgeneric;
-import controlador.interfaz.BDretrieveData;
-import controlador.utils.dao.GenericFactory;
+import controlador.interfaz.RetrieveData;
+import controlador.utils.dao.FactoryDAO;
 import controlador.utils.dao.SQLCon;
 import modelo.clases.Trabajador;
 import modelo.clases.Usuario;
@@ -18,18 +18,18 @@ import modelo.clases.Usuario;
  * La clase {@code UsuarioDAO} es una clase que implementa la interfaz genérica
  * {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea métodos
  * CRUD necesarios para gestionar la clase {@link modelo.clases.Usuario
- * Usuario}, también usaremos la interfaz {@link BDretrieveData} para recoger
- * los datos de un trabajador mediante su {@link Usuario}.
+ * Usuario}, también usaremos la interfaz {@link RetrieveData} para recoger los
+ * datos de un trabajador mediante su {@link Usuario}.
  * <p>
- * Esta clase también implementa la interfaz {@link BDretrieveData}
- * especificando las clases {@link Usuario} y {@link Trabajador} para hacer uso
- * del método {@link #recogerInfo} que nos servirá para el login.
+ * Esta clase también implementa la interfaz {@link RetrieveData} especificando
+ * las clases {@link Usuario} y {@link Trabajador} para hacer uso del método
+ * {@link #recogerInfo} que nos servirá para el login.
  * 
  * 
  * @author Henrique Yeguo
  * 
  **/
-public class UserDAO implements BDgeneric<Usuario>, BDretrieveData<Usuario, Trabajador> {
+public class UserDAO implements BDgeneric<Usuario>, RetrieveData<Usuario, Trabajador> {
 
 	// MySQL Consultas
 	// Insertar usuarios
@@ -228,7 +228,7 @@ public class UserDAO implements BDgeneric<Usuario>, BDretrieveData<Usuario, Trab
 	 * @return información del trabajador
 	 **/
 	@Override
-	public Trabajador recogerInfo(Usuario clase) {
+	public Trabajador checkInfo(Usuario clase) {
 
 		this.openConnection();
 		ResultSet rs = null;
@@ -245,9 +245,7 @@ public class UserDAO implements BDgeneric<Usuario>, BDretrieveData<Usuario, Trab
 			if (rs.next()) {
 				String[] id = { rs.getString(1) };
 
-				Trabajador trabajador = (Trabajador) GenericFactory.TRABAJADOR.getInstance().search(id);
-
-				return trabajador;
+				return FactoryDAO.getTrabajador().search(id);
 			}
 
 		} catch (SQLException e) {

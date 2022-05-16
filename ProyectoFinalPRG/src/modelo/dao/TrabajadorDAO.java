@@ -370,8 +370,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 		Trabajador trabajador = null;
 
 		// Prepare Statement - ReadAll
-		try (CallableStatement stat = con.prepareCall(READALL, ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY)) {
+		try (CallableStatement stat = con.prepareCall(READALL)) {
 
 			// Ejecutar el procedimiento y guardarlo en el result set
 			rs = stat.executeQuery();

@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Window;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,7 +19,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controlador.utils.dao.GenericFactory;
+import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
 import vistas.dao.GetData;
 import vistas.ventanas.data.DatosEquipamiento;
@@ -41,13 +42,14 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public TablaEquipamiento() {
+	public TablaEquipamiento(Window parent) {
+		super(parent);
 		this.setUndecorated(true);
-		setBounds(100, 100, 550, 420);
+		setSize(Utilidades.resizeWindow(this));
+		Utilidades.centerWindow(parent, this);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		tabla();
 
@@ -82,7 +84,7 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 	private void tabla() {
 
 		// Recoger los datos de los trabajdores
-		Object[][] data = (Object[][]) GenericFactory.GETDATA.getUIcontroller().check(GetData.EQUIPAMIENTO);
+		Object[][] data = FactoryDAO.getGetData().checkInfo(GetData.EQUIPAMIENTO);
 		String[] column = new String[] { "ID", "Nombre", "Tipo" };
 
 		// Scroll panel

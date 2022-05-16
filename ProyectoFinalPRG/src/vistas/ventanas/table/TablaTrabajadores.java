@@ -1,31 +1,29 @@
 package vistas.ventanas.table;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.text.AttributeSet.ColorAttribute;
-
-import controlador.utils.dao.GenericFactory;
-import controlador.utils.views.Utilidades;
-import vistas.dao.GetData;
-import vistas.ventanas.data.DatosPersonal;
-
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
-import java.awt.SystemColor;
+import controlador.utils.dao.FactoryDAO;
+import controlador.utils.views.Utilidades;
+import modelo.clases.Trabajador;
+import vistas.dao.GetData;
+import vistas.ventanas.data.DatosPersonal;
 
 public class TablaTrabajadores extends JDialog implements ActionListener {
 
@@ -34,6 +32,7 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private final JDialog thisDialog;
 	private JTable table;
 	private JTextField textField;
 	private JButton btnBuscar;
@@ -44,14 +43,13 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public TablaTrabajadores() {
+	public TablaTrabajadores(Window parent) {
+		super(parent);
 		this.setUndecorated(true);
-		setBounds(100, 100, 550, 420);
+		thisDialog = this;
+		setSize(Utilidades.resizeWindow(this));
+		Utilidades.centerWindow(parent, this);
 		contentPanel.setLayout(null);
-		contentPanel.setBackground(Color.LIGHT_GRAY);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		tabla();
 
@@ -86,7 +84,7 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 	private void tabla() {
 
 		// Recoger los datos de los trabajdores
-		Object[][] data = (Object[][]) GenericFactory.GETDATA.getUIcontroller().check(GetData.TRABAJADOR);
+		Object[][] data = FactoryDAO.getGetData().checkInfo(GetData.TRABAJADOR);
 		String[] column = new String[] { "ID", "DNI", "Nombre", "Apellido", "Num. Tel", "Num. Premios", "Dirección",
 				"Tipo", "Fecha Nacimiento" };
 
@@ -98,6 +96,16 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 
 		// Crear una tabla
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int i = table.getSelectedRow();
+				TableModel model = table.getModel();
+				int id = Integer.parseInt(model.getValueAt(i, 1).toString());
+				Trabajador trabajador = (Trabajador) GetData.getDatos(GetData.TRABAJADOR).get(id);
+				DatosPersonal dataPersona = new DatosPersonal(thisDialog, true, trabajador);
+			}
+		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(new DefaultTableModel(data, column)); // Añadir los datos a la tabla
 		Utilidades.resizeColumnWidth(table); // Redimensionar columnas

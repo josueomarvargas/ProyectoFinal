@@ -1,14 +1,10 @@
 package vistas.dao;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
-import controlador.interfaz.BDgeneric;
-import controlador.interfaz.BDview;
-import controlador.interfaz.UIcontrol;
-import controlador.utils.dao.GenericFactory;
+import controlador.interfaz.RetrieveData;
+import controlador.utils.dao.FactoryDAO;
 import modelo.clases.Equipamiento;
 import modelo.clases.ObraAudiovisual;
 import modelo.clases.Patrocinador;
@@ -24,13 +20,14 @@ import modelo.clases.ViewSerie;
  * 
  * @author Henrique Yeguo
  */
-public class GetData implements UIcontrol<Object[][]> {
+public class GetData implements RetrieveData<String, Object[][]> {
 
-	public static final List<String> PELICULA = Arrays.asList("peli");
-	public static final List<String> SERIE = Arrays.asList("serie");
-	public static final List<String> EQUIPAMIENTO = Arrays.asList("equipamiento");
-	public static final List<String> PATROCINADOR = Arrays.asList("patrocinador");
-	public static final List<String> TRABAJADOR = Arrays.asList("trabajador");
+	public static final String PELICULA = "peli";
+	public static final String SERIE = "serie";
+	public static final String OBRA = "obra";
+	public static final String EQUIPAMIENTO = "equipamiento";
+	public static final String PATROCINADOR = "patrocinador";
+	public static final String TRABAJADOR = "trabajador";
 
 	/**
 	 * Estos atributos guardarán maps con la información completa de las tablas,
@@ -50,45 +47,33 @@ public class GetData implements UIcontrol<Object[][]> {
 	 * @param en la lista que solo recogerá un valor, que será el nombre del objecto
 	 *           que se quiere recuperar de la base de datos
 	 **/
-	@SuppressWarnings("unchecked")
 	@Override
-	public Object[][] check(List<String> list) {
-
-		BDgeneric<?> dao;
-		BDview<?> viewDao;
+	public Object[][] checkInfo(String type) {
 
 		// Guardar todos los datos de las obras
-		if (list.get(0).equals("peli") || list.get(0).equals("serie")) {
-			dao = GenericFactory.OBRA.getInstance();
-			obra = (Map<Integer, ObraAudiovisual>) dao.readAll();
+		if (type.equals("peli") || type.equals("serie")) {
+			obra = FactoryDAO.getObra().readAll();
 		}
 
-		switch (list.get(0)) {
+		switch (type) {
 		case "peli":
-			viewDao = GenericFactory.VIEWPELIS.getInstanceView();
-			Map<Integer, ViewPeli> peli = (Map<Integer, ViewPeli>) viewDao.callView();
-			return toObjectArray(peli, "peli");
+			return toObjectArray(FactoryDAO.getViewPeli().callView(), "peli");
 		case "serie":
-			viewDao = (BDview<ViewSerie>) GenericFactory.VIEWSERIE.getInstanceView();
-			Map<Integer, ViewSerie> serie = (Map<Integer, ViewSerie>) viewDao.callView();
-			return toObjectArray(serie, "serie");
+			return toObjectArray(FactoryDAO.getViewSerie().callView(), "serie");
 
 		case "equipamiento":
-			dao = GenericFactory.EQUIP.getInstance();
 			if (equipamiento == null)
-				equipamiento = (Map<Integer, Equipamiento>) dao.readAll();
+				equipamiento = FactoryDAO.getEquip().readAll();
 			return toObjectArray(equipamiento, "equipamiento");
 
 		case "patrocinador":
-			dao = GenericFactory.PATROCINADOR.getInstance();
 			if (patrocinador == null)
-				patrocinador = (Map<Integer, Patrocinador>) dao.readAll();
+				patrocinador = FactoryDAO.getPatrocinador().readAll();
 			return toObjectArray(patrocinador, "patrocinador");
 
 		case "trabajador":
-			dao = GenericFactory.TRABAJADOR.getInstance();
 			if (trabajador == null)
-				trabajador = (Map<Integer, Trabajador>) dao.readAll();
+				trabajador = FactoryDAO.getTrabajador().readAll();
 			return toObjectArray(trabajador, "trabajador");
 
 		}
@@ -100,7 +85,7 @@ public class GetData implements UIcontrol<Object[][]> {
 	 * @param clase nombre del objecto que se quiere recoger
 	 * @return
 	 */
-	public Map<Integer, ?> getDatos(String clase) {
+	public static Map<Integer, ?> getDatos(String clase) {
 
 		switch (clase) {
 		case "obra":
@@ -114,15 +99,34 @@ public class GetData implements UIcontrol<Object[][]> {
 
 		case "trabajador":
 			return trabajador;
+		default:
+			return null;
 		}
-		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void setDatos(Map<Integer, ?> map, String clase) {
+
+		switch (clase) {
+		case "obra":
+			obra = (Map<Integer, ObraAudiovisual>) map;
+
+		case "equipamiento":
+			equipamiento = (Map<Integer, Equipamiento>) map;
+
+		case "patrocinador":
+			patrocinador = (Map<Integer, Patrocinador>) map;
+
+		case "trabajador":
+			trabajador = (Map<Integer, Trabajador>) map;
+
+		}
 	}
 
 	private <K, V> Object[][] toObjectArray(Map<K, V> map, String tipo) {
 
 		Object[][] array2D = null;
-		Iterator<?> iterObra;
-		iterObra = map.values().iterator();
+		Iterator<?> iterObra = map.values().iterator();
 		switch (tipo) {
 		case "peli":
 			array2D = new Object[map.size()][8];

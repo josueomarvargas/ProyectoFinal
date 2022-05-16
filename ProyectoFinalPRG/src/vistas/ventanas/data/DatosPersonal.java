@@ -9,7 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import vistas.ventanas.gui.GestionDatos;
+import vistas.ventanas.GestionDatos;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
