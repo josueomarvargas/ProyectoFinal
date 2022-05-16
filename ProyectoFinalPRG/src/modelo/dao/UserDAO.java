@@ -18,7 +18,7 @@ import modelo.clases.Usuario;
  * @author Henrique Yeguo
  * 
  **/
-public class UserDAO implements BDgeneric<Usuario> {
+public class UserDAO implements BDgeneric<Usuario> { 
 
 	// MySQL Consultas
 	// Insertar usuarios

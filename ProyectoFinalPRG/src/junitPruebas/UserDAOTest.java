@@ -27,7 +27,7 @@ class UserDAOTest {
 			usr = new Usuario();
 			usr.setIdUsuario("ManuLopez");
 			usr.setPasswd("abcd*1234");
-			usr.setIdTrabajador(5);
+			usr.setIdTrabajador(3);
 	}
 
 	@AfterAll
@@ -37,7 +37,7 @@ class UserDAOTest {
 	@Test
 	void testCreate() {
 		try {
-			estado = uDao.create(usr);
+		estado = uDao.create(usr);
 
 		assertTrue(estado);
 		} catch (Exception e) {
