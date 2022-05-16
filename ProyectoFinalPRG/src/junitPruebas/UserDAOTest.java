@@ -34,19 +34,19 @@ class UserDAOTest {
 	static void tearDownAfterClass() throws Exception {
 	}
 
-//	@Test
-//	void testCreate() {
-//		try {
-//			estado = uDao.create(usr);
-//
-//		assertTrue(estado);
-//		} catch (Exception e) {
-//			//// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("Fallo SQL");
-//		}
-//		
-//	}
+	@Test
+	void testCreate() {
+		try {
+			estado = uDao.create(usr);
+
+		assertTrue(estado);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Fallo SQL");
+		}
+		
+	}
 
 //	@Test
 //	void testSearch() {
@@ -86,19 +86,19 @@ class UserDAOTest {
 //		}
 //	
 //	}
-
-	@Test
-	void testRemove() {
-		String[] user = {"josue", "5"};
-		try {
-			estado = uDao.remove(user);
-
-			assertTrue(estado);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail("Fallo SQL");
-		}
-	}
+//
+//	@Test
+//	void testRemove() {
+//		String[] user = {"josue", "5"};
+//		try {
+//			estado = uDao.remove(user);
+//
+//			assertTrue(estado);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			fail("Fallo SQL");
+//		}
+//	}
 
 }

@@ -43,71 +43,71 @@ class ActorDAOTest {
 		((Actor) act).setEspecialidades(especialidades);
 	}
 
-//	@Test
-//	void testCreate() {
-//
-//		try {
-//			estado = aDao.create(act);
-//
-//			assertTrue(estado);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("Fallo SQL");
-//		}
-//
-//	}
+	@Test
+	void testCreate() {
 
-//	@Test
-//	void testSearch() {
-//		String [] id = {"1"};
-//		try {
-//			Trabajador aux = aDao.search(id);
-//			
-//			System.out.println(aux.toString());
-//			
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		fail("Not yet implemented");
-//	}
+		try {
+			estado = aDao.create(act);
 
-//	@Test
-//	void testReadAll() {
-//		try {
-//			Trabajador aux;
-//			Map<Integer, Trabajador> map = aDao.readAll();
-//			Iterator<Trabajador> iter = map.values().iterator();
-//			while (iter.hasNext()) {
-//				aux = iter.next();
-//				if(aux instanceof Actor) {
-//					System.out.println(((Actor) aux).toString());
-//					
-//				}
-//				
-//						
-//			}
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		fail("Not yet implemented");
-//	}
+			assertTrue(estado);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Fallo SQL");
+		}
 
-//	@Test
-//	void testUpdate() {
-//		try {
-//			estado = aDao.update(act);
-//
-//			assertTrue(estado);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("Fallo SQL");
-//		}
-//	}
+	}
+	
+	@Test
+	void testSearch() {
+		String [] id = {"1"};
+		try {
+			Trabajador aux = aDao.search(id);
+			
+			System.out.println(aux.toString());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testReadAll() {
+		try {
+			Trabajador aux;
+			Map<Integer, Trabajador> map = aDao.readAll();
+			Iterator<Trabajador> iter = map.values().iterator();
+			while (iter.hasNext()) {
+				aux = iter.next();
+				if(aux instanceof Actor) {
+					System.out.println(((Actor) aux).toString());
+					
+				}
+				
+						
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testUpdate() {
+		try {
+			estado = aDao.update(act);
+
+			assertTrue(estado);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Fallo SQL");
+		}
+	}
 
 	@Test
 	void testRemove() {

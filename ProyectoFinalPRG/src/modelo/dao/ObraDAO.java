@@ -319,7 +319,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			nomCap = rs.getString("nombreCap");
 		}
 
-		// EJ: el RS nos devuelve la temporada 3 y el tamaño de la lista es de 2 crear
+		//EJ: el RS nos devuelve la temporada 3 y el tamaño de la lista es de 2 crear
 		// una nueva temporada/lista
 		if (numTemporada != nombreCap.size()) {
 			// Crear una nueva lista

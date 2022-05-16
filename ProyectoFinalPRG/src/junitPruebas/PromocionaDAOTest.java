@@ -1,4 +1,4 @@
-package modelo.dao;
+package junitPruebas;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import modelo.clases.Equipamiento;
 import modelo.clases.Participa;
 import modelo.clases.Promociona;
+import modelo.dao.PromocionaDAO;
 
 class PromocionaDAOTest {
 	static Promociona promo = null;

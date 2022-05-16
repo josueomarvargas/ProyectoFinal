@@ -44,32 +44,32 @@ class EquipamientoDAOTest {
 //	static void tearDownAfterClass() throws Exception {
 //	}
 //
-	@Test
-	void testCreate() {
-		try {
-			estado = eqpDao.create(equipa);
-
-			assertTrue(estado);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail("Fallo SQL");
-		}
-	}
-
 //	@Test
-//	void testSearch() {
-//		String [] id = {"15"};
+//	void testCreate() {
 //		try {
-//		Equipamiento aux = eqpDao.search(id);
-//			System.out.println(aux.getCaracteristicas());
+//			estado = eqpDao.create(equipa);
+//
+//			assertTrue(estado);
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
+//			fail("Fallo SQL");
 //		}
-//
-//		fail("Not yet implemented");
 //	}
+
+	@Test
+	void testSearch() {
+		String [] id = {"15"};
+		try {
+		Equipamiento aux = eqpDao.search(id);
+			System.out.println(aux.getCaracteristicas());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		fail("Not yet implemented");
+	}
 
 
 //	@Test

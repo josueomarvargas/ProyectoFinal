@@ -64,10 +64,10 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	private final String UPDATE = "UPDATE trabajador SET nombre = ?, apellido = ?, numtel = ?, numPremios = ?, direccion = ?, fechaNac = ? WHERE idTrabajador = ?";
 
 	// Eliminar datos
-	private final String DELETE = "DELETE trabajador WHERE idtrabajador = ? ";
+	private final String DELETE = "DELETE FROM trabajador WHERE idtrabajador = ? ";
 
 	// Eliminar un atributo Ej: una especialidad de un actor
-	private final String DELETEATRIBUTO = "CALL deleteAtributo(?)";
+	private final String DELETEATRIBUTO = "CALL deleteAtributo(?)"; 
 
 	// Establecer conexión a la base de datos
 	private static Connection con;

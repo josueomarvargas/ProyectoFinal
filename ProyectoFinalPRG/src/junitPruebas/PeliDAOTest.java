@@ -3,7 +3,6 @@ package junitPruebas;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,56 +13,57 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import controlador.interfaz.BDgeneric;
 import controlador.utils.dao.DAOFactory;
 import modelo.clases.Actor;
-import modelo.clases.Director;
+import modelo.clases.ObraAudiovisual;
+import modelo.clases.Pelicula;
 import modelo.clases.Trabajador;
+import modelo.dao.ObraDAO;
 import modelo.dao.TrabajadorDAO;
+import modelo.dao.ViewPeliDAO;
 
-class DirectorDAOTest {
+class PeliDAOTest {
 
-	static Trabajador dir = null;
+	static Pelicula pel = null;
 	boolean estado;
-	TrabajadorDAO dDao = (TrabajadorDAO) DAOFactory.TRABAJADOR.getInstance();
+	ObraDAO pDao = (ObraDAO) DAOFactory.OBRA.getInstance();
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		dir = new Director();
-		dir.setIdTrabajador(19);
-		dir.setNombre("fjksef78y4r2487234747fuherf34758uy34qfjer89'");
-		dir.setApellido("Perez");
-		dir.setNumTel(1111111111);
-		dir.setNumPremios(6);
-		dir.setDireccion("Bergara");
-		dir.setTipo("director");
-		dir.setFechaNac(LocalDate.of(0000, 10, 20));
-		
-		((Director) dir).setCategoria("comedia");
+		pel = new Pelicula();
+		pel.setIdObra(1);
+		pel.setDuracion(120);
+		pel.setEsTaquillera(false);
+		pel.setFechaEstreno(LocalDate.of(1997, 10, 20));
+		pel.setNombre("Iker");
+		pel.setPresupuesto(70000);
+		pel.setTipo("Pelicula");
 	}
 
-//	@AfterAll
-//	static void tearDownAfterClass() throws Exception {
-//	}
-//
 //	@Test
 //	void testCreate() {
+//
 //		try {
-//		estado = dDao.create(dir);
+//			estado = ((BDgeneric<ObraAudiovisual>) pDao).create(pel);
 //
 //			assertTrue(estado);
 //		} catch (Exception e) {
-//		// TODO Auto-generated catch block
+//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //			fail("Fallo SQL");
 //		}
+//
 //	}
 
 //	@Test
 //	void testSearch() {
-//		String[] id = {"14"};
+//		String [] id = {"6"};
 //		try {
-//			Director aux = (Director) dDao.search(id);
+//			ObraAudiovisual aux = pDao.search(id);
+//			
 //			System.out.println(aux.toString());
+//			
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -75,18 +75,16 @@ class DirectorDAOTest {
 //	@Test
 //	void testReadAll() {
 //		try {
-//			Trabajador aux;
-//			Map<Integer, Trabajador> map = dDao.readAll();
-//			System.out.println(map.get(1).toString());
-//			Iterator<Trabajador> iter = map.values().iterator();
+//			ObraAudiovisual aux;
+//			Map<Integer, ObraAudiovisual> map = pDao.readAll();
+//			Iterator<ObraAudiovisual> iter = map.values().iterator();
 //			while (iter.hasNext()) {
 //				aux = iter.next();
-//				if(aux instanceof Director) {
-//					System.out.println(((Director) aux).toString());
+//				if(aux instanceof Pelicula) {
+//					System.out.println(((Pelicula) aux).toString());
 //					
 //				}
 //				
-//		dir.toString();		
 //						
 //			}
 //		} catch (Exception e) {
@@ -99,7 +97,7 @@ class DirectorDAOTest {
 //	@Test
 //	void testUpdate() {
 //		try {
-//			estado = dDao.update(dir);
+//			estado = pDao.update(pel);
 //
 //			assertTrue(estado);
 //		} catch (Exception e) {
@@ -108,18 +106,19 @@ class DirectorDAOTest {
 //			fail("Fallo SQL");
 //		}
 //	}
-//
+
 	@Test
 	void testRemove() {
-		String [] id = {"11"};
-		 try {
-		 estado = dDao.remove(id);
+		String[] idObra = { "6" };
+		try {
+			estado = pDao.remove(idObra);
 
 			assertTrue(estado);
-		 } catch (Exception e) {
-		// TODO Auto-generated catch block
-		 e.printStackTrace();
-		 fail("Fallo SQL");
-		 }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Fallo SQL");
+		}
 	}
+
 }
