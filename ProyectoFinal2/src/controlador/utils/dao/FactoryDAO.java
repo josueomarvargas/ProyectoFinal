@@ -8,10 +8,10 @@ import modelo.dao.PatrocinadorDAO;
 import modelo.dao.PromocionaDAO;
 import modelo.dao.TrabajadorDAO;
 import modelo.dao.UserDAO;
-import modelo.dao.ViewPeliDAO;
-import modelo.dao.ViewSerieDAO;
 import vistas.dao.CheckLogin;
+import vistas.dao.DeleteData;
 import vistas.dao.GetData;
+import vistas.dao.InsertData;
 import vistas.dao.UpdateData;
 
 public class FactoryDAO {
@@ -24,11 +24,11 @@ public class FactoryDAO {
 	private static PromocionaDAO promociona;
 	private static TrabajadorDAO trabajador;
 	private static UserDAO usuario;
-	private static ViewPeliDAO viewPeli;
-	private static ViewSerieDAO viewSerie;
 	private static CheckLogin checkLogin;
 	private static GetData getData;
 	private static UpdateData updateData;
+	private static DeleteData deleteData;
+	private static InsertData insertData;
 
 	public static EquipDAO getEquip() {
 		if (equip == null)
@@ -78,18 +78,6 @@ public class FactoryDAO {
 		return usuario;
 	}
 
-	public static ViewPeliDAO getViewPeli() {
-		if (viewPeli == null)
-			viewPeli = new ViewPeliDAO();
-		return viewPeli;
-	}
-
-	public static ViewSerieDAO getViewSerie() {
-		if (viewSerie == null)
-			viewSerie = new ViewSerieDAO();
-		return viewSerie;
-	}
-
 	public static CheckLogin getCheckLogin() {
 		if (checkLogin == null)
 			checkLogin = new CheckLogin();
@@ -101,12 +89,26 @@ public class FactoryDAO {
 			getData = new GetData();
 		return getData;
 	}
-	
+
 	public static UpdateData getUpdateData() {
-		if (getUpdateData() == null) {
+		if (updateData == null) {
 			updateData = new UpdateData();
 		}
 		return updateData;
+	}
+
+	public static DeleteData getDeleteData() {
+		if (deleteData == null) {
+			deleteData = new DeleteData();
+		}
+		return deleteData;
+	}
+
+	public static InsertData getInsertData() {
+		if (insertData == null) {
+			insertData = new InsertData();
+		}
+		return insertData;
 	}
 
 }

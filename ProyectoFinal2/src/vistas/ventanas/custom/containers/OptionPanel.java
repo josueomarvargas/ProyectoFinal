@@ -1,8 +1,7 @@
 package vistas.ventanas.custom.containers;
 
-import java.awt.Font;
-import java.awt.Point;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,15 +18,36 @@ import vistas.ventanas.custom.components.MenuButton;
 public class OptionPanel extends JDialog {
 
 	private static final long serialVersionUID = 1L;
+	/** Constante para el tipo de mensaje {@code ERROR}, el valor es 0 **/
 	public static int ERROR = 0;
+	/** Constante para el tipo de mensaje {@code CONFIRM}, el valor es 1 **/
 	public static int CONFIRM = 1;
+	/** Constante para el tipo de mensaje {@code MESSAGE}, el valor es 2 **/
+	public static int MESSAGE = 2;
 
 	private static int choose;
 	private Icon icon;
-	private Point position;
+	private static String yes = "Sí";
+	private static String no = "No";
+	private static String ok = "Vale";
+
+	public void resetStrings() {
+		yes = "Sí";
+		no = "No";
+		ok = "Vale";
+	}
 
 	public static void showMessage(Window parent, String message, String title, int type) {
 		showOptionMessage(parent, message, title, type);
+	}
+
+	public static int showOptionMessage(Window parent, String message, String title, String btn1, String btn2,
+			int type) {
+		yes = btn1;
+		no = btn2;
+		OptionPanel op = new OptionPanel(parent, message, title, type);
+		op.setVisible(true);
+		return choose;
 	}
 
 	public static int showOptionMessage(Window parent, String message, String title, int type) {
@@ -69,25 +89,15 @@ public class OptionPanel extends JDialog {
 		switch (type) {
 		case 0:
 			icon = new ImageIcon(getClass().getResource("/vistas/ventanas/custom/components/img/warning.png"));
-			MenuButton okBtn = new MenuButton();
-			Utilidades.configButtons(okBtn, "Vale");
-			okBtn.setBounds((int) dialog.getWidth() / 2 - 25, (int) dialog.getHeight() - 50, 50, 32);
-
-			okBtn.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent e) {
-					choose = 0;
-					dialog.dispose();
-				}
-			});
-			dialog.add(okBtn);
+			okButton(dialog);
 			break;
 		case 1:
 			icon = new ImageIcon(getClass().getResource("/vistas/ventanas/custom/components/img/ask.png"));
 
 			MenuButton siBtn = new MenuButton();
-			Utilidades.configButtons(siBtn, "Sí");
-			siBtn.setBounds((int) dialog.getWidth() / 2 - 35, (int) dialog.getHeight() - 50, 50, 32);
+			siBtn.setEnabled(true);
+			Utilidades.configButtons(siBtn, yes);
+			siBtn.setBounds((int) dialog.getWidth() / 2 - 80, (int) dialog.getHeight() - 50, 75, 32);
 			siBtn.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -98,9 +108,9 @@ public class OptionPanel extends JDialog {
 			dialog.add(siBtn);
 
 			MenuButton noBtn = new MenuButton();
-			Utilidades.configButtons(noBtn, "No");
-			noBtn.setText("No");
-			noBtn.setBounds((int) dialog.getWidth() / 2 + 35, (int) dialog.getHeight() - 50, 50, 32);
+			noBtn.setEnabled(true);
+			Utilidades.configButtons(noBtn, no);
+			noBtn.setBounds((int) dialog.getWidth() / 2 + 40, (int) dialog.getHeight() - 50, 75, 32);
 			noBtn.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -111,7 +121,29 @@ public class OptionPanel extends JDialog {
 			dialog.add(noBtn);
 			break;
 
+		case 2:
+			icon = new ImageIcon(getClass().getResource("/vistas/ventanas/custom/components/img/check.png"));
+			okButton(dialog);
+			break;
+
 		}
+		resetStrings();
+
+	}
+
+	private void okButton(Window dialog) {
+		MenuButton valeBtn = new MenuButton();
+		Utilidades.configButtons(valeBtn, ok);
+		valeBtn.setBounds((int) dialog.getWidth() / 2 - 25, (int) dialog.getHeight() - 50, 50, 32);
+		valeBtn.setEnabled(true);
+
+		valeBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				dialog.dispose();
+			}
+		});
+		dialog.add(valeBtn);
 	}
 
 	// Error

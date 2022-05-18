@@ -21,8 +21,13 @@ public class Principal {
 		//TablaPatrocinadores tp= new TablaPatrocinadores();
 		//tp.setVisible(true);
 
+<<<<<<< HEAD:ProyectoFinal2/src/main/Principal.java
 		//		DatosObra datosObra = new DatosObra();
 		//		datosObra.setVisible(true);
+=======
+//		DatosObra datosObra = new DatosObra(null, true, "pelicula");
+//		datosObra.setVisible(true);
+>>>>>>> 409a10d0888d0cf78705544f5ac0413365a0f6bd:ProyectoFinalPRG/src/main/Principal.java
 
 	}
 

@@ -1,14 +1,14 @@
 package vistas.ventanas.table;
 
 import java.awt.Color;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
-import java.awt.Window;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -16,25 +16,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
 import modelo.clases.ObraAudiovisual;
 import vistas.dao.GetData;
+import vistas.ventanas.custom.components.MenuButton;
+import vistas.ventanas.custom.components.TextField;
 import vistas.ventanas.custom.containers.CustomTab;
+import vistas.ventanas.custom.containers.OptionPanel;
 import vistas.ventanas.custom.containers.TitleBar;
 import vistas.ventanas.data.DatosObra;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class TablaPeliculasSeries extends JDialog {
+public class TablaPeliculasSeries extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -44,43 +43,82 @@ public class TablaPeliculasSeries extends JDialog {
 	private final JPanel peliPanel = new JPanel();
 	private final JPanel seriePanel = new JPanel();
 	private final JDialog thisDialog;
-	private JTable tablePeli;
-	private JTable tableSerie;
-	private JTextField nombreField;
-	private JTextField directorField;
-	private JTextField guionistaField;
-	private JTextField numTfield;
-	private JButton btnBuscar;
-	private JButton btnAnadir;
-	private JButton btnVolver;
-	private JButton btnAceptar;
-	private int filterX = 780;
-	private int filterY = 20;
-	private int filterWidth = 160;
-	private int filterHeight = 20;
-	@SuppressWarnings("unused")
+//	private final Trabajador trabajador = CheckLogin.getLogin();
+	private CustomTab tabs = null;
+	private JTable tablePeli = null;
+	private JTable tableSerie = null;
+	private TextField nombreField, directorField, guionistaField, numTfield;
+	private MenuButton btnBuscar, btnAnadir, btnVolver, btnRefrescar;
 	private DatosObra dataObra;
 	private TitleBar bar;
+	private Window parent;
+	private int index;
+	private TableModel model;
 
-	/**
-	 * Create the dialog.
-	 */
 	public TablaPeliculasSeries(Window parent, boolean modal) {
 //		super(parent);
-		setModal(true);
+		setModal(modal);
 		this.setUndecorated(true);
-		thisDialog = this;
+		this.parent = parent;
 		setSize(Utilidades.resizeWindow(this));
 //		Utilidades.centerWindow(parent, this);
-		getContentPane().setBackground(Color.WHITE);
+		thisDialog = this;
 		contentPanel.setBackground(Color.WHITE);
-		contentPanel.setLayout(null);
+		init();
+	}
 
+	private void init() {
 		bar = new TitleBar(this);
 		bar.setBounds(0, 0, this.getWidth(), 25);
-		getContentPane().add(bar);
+		contentPanel.add(bar);
+		contentPanel.setLayout(null);
 
-		CustomTab tabs = new CustomTab();
+		loadTables();
+
+		buttons();
+		menuFiltro();
+
+		tablePeli.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (tablePeli.getSelectedRow() != -1) {
+					index = tablePeli.getSelectedRow();
+					model = tablePeli.getModel();
+				}
+				openData(index, model);
+				thisDialog.dispose();
+			}
+		});
+
+		tableSerie.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (tableSerie.getSelectedRow() != -1) {
+					index = tableSerie.getSelectedRow();
+					model = tableSerie.getModel();
+				}
+				openData(index, model);
+				thisDialog.dispose();
+			}
+		});
+
+		switch (new String("administrador")) {
+		case "administrador":
+			btnAnadir.setEnabled(true);
+			btnVolver.setEnabled(true);
+			btnRefrescar.setEnabled(true);
+			break;
+
+		default:
+			break;
+		}
+
+		getContentPane().add(contentPanel);
+	}
+
+	private void loadTables() {
+		tabs = new CustomTab();
+		tabs.setBounds(15, 50, 750, 480);
 		tabs.setTabPlacement(JTabbedPane.BOTTOM);
 		tabs.setBackground(Color.WHITE);
 		peliPanel.setBackground(Color.WHITE);
@@ -88,131 +126,110 @@ public class TablaPeliculasSeries extends JDialog {
 		seriePanel.setBackground(Color.WHITE);
 		tabs.add("Serie", seriePanel);
 		seriePanel.setLayout(null);
-		getContentPane().add(tabs);
+		contentPanel.add(tabs);
+		tablePeli = tablas(peliPanel, ClasesEnum.PELICULA.getName(), tablePeli);
+		tableSerie = tablas(seriePanel, ClasesEnum.SERIE.getName(), tableSerie);
+	}
 
-		menuFiltro(peliPanel);
-		menuFiltro(seriePanel);
-		buttons(peliPanel);
-		buttons(seriePanel);
-		tablePeli = tablas(peliPanel, GetData.PELICULA, tablePeli);
-		tableSerie = tablas(seriePanel, GetData.SERIE, tableSerie);
+	/**
+	 * Abrir ventana con los datos
+	 * 
+	 * @param model2
+	 * @param index2
+	 * 
+	 **/
+	private void openData(int i, TableModel tableModel) {
+		thisDialog.setVisible(false);
+		int id = Integer.parseInt(tableModel.getValueAt(i, 0).toString());
+		ObraAudiovisual oa = (ObraAudiovisual) GetData.getDatos(ClasesEnum.OBRA.getName()).get(id);
+		dataObra = new DatosObra(thisDialog, true, oa, null);
+		dataObra.setVisible(true);
+	}
+
+	private void buttons() {
+
+		btnAnadir = new MenuButton();
+		btnAnadir.setBounds(890, 455, 50, 30);
+		btnAnadir.setIcon(new ImageIcon(
+				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/plus.png")));
+		Utilidades.configButtons(btnAnadir, "");
+		btnAnadir.addActionListener(this);
+		contentPanel.add(btnAnadir);
+
+		btnRefrescar = new MenuButton();
+		btnRefrescar.setIcon(new ImageIcon(
+				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
+		btnRefrescar.setBounds(835, 455, 50, 30);
+		Utilidades.configButtons(btnRefrescar, "");
+		btnRefrescar.addActionListener(this);
+		contentPanel.add(btnRefrescar);
+
+		btnVolver = new MenuButton();
+		btnVolver.setBounds(780, 455, 50, 30);
+		btnVolver.setIcon(new ImageIcon(
+				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/arrow.png")));
+		Utilidades.configButtons(btnVolver, "");
+		btnVolver.addActionListener(this);
+		contentPanel.add(btnVolver);
 
 	}
 
-	private void buttons(JPanel panel) {
-		filterY += 350;
-		filterHeight = 30;
-
-		btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(780, 50, 160, 30);
-		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("a");
-			}
-		});
-		panel.add(btnAceptar);
-
-		btnAnadir = new JButton("+");
-		btnAnadir.setBounds(880, 40, 50, 30);
-		btnAnadir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel.add(btnAnadir);
-
-		btnVolver = new JButton(new String("\u2190"));
-		btnVolver.setBounds(780, 40, 50, 30);
-		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel.add(btnVolver);
-
-	}
-
-	private void menuFiltro(JPanel panel) {
-		filterY = 20;
+	private void menuFiltro() {
 		peliPanel.setLayout(null);
 
-		// Etiqueta: Nombre
-		JLabel nombreLabel = new JLabel("Nombre Obra:");
-		nombreLabel.setBounds(780, 20, 160, 20);
-		panel.add(nombreLabel);
-
 		// TextField: Nombre
-		nombreField = new JTextField();
-		nombreField.setBounds(780, 20, 160, 25);
-		panel.add(nombreField);
-
-		// Etiqueta: Director
-		JLabel directorLabel = new JLabel("Director:");
-		directorLabel.setBounds(780, 45, 160, 20);
-		panel.add(directorLabel);
+		nombreField = new TextField();
+		nombreField.setBounds(780, 50, 160, 45);
+		nombreField.setLabelText("Nombre");
+		contentPanel.add(nombreField);
 
 		// TextField: Director
-		directorField = new JTextField();
-		directorField.setBounds(780, 20, 160, 25);
-		panel.add(directorField);
-
-		// Etiqueta: Guionista
-		JLabel guionistaLabel = new JLabel("Guionista:");
-		guionistaLabel.setBounds(780, 45, 160, 20);
-		panel.add(guionistaLabel);
+		directorField = new TextField();
+		directorField.setBounds(780, 100, 160, 45);
+		directorField.setLabelText("Director");
+		contentPanel.add(directorField);
 
 		// TextField: Guionista
-		guionistaField = new JTextField();
-		guionistaField.setBounds(780, 20, 160, 25);
-		panel.add(guionistaField);
-
-		// Etiqueta: Num Trabajadores
-		JLabel trabajdorLabel = new JLabel("Numero Trabajadores");
-		trabajdorLabel.setBounds(780, 45, 160, 20);
-		panel.add(trabajdorLabel);
+		guionistaField = new TextField();
+		guionistaField.setBounds(780, 150, 160, 45);
+		guionistaField.setLabelText("Guionista");
+		contentPanel.add(guionistaField);
 
 		// TextField: Num Trabajadores
-		numTfield = new JTextField();
-		numTfield.setBounds(780, 20, 160, 25);
-		panel.add(numTfield);
+		numTfield = new TextField();
+		numTfield.setBounds(780, 200, 160, 45);
+		numTfield.setLabelText("Numero de trabajadores");
+		contentPanel.add(numTfield);
 
-		// Etiqueta: Presupuesto
-		JLabel presupuestoLabel = new JLabel("Presupuesto:");
-		presupuestoLabel.setBounds(780, 45, 160, 20);
-		panel.add(presupuestoLabel);
+		JLabel presupuesto = new JLabel("Presupuesto");
+		presupuesto.setBounds(780, 250, 160, 25);
+		contentPanel.add(presupuesto);
 
 		// ComboBox: presupuesto
 		JComboBox<String> comboBox = new JComboBox<>();
-		comboBox.setBounds(780, 20, 160, 25);
+		comboBox.setBounds(780, 275, 160, 25);
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "Mayor a Menor", "Menor a Mayor" }));
-		panel.add(comboBox);
+		contentPanel.add(comboBox);
 
 		// Boton para buscar
-		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(780, 50, 160, 25);
+		btnBuscar = new MenuButton();
+		btnBuscar.setBounds(780, 320, 160, 35);
+		btnBuscar.setIcon(new ImageIcon(
+				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/search.png")));
+		Utilidades.configButtons(btnBuscar, "");
+		btnBuscar.setEnabled(false);
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		panel.add(btnBuscar);
+		contentPanel.add(btnBuscar);
 	}
 
 	private JTable tablas(JPanel panel, String obra, JTable table) {
 
-		// Recoger los datos de las pelis/series
-		Object[][] data = FactoryDAO.getGetData().checkInfo(obra);
-		String[] column = null;
-
-		// Inicializar el nombre de las columnas dependiendo de que tabla es
-		if (obra.equals(GetData.PELICULA)) {
-			column = new String[] { "ID", "Nombre", "Director", "Guionista", "Num.T", "Presupuesto", "Fecha Estreno",
-					"Es Taquillero" };
-		} else {
-			column = new String[] { "ID", "Nombre", "Director", "Guionista", "Num.T", "Presupuesto", "Fecha Estreno",
-					"Temporadas", "Capitulos" };
-		}
-
 		// Scroll panel
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(5, 40, 760, 445);
+		scrollPane.setBounds(0, 0, 740, 440);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
@@ -225,29 +242,11 @@ public class TablaPeliculasSeries extends JDialog {
 			}
 
 		};
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				TableModel model = null;
-				int i;
-				if (tablePeli.getSelectedRow() != -1) {
-					i = tablePeli.getSelectedRow();
-					model = tablePeli.getModel();
-				} else {
-					i = tableSerie.getSelectedRow();
-					model = tableSerie.getModel();
-				}
-				thisDialog.setVisible(false);
-				int id = Integer.parseInt(model.getValueAt(i, 0).toString());
-				ObraAudiovisual oa = (ObraAudiovisual) GetData.getDatos(GetData.OBRA).get(id);
-				dataObra = new DatosObra(thisDialog, true, oa);
-				dataObra.setVisible(true);
-			}
-		});
+
 		table.setBackground(new Color(255, 255, 255));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		// Añadir los datos a la tabla
-		table.setModel(new DefaultTableModel(data, column));
+		table.setModel(tableModel(obra));
 		Utilidades.resizeColumnWidth(table); // Redimensionar columnas
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table); // Añadir la tabla al scroll panel
@@ -256,4 +255,53 @@ public class TablaPeliculasSeries extends JDialog {
 		return table;
 	}
 
+	private DefaultTableModel tableModel(String obra) {
+		// Recoger los datos de las pelis/series
+		Object[][] data = FactoryDAO.getGetData().dataManage(obra);
+		String[] column = null;
+
+		// Inicializar el nombre de las columnas dependiendo de que tabla es
+		if (obra.equals(ClasesEnum.PELICULA.getName())) {
+			column = new String[] { "ID", "Nombre", "Duracion", "Fecha Estreno", "Presupuesto", "Es Taquillero" };
+		} else {
+			column = new String[] { "ID", "Nombre", "Duracion", "Fecha Estreno", "Presupuesto", "Temporadas" };
+		}
+
+		return new DefaultTableModel(data, column);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(btnBuscar)) {
+
+		} else if (e.getSource().equals(btnAnadir)) {
+			int i = OptionPanel.showOptionMessage(thisDialog, "¿Qué tipo de obra audiovisual desea añadir?",
+					"Añadir una nueva obra audiovisual", "Pelicula", "Serie", OptionPanel.CONFIRM);
+			if (i == 0) {
+				dataObra = new DatosObra(thisDialog, true, null, ClasesEnum.SERIE.getName());
+			} else {
+				dataObra = new DatosObra(thisDialog, true, null, ClasesEnum.PELICULA.getName());
+			}
+
+			if (dataObra != null) {
+				thisDialog.setVisible(false);
+				dataObra.setVisible(true);
+			}
+		} else if (e.getSource().equals(btnVolver)) {
+			int i = OptionPanel.showOptionMessage(thisDialog,
+					"¿Estas segur@ de que quieres volver a la ventana anterior?", "¿Quieres volver?",
+					OptionPanel.CONFIRM);
+			if (i == 1) {
+				thisDialog.dispose();
+				parent.setVisible(true);
+			}
+		} else if (e.getSource().equals(btnRefrescar)) {
+			tablePeli.setModel(tableModel(ClasesEnum.PELICULA.getName()));
+			tableSerie.setModel(tableModel(ClasesEnum.SERIE.getName()));
+			Utilidades.resizeColumnWidth(tablePeli);
+			Utilidades.resizeColumnWidth(tableSerie);
+
+		}
+
+	}
 }

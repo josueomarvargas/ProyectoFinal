@@ -54,7 +54,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	private final String READALL = "CALL showObras()";
 
 	// Actualizar datos
-	private final String UPDATE = "UPDATE obraaudiovisual SET nombre = ?, duracion = ?, FechaEstreno = ?, presupuesto = ? WHERE idObra = ?";
+	private final String UPDATE = "UPDATE obraaudiovisual SET nombre = ?, duracion = ?, FechaEstreno = ?, presupuesto = ?, imgPath = ? WHERE idObra = ?";
 	private final String UPDATEPELI = "UPDATE pelicula SET esTaquillera = ? WHERE idObra = ?";
 
 	// Eliminar obra
@@ -398,6 +398,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 					oa.setFechaEstreno(rs.getDate(4) != null ? rs.getDate(4).toLocalDate() : null);
 					oa.setPresupuesto(rs.getInt(5));
 					oa.setTipo(rs.getString(6));
+					oa.setImgPath(rs.getString(7));
 				}
 
 				// Añadimos la clave y el objecto al map
@@ -446,23 +447,23 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			stat.setInt(2, clase.getDuracion());
 			stat.setDate(3, clase.getFechaEstreno() != null ? Date.valueOf(clase.getFechaEstreno()) : null);
 			stat.setInt(4, clase.getPresupuesto());
-			stat.setInt(5, clase.getIdObra());
+			stat.setString(5, clase.getImgPath());
+			stat.setInt(6, clase.getIdObra());
 
 			// Ejecutar consulta
 			stat.executeUpdate();
-
 			if (clase instanceof Pelicula) {
 				// Actualizamos si es taquillera
 				updatePeli.setInt(1, ((Pelicula) clase).isEsTaquillera() == true ? 1 : 0);
+				updatePeli.setInt(2, clase.getIdObra());
 				updatePeli.executeUpdate();
 			} else {
 				// Eliminamos las series
 				delSerie.setInt(1, clase.getIdObra());
 				delSerie.executeUpdate();
+				// Insertamos de nuevo las series
+				insertSerie(clase.getIdObra(), clase);
 			}
-
-			// Insertamos de nuevo las series
-			insertSerie(clase.getIdObra(), clase);
 
 			// Aplicar los cambios
 			con.commit();
