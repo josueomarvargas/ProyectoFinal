@@ -14,14 +14,14 @@ package controlador.interfaz;
  * @param <T> objeto que se pasará por parametros en el método
  * @param <U> objeto que devolverá el método
  */
-public interface RetrieveData<T, U> {
+public interface DataManager<T, U> {
 
 	/**
 	 * 
-	 * @param clase objecto que se ha especificado al implementar y que pasará por
+	 * @param data objecto que se ha especificado al implementar y que pasará por
 	 *              parametros
 	 * @return devolverá el tipo que se ha especificado al implementarlo
 	 */
-	public U checkInfo(T clase);
+	public U dataManage(T data);
 
 }

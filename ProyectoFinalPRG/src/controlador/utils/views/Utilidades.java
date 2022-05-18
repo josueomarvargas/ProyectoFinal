@@ -9,8 +9,9 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,26 +19,36 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Base64;
+import java.util.Objects;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.plaf.basic.BasicEditorPaneUI;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.Document;
+import javax.swing.text.JTextComponent;
 
 import vistas.ventanas.custom.components.MenuButton;
 
-public class Utilidades {
+public abstract class Utilidades {
 
 	// Screen size
 	private static Dimension size;
 
 	// Img path
-	private static String basePath = new File("").getAbsolutePath();
-	public static Path imgSavePath = Paths.get(basePath, "/src/vistas/img/");
+	public static String basePath = new File("").getAbsolutePath();
+	public static Path imgSavePath = Paths.get(basePath, "/src/modelo/img/");
 
 	/**
 	 * Redimensionar las columnas según el valor más largo de la columna.
@@ -100,9 +111,9 @@ public class Utilidades {
 
 	}
 
-	public static ImageIcon resizeIcon(JLabel comp, File file) {
+	public static ImageIcon resizeIcon(JLabel label, File file) {
 		ImageIcon icon = new ImageIcon(file.getPath());
-		Image img = icon.getImage().getScaledInstance(comp.getWidth(), comp.getHeight(), Image.SCALE_SMOOTH);
+		Image img = icon.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
 		return new ImageIcon(img);
 	}
 
@@ -115,7 +126,7 @@ public class Utilidades {
 
 	public static LocalDate validateDate(String date) {
 
-		final DateTimeFormatter dateFormatter = DateTimeFormatter.BASIC_ISO_DATE;
+		final DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE;
 
 		try {
 			return LocalDate.parse(date, dateFormatter);
@@ -126,6 +137,8 @@ public class Utilidades {
 
 	public static File addFoto() {
 		JFileChooser fileChooser = new JFileChooser("C:\\");
+		FileFilter filter = new FileNameExtensionFilter("JPEG file", "jpg", "jpeg", "png");
+		fileChooser.setFileFilter(filter);
 
 		int response = fileChooser.showOpenDialog(null);
 
@@ -135,14 +148,13 @@ public class Utilidades {
 			Path copiedFile = null;
 			File aux = null;
 			try {
-				if (copiedFile == null)
-					copiedFile = Paths.get(imgSavePath.toString() + "\\" + foto.getName());
+				copiedFile = Paths.get(imgSavePath.toString() + "\\" + foto.getName());
 				aux = Files.copy(foto.toPath(), copiedFile, StandardCopyOption.REPLACE_EXISTING).toFile();
 			} catch (Exception e) {
 				System.err.println(e);
 			}
 
-			return aux;
+			return new File(aux.toString().substring(basePath.length()));
 		}
 		return null;
 	}

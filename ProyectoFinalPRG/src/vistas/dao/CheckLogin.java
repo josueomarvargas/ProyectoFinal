@@ -1,6 +1,6 @@
 package vistas.dao;
 
-import controlador.interfaz.RetrieveData;
+import controlador.interfaz.DataManager;
 import controlador.utils.dao.FactoryDAO;
 import modelo.clases.Trabajador;
 import modelo.clases.Usuario;
@@ -15,7 +15,7 @@ import modelo.dao.UserDAO;
  * @author Henrique Yeguo
  *
  */
-public class CheckLogin implements RetrieveData<Usuario, Trabajador> {
+public class CheckLogin implements DataManager<Usuario, Trabajador> {
 
 	private static Trabajador tData;
 
@@ -33,10 +33,10 @@ public class CheckLogin implements RetrieveData<Usuario, Trabajador> {
 	 *         usuario y/o contraseña són inválidas.
 	 **/
 	@Override
-	public Trabajador checkInfo(Usuario user) {
+	public Trabajador dataManage(Usuario user) {
 		if (tData == null) {
 			// Recoger información del trabajador
-			tData = FactoryDAO.getUsuario().checkInfo(user);
+			tData = FactoryDAO.getUsuario().dataManage(user);
 		}
 		return tData;
 	}

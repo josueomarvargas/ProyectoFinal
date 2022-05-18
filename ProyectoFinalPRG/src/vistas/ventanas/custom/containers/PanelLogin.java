@@ -115,7 +115,7 @@ public class PanelLogin extends CustomPanel {
 		btnAcceder.setEnabled(false);
 		btnAcceder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (null != FactoryDAO.getCheckLogin().checkInfo(new Usuario(getUserName(), getPassword()))) {
+				if (null != FactoryDAO.getCheckLogin().dataManage(new Usuario(getUserName(), getPassword()))) {
 					parent.dispose();
 					Menu vMenu = new Menu(parent, true);
 					vMenu.setVisible(true);

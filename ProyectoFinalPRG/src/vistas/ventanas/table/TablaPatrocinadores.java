@@ -77,7 +77,7 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	private void tabla() {
 
 		// Recoger los datos de los trabajdores
-		Object[][] data = FactoryDAO.getGetData().checkInfo(GetData.PATROCINADOR);
+		Object[][] data = FactoryDAO.getGetData().dataManage(GetData.PATROCINADOR);
 		String[] column = new String[] { "ID", "Nombre", "Dinero" };
 
 		// Scroll panel

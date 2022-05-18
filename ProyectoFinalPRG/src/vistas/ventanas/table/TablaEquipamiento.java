@@ -84,7 +84,7 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 	private void tabla() {
 
 		// Recoger los datos de los trabajdores
-		Object[][] data = FactoryDAO.getGetData().checkInfo(GetData.EQUIPAMIENTO);
+		Object[][] data = FactoryDAO.getGetData().dataManage(GetData.EQUIPAMIENTO);
 		String[] column = new String[] { "ID", "Nombre", "Tipo" };
 
 		// Scroll panel

@@ -84,7 +84,7 @@ public class TablaTrabajadores extends JDialog implements ActionListener {
 	private void tabla() {
 
 		// Recoger los datos de los trabajdores
-		Object[][] data = FactoryDAO.getGetData().checkInfo(GetData.TRABAJADOR);
+		Object[][] data = FactoryDAO.getGetData().dataManage(GetData.TRABAJADOR);
 		String[] column = new String[] { "ID", "DNI", "Nombre", "Apellido", "Num. Tel", "Num. Premios", "Dirección",
 				"Tipo", "Fecha Nacimiento" };
 

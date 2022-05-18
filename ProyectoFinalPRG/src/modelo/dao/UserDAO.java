@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import controlador.interfaz.BDgeneric;
-import controlador.interfaz.RetrieveData;
+import controlador.interfaz.DataManager;
 import controlador.utils.dao.FactoryDAO;
 import controlador.utils.dao.SQLCon;
 import modelo.clases.Trabajador;
@@ -18,10 +18,10 @@ import modelo.clases.Usuario;
  * La clase {@code UsuarioDAO} es una clase que implementa la interfaz genérica
  * {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea métodos
  * CRUD necesarios para gestionar la clase {@link modelo.clases.Usuario
- * Usuario}, también usaremos la interfaz {@link RetrieveData} para recoger los
+ * Usuario}, también usaremos la interfaz {@link DataManager} para recoger los
  * datos de un trabajador mediante su {@link Usuario}.
  * <p>
- * Esta clase también implementa la interfaz {@link RetrieveData} especificando
+ * Esta clase también implementa la interfaz {@link DataManager} especificando
  * las clases {@link Usuario} y {@link Trabajador} para hacer uso del método
  * {@link #recogerInfo} que nos servirá para el login.
  * 
@@ -29,7 +29,7 @@ import modelo.clases.Usuario;
  * @author Henrique Yeguo
  * 
  **/
-public class UserDAO implements BDgeneric<Usuario>, RetrieveData<Usuario, Trabajador> {
+public class UserDAO implements BDgeneric<Usuario>, DataManager<Usuario, Trabajador> {
 
 	// MySQL Consultas
 	// Insertar usuarios
@@ -228,7 +228,7 @@ public class UserDAO implements BDgeneric<Usuario>, RetrieveData<Usuario, Trabaj
 	 * @return información del trabajador
 	 **/
 	@Override
-	public Trabajador checkInfo(Usuario clase) {
+	public Trabajador dataManage(Usuario clase) {
 
 		this.openConnection();
 		ResultSet rs = null;

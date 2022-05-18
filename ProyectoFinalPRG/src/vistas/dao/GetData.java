@@ -3,14 +3,14 @@ package vistas.dao;
 import java.util.Iterator;
 import java.util.Map;
 
-import controlador.interfaz.RetrieveData;
+import controlador.interfaz.DataManager;
 import controlador.utils.dao.FactoryDAO;
 import modelo.clases.Equipamiento;
 import modelo.clases.ObraAudiovisual;
 import modelo.clases.Patrocinador;
+import modelo.clases.Pelicula;
+import modelo.clases.Serie;
 import modelo.clases.Trabajador;
-import modelo.clases.ViewPeli;
-import modelo.clases.ViewSerie;
 
 /**
  * Clase que implementa la interfaz {@link UIcontrol} para recoger los datos de
@@ -20,14 +20,7 @@ import modelo.clases.ViewSerie;
  * 
  * @author Henrique Yeguo
  */
-public class GetData implements RetrieveData<String, Object[][]> {
-
-	public static final String PELICULA = "peli";
-	public static final String SERIE = "serie";
-	public static final String OBRA = "obra";
-	public static final String EQUIPAMIENTO = "equipamiento";
-	public static final String PATROCINADOR = "patrocinador";
-	public static final String TRABAJADOR = "trabajador";
+public class GetData implements DataManager<String, Object[][]> {
 
 	/**
 	 * Estos atributos guardarán maps con la información completa de las tablas,
@@ -48,7 +41,7 @@ public class GetData implements RetrieveData<String, Object[][]> {
 	 *           que se quiere recuperar de la base de datos
 	 **/
 	@Override
-	public Object[][] checkInfo(String type) {
+	public Object[][] dataManage(String type) {
 
 		// Guardar todos los datos de las obras
 		if (type.equals("peli") || type.equals("serie")) {
@@ -57,10 +50,9 @@ public class GetData implements RetrieveData<String, Object[][]> {
 
 		switch (type) {
 		case "peli":
-			return toObjectArray(FactoryDAO.getViewPeli().callView(), "peli");
+			return toObjectArray(FactoryDAO.getObra().readAll(), "peli");
 		case "serie":
-			return toObjectArray(FactoryDAO.getViewSerie().callView(), "serie");
-
+			return toObjectArray(FactoryDAO.getObra().readAll(), "serie");
 		case "equipamiento":
 			if (equipamiento == null)
 				equipamiento = FactoryDAO.getEquip().readAll();
@@ -127,39 +119,44 @@ public class GetData implements RetrieveData<String, Object[][]> {
 
 		Object[][] array2D = null;
 		Iterator<?> iterObra = map.values().iterator();
+		ObraAudiovisual obra = null;
+		int i = 0;
 		switch (tipo) {
 		case "peli":
-			array2D = new Object[map.size()][8];
-			for (int i = 0; iterObra.hasNext(); i++) {
-				ViewPeli aux = (ViewPeli) iterObra.next();
-				array2D[i][0] = aux.getId();
-				array2D[i][1] = aux.getNombre();
-				array2D[i][2] = aux.getDirector();
-				array2D[i][3] = aux.getGuionista();
-				array2D[i][4] = aux.getNumTrabajadores();
-				array2D[i][5] = aux.getPresupuesto();
-				array2D[i][6] = aux.getFechaEstreno();
-				array2D[i][7] = aux.getEsTaquillero().equals("1") ? "Sí" : "No";
+			array2D = new Object[getMapObraLength(map)[0]][6];
+			while (iterObra.hasNext()) {
+				obra = (ObraAudiovisual) iterObra.next();
+				if (obra instanceof Pelicula) {
+					Pelicula aux = (Pelicula) obra;
+					array2D[i][0] = aux.getIdObra();
+					array2D[i][1] = aux.getNombre();
+					array2D[i][2] = aux.getDuracion();
+					array2D[i][3] = aux.getFechaEstreno();
+					array2D[i][4] = aux.getPresupuesto();
+					array2D[i][5] = aux.isEsTaquillera() == true ? "Sí" : "No";
+					i++;
+				}
 			}
 			break;
 		case "serie":
-			array2D = new Object[map.size()][9];
-			for (int i = 0; iterObra.hasNext(); i++) {
-				ViewSerie aux = (ViewSerie) iterObra.next();
-				array2D[i][0] = aux.getId();
-				array2D[i][1] = aux.getNombre();
-				array2D[i][2] = aux.getDirector();
-				array2D[i][3] = aux.getGuionista();
-				array2D[i][4] = aux.getNumTrabajadores();
-				array2D[i][5] = aux.getPresupuesto();
-				array2D[i][6] = aux.getFechaEstreno();
-				array2D[i][7] = aux.getTemporadas();
-				array2D[i][8] = aux.getCapitulos();
+			array2D = new Object[getMapObraLength(map)[1]][6];
+			while (iterObra.hasNext()) {
+				obra = (ObraAudiovisual) iterObra.next();
+				if (obra instanceof Serie) {
+					Serie aux = (Serie) obra;
+					array2D[i][0] = aux.getIdObra();
+					array2D[i][1] = aux.getNombre();
+					array2D[i][2] = aux.getDuracion();
+					array2D[i][3] = aux.getFechaEstreno();
+					array2D[i][4] = aux.getPresupuesto();
+					array2D[i][5] = aux.getNombreCap().size();
+					i++;
+				}
 			}
 			break;
 		case "equipamiento":
 			array2D = new Object[map.size()][3];
-			for (int i = 0; iterObra.hasNext(); i++) {
+			for (; iterObra.hasNext(); i++) {
 				Equipamiento aux = (Equipamiento) iterObra.next();
 				array2D[i][0] = aux.getIdEquip();
 				array2D[i][1] = aux.getNombre();
@@ -168,7 +165,7 @@ public class GetData implements RetrieveData<String, Object[][]> {
 			break;
 		case "patrocinador":
 			array2D = new Object[map.size()][3];
-			for (int i = 0; iterObra.hasNext(); i++) {
+			for (; iterObra.hasNext(); i++) {
 				Patrocinador aux = (Patrocinador) iterObra.next();
 				array2D[i][0] = aux.getIdPatro();
 				array2D[i][1] = aux.getNombre();
@@ -177,7 +174,7 @@ public class GetData implements RetrieveData<String, Object[][]> {
 			break;
 		case "trabajador":
 			array2D = new Object[map.size()][9];
-			for (int i = 0; iterObra.hasNext(); i++) {
+			for (; iterObra.hasNext(); i++) {
 				Trabajador aux = (Trabajador) iterObra.next();
 				array2D[i][0] = aux.getIdTrabajador();
 				array2D[i][1] = aux.getDni();
@@ -191,6 +188,19 @@ public class GetData implements RetrieveData<String, Object[][]> {
 			}
 		}
 		return array2D;
+	}
+
+	private <K, V> int[] getMapObraLength(Map<K, V> map) {
+		Iterator<?> iterObra = map.values().iterator();
+		int[] size = { 0, 0 };
+		while (iterObra.hasNext()) {
+			ObraAudiovisual obra = (ObraAudiovisual) iterObra.next();
+			if (obra instanceof Pelicula)
+				size[0] += 1;
+			else
+				size[1] += 1;
+		}
+		return size;
 	}
 
 }
