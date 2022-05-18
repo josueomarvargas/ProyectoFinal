@@ -9,16 +9,14 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-<<<<<<< HEAD:ProyectoFinalPRG/src/vistas/AddDatosPersonal.java
+
 import javax.swing.text.MaskFormatter;
 
 import com.toedter.calendar.JCalendar;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
-=======
 
 import vistas.ventanas.GestionDatos;
->>>>>>> d8c73f11bb9863bc5cc83208801d69d59db29fe4:ProyectoFinalPRG/src/vistas/ventanas/data/DatosPersonal.java
 
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -93,7 +91,6 @@ public class DatosPersonal extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-<<<<<<< HEAD:ProyectoFinalPRG/src/vistas/AddDatosPersonal.java
 	public AddDatosPersonal() {
 		scrollPane= new JScrollPane();
 		scrollPane.setBounds(5,10,100,150);
@@ -101,7 +98,6 @@ public class DatosPersonal extends JDialog implements ActionListener {
 		//this.setUndecorated(true);
 		setBounds(100, 100, 550, 677);
 		//getContentPane().setLayout(new BorderLayout());
-=======
 	public DatosPersonal() {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(5, 10, 100, 150);
@@ -109,7 +105,6 @@ public class DatosPersonal extends JDialog implements ActionListener {
 		this.setUndecorated(true);
 		setBounds(100, 100, 550, 420);
 		// getContentPane().setLayout(new BorderLayout());
->>>>>>> d8c73f11bb9863bc5cc83208801d69d59db29fe4:ProyectoFinalPRG/src/vistas/ventanas/data/DatosPersonal.java
 		contentPanel.setBackground(SystemColor.activeCaption);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		// getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -455,9 +450,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 		getContentPane().add(scrollPane, BorderLayout.EAST); 	
 
 
-=======
 		getContentPane().add(scrollPane);
->>>>>>> d8c73f11bb9863bc5cc83208801d69d59db29fe4:ProyectoFinalPRG/src/vistas/ventanas/data/DatosPersonal.java
 	}
 
 	@Override
