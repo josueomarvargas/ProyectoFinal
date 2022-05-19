@@ -42,36 +42,34 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private final JPanel peliPanel = new JPanel();
 	private final JPanel seriePanel = new JPanel();
+	private final Window parent;
 	private final JDialog thisDialog;
 //	private final Trabajador trabajador = CheckLogin.getLogin();
 	private CustomTab tabs = null;
 	private JTable tablePeli = null;
 	private JTable tableSerie = null;
+	private JComboBox<String> comboBox;
 	private TextField nombreField, directorField, guionistaField, numTfield;
 	private MenuButton btnBuscar, btnAnadir, btnVolver, btnRefrescar;
 	private DatosObra dataObra;
-	private TitleBar bar;
-	private Window parent;
-	private int index;
-	private TableModel model;
 
 	public TablaPeliculasSeries(Window parent, boolean modal) {
 //		super(parent);
 		setModal(modal);
 		this.setUndecorated(true);
-		this.parent = parent;
 		setSize(Utilidades.resizeWindow(this));
 //		Utilidades.centerWindow(parent, this);
+		this.parent = parent;
 		thisDialog = this;
 		contentPanel.setBackground(Color.WHITE);
+		contentPanel.setLayout(null);
 		init();
 	}
 
 	private void init() {
-		bar = new TitleBar(this);
+		TitleBar bar = new TitleBar(this);
 		bar.setBounds(0, 0, this.getWidth(), 25);
 		contentPanel.add(bar);
-		contentPanel.setLayout(null);
 
 		loadTables();
 
@@ -82,11 +80,10 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (tablePeli.getSelectedRow() != -1) {
-					index = tablePeli.getSelectedRow();
-					model = tablePeli.getModel();
+					int index = tablePeli.getSelectedRow();
+					TableModel model = tablePeli.getModel();
+					openData(index, model);
 				}
-				openData(index, model);
-				thisDialog.dispose();
 			}
 		});
 
@@ -94,11 +91,11 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (tableSerie.getSelectedRow() != -1) {
-					index = tableSerie.getSelectedRow();
-					model = tableSerie.getModel();
+					int index = tableSerie.getSelectedRow();
+					TableModel model = tableSerie.getModel();
+					openData(index, model);
 				}
-				openData(index, model);
-				thisDialog.dispose();
+
 			}
 		});
 
@@ -125,7 +122,6 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		tabs.add("Pelicula", peliPanel);
 		seriePanel.setBackground(Color.WHITE);
 		tabs.add("Serie", seriePanel);
-		seriePanel.setLayout(null);
 		contentPanel.add(tabs);
 		tablePeli = tablas(peliPanel, ClasesEnum.PELICULA.getName(), tablePeli);
 		tableSerie = tablas(seriePanel, ClasesEnum.SERIE.getName(), tableSerie);
@@ -139,10 +135,10 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	 * 
 	 **/
 	private void openData(int i, TableModel tableModel) {
-		thisDialog.setVisible(false);
 		int id = Integer.parseInt(tableModel.getValueAt(i, 0).toString());
 		ObraAudiovisual oa = (ObraAudiovisual) GetData.getDatos(ClasesEnum.OBRA.getName()).get(id);
 		dataObra = new DatosObra(thisDialog, true, oa, null);
+		thisDialog.setVisible(false);
 		dataObra.setVisible(true);
 	}
 
@@ -175,7 +171,6 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	}
 
 	private void menuFiltro() {
-		peliPanel.setLayout(null);
 
 		// TextField: Nombre
 		nombreField = new TextField();
@@ -206,7 +201,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		contentPanel.add(presupuesto);
 
 		// ComboBox: presupuesto
-		JComboBox<String> comboBox = new JComboBox<>();
+		comboBox = new JComboBox<>();
 		comboBox.setBounds(780, 275, 160, 25);
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "Mayor a Menor", "Menor a Mayor" }));
 		contentPanel.add(comboBox);
@@ -226,10 +221,11 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	}
 
 	private JTable tablas(JPanel panel, String obra, JTable table) {
+		panel.setLayout(null);
 
 		// Scroll panel
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 740, 440);
+		scrollPane.setBounds(10, 5, 725, 428);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
@@ -276,7 +272,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 
 		} else if (e.getSource().equals(btnAnadir)) {
 			int i = OptionPanel.showOptionMessage(thisDialog, "¿Qué tipo de obra audiovisual desea añadir?",
-					"Añadir una nueva obra audiovisual", "Pelicula", "Serie", OptionPanel.CONFIRM);
+					"Añadir obra audiovisual", "Pelicula", "Serie", OptionPanel.CONFIRM);
 			if (i == 0) {
 				dataObra = new DatosObra(thisDialog, true, null, ClasesEnum.SERIE.getName());
 			} else {

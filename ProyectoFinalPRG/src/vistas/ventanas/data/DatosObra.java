@@ -6,12 +6,15 @@ import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -24,7 +27,11 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
@@ -43,15 +50,15 @@ public class DatosObra extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private DefaultListModel<String> listModel;
 	private final JPanel peliPanel = new JPanel();
 	private final JPanel seriePanel = new JPanel();
 	private MenuButton btnBorrarDatos, btnModificar = null, btnAddObra, btnVolver, btnVerPatrocinadores, addPortada,
 			btnVerTrabajadores, btnVerEquipamiento, addTemporada;
 	private TextField fieldNombre, fieldDuracion, fieldFecha, fieldPresupuesto, addCap;;
 	private JRadioButton esTaquillera = null;
-	private TitleBar bar;
+	private DefaultListModel<String> listModel;
 	private JList<String> listCap;
+	private TitleBar bar;
 	private JComboBox<Integer> comboBox = null;
 	private CustomTab tabs;
 	private Dimension size;
@@ -84,10 +91,11 @@ public class DatosObra extends JDialog implements ActionListener {
 		if (obra != null) {
 			this.obra = obra;
 			init();
-			initValues(obra);
+			initValues();
 		} else {
 			// Cuando se va ha añadir uno nuevo
 			this.type = type;
+			this.valido = false;
 			init();
 		}
 
@@ -119,14 +127,17 @@ public class DatosObra extends JDialog implements ActionListener {
 			tabs.setSelectedIndex(0);
 			tabsFields(peliPanel);
 			tabs.setEnabledAt(1, false);
-			if (this.obra == null)
+			if (this.obra == null) {
 				this.obra = new Pelicula();
+				this.obra.setTipo("Pelicula");
+			}
 		} else {
 			tabs.setSelectedIndex(1);
 			tabsFields(seriePanel);
 			tabs.setEnabledAt(0, false);
 			if (this.obra == null) {
 				this.obra = new Serie();
+				obra.setTipo("Serie");
 				comboBox.addItem(1);
 			}
 		}
@@ -140,29 +151,52 @@ public class DatosObra extends JDialog implements ActionListener {
 		lblTitulo.setBounds(375, 32, 171, 36);
 		panel.add(lblTitulo);
 
+		JLabel invalidCharacter = new JLabel();
+		invalidCharacter.setText("Ese caracter es inválido.");
+		invalidCharacter.setFont(new Font("Calibri", Font.PLAIN, 14));
+		invalidCharacter.setForeground(Color.RED);
+
 		// Nombre
 		fieldNombre = new TextField();
 		fieldNombre.setLabelText("Nombre");
-		fieldNombre.setBounds(279, 79, 150, 50);
+		fieldNombre.setBounds(280, 80, 150, 50);
+		fieldNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Popup p = PopupFactory.getSharedInstance().getPopup(thisDialog, invalidCharacter, 285, 140);
+				char c = e.getKeyChar();
+				if ((c < '0') || (c > '9') && (c < 65) || (c > 90) && ((c < 97) || (c > 122))) {
+					if ((c != KeyEvent.VK_BACK_SPACE) && (c != KeyEvent.VK_SPACE)) {
+						e.consume();
+						toolTip(p);
+					}
+				}
+			}
+		});
 		panel.add(fieldNombre);
 
 		// Duracion
 		fieldDuracion = new TextField();
 		fieldDuracion.setLabelText("Duracion");
-		fieldDuracion.setBounds(462, 79, 150, 50);
+		fieldDuracion.setBounds(462, 80, 150, 50);
 		fieldDuracion.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
+				Popup p = PopupFactory.getSharedInstance().getPopup(thisDialog, invalidCharacter, 465, 140);
 				char c = e.getKeyChar();
 				if ((c < '0') || (c > '9') && (c != KeyEvent.VK_BACK_SPACE)) {
+					valido = false;
 					e.consume();
+					toolTip(p);
 				}
+				valido = true;
+
 			}
 		});
 		panel.add(fieldDuracion);
 
 		JLabel fechaError = new JLabel("<html>Error introduzca la fecha en el formato: yyyy-mm-dd</html>");
-		fechaError.setBounds(250, 200, 200, 50);
+		fechaError.setBounds(250, 220, 200, 50);
 		fechaError.setFont(new Font("Calibri", Font.PLAIN, 14));
 		fechaError.setForeground(Color.RED);
 		fechaError.setVisible(false);
@@ -171,7 +205,7 @@ public class DatosObra extends JDialog implements ActionListener {
 		// Fecha
 		fieldFecha = new TextField();
 		fieldFecha.setLabelText("Fecha de estreno :");
-		fieldFecha.setBounds(279, 140, 150, 50);
+		fieldFecha.setBounds(279, 160, 150, 50);
 		fieldFecha.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -180,10 +214,10 @@ public class DatosObra extends JDialog implements ActionListener {
 					e.consume();
 				}
 			}
-
+		});
+		fieldFecha.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyReleased(KeyEvent e) {
-
+			public void focusLost(FocusEvent e) {
 				LocalDate validate = Utilidades.validateDate(fieldFecha.getText());
 				if (null == validate) {
 					fechaError.setVisible(true);
@@ -199,27 +233,28 @@ public class DatosObra extends JDialog implements ActionListener {
 		// Presupuesto
 		fieldPresupuesto = new TextField();
 		fieldPresupuesto.setLabelText("Presupuesto:");
-		fieldPresupuesto.setBounds(464, 140, 148, 50);
+		fieldPresupuesto.setBounds(464, 160, 148, 50);
 		fieldPresupuesto.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
+				Popup p = PopupFactory.getSharedInstance().getPopup(thisDialog, invalidCharacter, 464, 220);
 				char c = e.getKeyChar();
 				if ((c < '0') || (c > '9') && (c != KeyEvent.VK_BACK_SPACE)) {
+					valido = false;
 					e.consume();
+					toolTip(p);
 				}
+				valido = true;
 			}
 		});
 		panel.add(fieldPresupuesto);
 
 		if (panel.equals(peliPanel)) {
 			esTaquillera = new JRadioButton("Es Taquillera");
-			esTaquillera.setBounds(562, 218, 109, 23);
+			esTaquillera.setBounds(562, 240, 109, 23);
 			esTaquillera.setBackground(Color.WHITE);
 			panel.add(esTaquillera);
 		} else {
-			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(660, 160, 261, 130);
-			panel.add(scrollPane);
 
 			JLabel lblTemporada = new JLabel("Temporada :");
 			lblTemporada.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -227,12 +262,29 @@ public class DatosObra extends JDialog implements ActionListener {
 			lblTemporada.setBounds(size.width - 320, 90, 100, 23);
 			panel.add(lblTemporada);
 
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(660, 160, 261, 130);
+			panel.add(scrollPane);
+
 			listCap = new JList<>();
+			listCap.setToolTipText("Click derecho para eliminar un capitulo");
+			listCap.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (SwingUtilities.isRightMouseButton(e)) {
+						int i = OptionPanel.showOptionMessage(thisDialog, "¿Quieres eliminar este capítulo?",
+								"Eliminar caracteristica", OptionPanel.CONFIRM);
+						if (i == 1) {
+							listModel = (DefaultListModel<String>) listCap.getModel();
+							listModel.remove(listCap.getSelectedIndex());
+						}
+					}
+				}
+			});
 			scrollPane.setViewportView(listCap);
 			listCap.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
 			comboBox = new JComboBox<>();
-			comboBox.setSelectedIndex(-1);
 			comboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (comboBox.getSelectedIndex() != -1) {
@@ -242,7 +294,6 @@ public class DatosObra extends JDialog implements ActionListener {
 						}
 						listCap.setModel(listModel);
 					}
-
 				}
 			});
 			comboBox.setBounds(size.width - 290, 120, 80, 20);
@@ -251,6 +302,22 @@ public class DatosObra extends JDialog implements ActionListener {
 			addCap = new TextField();
 			addCap.setLabelText("Introducir nuevos capitulos");
 			addCap.setToolTipText("Dale Enter para introducir un capítulo");
+			addCap.setBounds(660, 301, 260, 50);
+			addCap.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Popup p = PopupFactory.getSharedInstance().getPopup(thisDialog, invalidCharacter, 660, 360);
+					char c = e.getKeyChar();
+					if ((c < '0') || (c > '9') && (c < 65) || (c > 90) && ((c < 97) || (c > 122))) {
+						if ((c != KeyEvent.VK_BACK_SPACE) && (c != KeyEvent.VK_SPACE) && (c != KeyEvent.VK_ENTER)) {
+							valido = false;
+							e.consume();
+							toolTip(p);
+						}
+					}
+					valido = true;
+				}
+			});
 			addCap.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					listModel = (DefaultListModel<String>) listCap.getModel();
@@ -259,19 +326,26 @@ public class DatosObra extends JDialog implements ActionListener {
 						((Serie) obra).getNombreCap().get(comboBox.getSelectedIndex()).add(addCap.getText());
 						addCap.setText("");
 					} else {
-						new CustomExceptions(thisDialog, "No puede insertar un capítulo sin nombre",
-								"Error al insertar un capítulo");
+						Popup p = PopupFactory.getSharedInstance().getPopup(thisDialog,
+								new JLabel("Error, no se puede introducir un tipo vacío"), 285, 140);
+						toolTip(p);
 					}
 				}
 			});
-			addCap.setBounds(660, 301, 260, 50);
 			panel.add(addCap);
+
+			addTemporada = new MenuButton();
+			Utilidades.configButtons(addTemporada, "Añadir temporada");
+			addTemporada.setBounds(size.width - 190, 120, 150, 25);
+			addTemporada.setEnabled(true);
+			addTemporada.addActionListener(this);
+			panel.add(addTemporada);
 		}
 
-		tabsButtons(panel, obra);
+		tabsButtons(panel);
 	}
 
-	private void tabsButtons(JPanel panel, ObraAudiovisual obra) {
+	private void tabsButtons(JPanel panel) {
 
 		// Botones
 		btnVerPatrocinadores = new MenuButton();
@@ -294,13 +368,6 @@ public class DatosObra extends JDialog implements ActionListener {
 		btnVerEquipamiento.setEnabled(true);
 		btnVerEquipamiento.addActionListener(this);
 		panel.add(btnVerEquipamiento);
-
-		addTemporada = new MenuButton();
-		Utilidades.configButtons(addTemporada, "Añadir temporada");
-		addTemporada.setBounds(size.width - 190, 120, 150, 25);
-		addTemporada.setEnabled(true);
-		addTemporada.addActionListener(this);
-		panel.add(addTemporada);
 
 		btnBorrarDatos = new MenuButton();
 		Utilidades.configButtons(btnBorrarDatos, null);
@@ -338,7 +405,7 @@ public class DatosObra extends JDialog implements ActionListener {
 		panel.add(btnVolver);
 
 		fotoLabel = new JLabel("Imagen no proporcionada");
-		fotoLabel.setBounds(289, 201, 298, 292);
+		fotoLabel.setBounds(289, 250, 298, 292);
 		panel.add(fotoLabel);
 
 		addPortada = new MenuButton();
@@ -360,7 +427,7 @@ public class DatosObra extends JDialog implements ActionListener {
 
 	}
 
-	private void initValues(ObraAudiovisual obra) {
+	private void initValues() {
 
 		if (obra instanceof Pelicula) {
 			boolean esTaq = ((Pelicula) obra).isEsTaquillera() ? true : false;
@@ -382,15 +449,42 @@ public class DatosObra extends JDialog implements ActionListener {
 		}
 	}
 
+	private void toolTip(Popup p) {
+		p.show();
+		// create a timer to hide the popup later
+		Timer t = new Timer(500, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				p.hide();
+			}
+		});
+		t.setRepeats(false);
+		t.start();
+	}
+
+	private void updateData() {
+		obra.setNombre(fieldNombre.getText());
+		obra.setDuracion(Integer.parseInt(fieldDuracion.getText()));
+		obra.setFechaEstreno(Utilidades.validateDate(fieldFecha.getText()));
+		obra.setPresupuesto(Integer.parseInt(fieldPresupuesto.getText()));
+		if (img != null)
+			obra.setImgPath(img.getPath());
+		if (obra instanceof Pelicula) {
+			((Pelicula) obra).setEsTaquillera(esTaquillera.isSelected());
+		}
+
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		boolean ok = false;
 		if (e.getSource().equals(btnBorrarDatos)) {
 			if (obra != null) {
 				int i = OptionPanel.showOptionMessage(thisDialog,
 						"¿Está usted seguro de que quiere eliminar esta obra audiovisual?", "Confirmación",
 						OptionPanel.CONFIRM);
 				if (i == OptionPanel.CONFIRM) {
-					boolean ok = FactoryDAO.getDeleteData()
+					ok = FactoryDAO.getDeleteData()
 							.dataManage(new String[] { ClasesEnum.OBRA.getName(), Integer.toString(obra.getIdObra()) });
 					if (ok) {
 						OptionPanel.showMessage(thisDialog, "La obra seleccionada ha sido eliminada",
@@ -405,15 +499,7 @@ public class DatosObra extends JDialog implements ActionListener {
 			}
 		} else if (e.getSource().equals(btnModificar)) {
 			if (obra != null && valido) {
-				obra.setNombre(fieldNombre.getText());
-				obra.setDuracion(Integer.parseInt(fieldDuracion.getText()));
-				obra.setFechaEstreno(Utilidades.validateDate(fieldFecha.getText()));
-				obra.setPresupuesto(Integer.parseInt(fieldPresupuesto.getText()));
-				if (img != null)
-					obra.setImgPath(img.getPath());
-				if (obra instanceof Pelicula) {
-					((Pelicula) obra).setEsTaquillera(esTaquillera.isSelected());
-				}
+				updateData();
 				if (FactoryDAO.getUpdateData().dataManage(obra)) {
 					OptionPanel.showMessage(thisDialog, "Se ha modificado correctamente los datos de la obra",
 							"Modificación de datos", OptionPanel.MESSAGE);
@@ -423,33 +509,26 @@ public class DatosObra extends JDialog implements ActionListener {
 						"Error al intentar modificar", OptionPanel.MESSAGE);
 			}
 		} else if (e.getSource().equals(btnAddObra)) {
-			boolean ok = false;
 			if (valido) {
+				updateData();
 				int i = OptionPanel.showOptionMessage(thisDialog, "¿Estás segur@ de que quieres insertar esta obra?",
 						"Confirmación", OptionPanel.CONFIRM);
 				if (i == OptionPanel.CONFIRM) {
-					obra.setNombre(fieldNombre.getText());
-					obra.setDuracion(Integer.parseInt(fieldDuracion.getText()));
-					obra.setFechaEstreno(Utilidades.validateDate(fieldFecha.getText()));
-					obra.setPresupuesto(Integer.parseInt(fieldPresupuesto.getText()));
-					if (obra instanceof Pelicula) {
-						((Pelicula) obra).setEsTaquillera(esTaquillera.isSelected());
-						obra.setTipo("Pelicula");
-					} else
-						obra.setTipo("Serie");
-
 					ok = FactoryDAO.getInsertData().dataManage(obra);
 				}
 			}
-			if (!valido || !ok) {
+			if (ok) {
+				OptionPanel.showMessage(thisDialog, "Se ha añadido correctamente los datos de la obra",
+						"Modificación de datos", OptionPanel.MESSAGE);
+				thisDialog.dispose();
+			} else if (!valido || !ok) {
 				OptionPanel.showMessage(thisDialog, "Error al añadir la obra, compruebe los datos e inténtelo de nuevo",
 						"Error al intentar insertar", OptionPanel.MESSAGE);
 			}
 
 		} else if (e.getSource().equals(btnVolver)) {
 			int i = OptionPanel.showOptionMessage(thisDialog,
-					"¿Estas segur@ de que quieres volver a la ventana anterior?", "¿Quieres volver?",
-					OptionPanel.CONFIRM);
+					"¿Estas segur@ de que quieres volver a la ventana anterior?", "Volver", OptionPanel.CONFIRM);
 			if (i == OptionPanel.CONFIRM) {
 				thisDialog.dispose();
 				parent.setVisible(true);

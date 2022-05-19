@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import controlador.interfaz.BDgeneric;
 import controlador.utils.dao.SQLCon;
@@ -109,6 +109,7 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 			// Añadir datos al Prepare Statement
 			stat.setString(1, clase.getNombre());
 			stat.setString(2, clase.getTipo());
+			stat.setString(3, clase.getImgPath());
 
 			// Ejecutar consulta y devolver true o false
 			stat.executeUpdate();
@@ -209,11 +210,12 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 				equip.setIdEquip(rs.getInt(1));
 				equip.setNombre(rs.getString(2));
 				equip.setTipo(rs.getString(3));
+				equip.setImgPath(rs.getString(4));
 
 				caracteristicas = new ArrayList<>();
 				// Loop para recorrer todas las características que puede tener
 				do {
-					caracteristicas.add(rs.getString(4));
+					caracteristicas.add(rs.getString(5));
 				} while (rs.next());
 
 				equip.setCaracteristicas(caracteristicas);
@@ -252,7 +254,7 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 		this.openConnection();
 
 		// RS y la clase para recoger los datos, además un map para guardar
-		Map<Integer, Equipamiento> allEquip = new HashMap<>();
+		Map<Integer, Equipamiento> allEquip = new TreeMap<>();
 		ResultSet rs = null;
 		Equipamiento equip = null;
 
@@ -274,11 +276,8 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 					// Recogemos el equipamiento del map
 					equip = allEquip.get(rs.getInt(1));
 
-					// Recogemos la lista que tiene el equipamiento
-					auxCaracteristicas = equip.getCaracteristicas();
-
 					// Añadir la caracteristica a la lista
-					auxCaracteristicas.add(rs.getString(4));
+					equip.getCaracteristicas().add(rs.getString(5));
 
 				} else {
 					// Crearmos una instancia del objecto y añadimos los datos
@@ -286,19 +285,20 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 					equip.setIdEquip(rs.getInt(1));
 					equip.setNombre(rs.getString(2));
 					equip.setTipo(rs.getString(3));
+					equip.setImgPath(rs.getString(4));
 
 					// Instanciamos un nuevo arrayList
 					auxCaracteristicas = new ArrayList<>();
 
 					// Añadimos la caracteristica a la lista
-					auxCaracteristicas.add(rs.getString(4));
+					auxCaracteristicas.add(rs.getString(5));
+
+					// Insertamos la lista al equipamiento
+					equip.setCaracteristicas(auxCaracteristicas);
 
 				}
-
-				// Insertamos la lista al equipamiento
-				equip.setCaracteristicas(auxCaracteristicas);
 				// Añadir la clave y el equip al map
-				allEquip.put(rs.getInt(1), equip);
+				allEquip.put(equip.getIdEquip(), equip);
 			}
 
 		} catch (SQLException e) {
@@ -306,7 +306,6 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 		} finally {
 			this.closeConnection();
 		}
-
 		// Devolverá un map con los datos, o un map vacío
 		return allEquip;
 	}
@@ -340,7 +339,8 @@ public class EquipDAO implements BDgeneric<Equipamiento> {
 			// Añadir datos al Prepare Statement
 			stat.setString(1, clase.getNombre());
 			stat.setString(2, clase.getTipo());
-			stat.setInt(3, clase.getIdEquip());
+			stat.setString(3, clase.getImgPath());
+			stat.setInt(4, clase.getIdEquip());
 
 			// Ejecutar consulta
 			stat.executeUpdate();
