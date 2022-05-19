@@ -74,7 +74,7 @@ public class DatosObra extends JDialog implements ActionListener {
 		this.setUndecorated(true);
 		size = Utilidades.resizeWindow(this);
 		setSize(size);
-//		Utilidades.centerWindow(parent, this);
+		//		Utilidades.centerWindow(parent, this);
 		contentPanel.setLayout(null);
 		bar = new TitleBar(this);
 		bar.setBounds(0, 0, this.getWidth(), 25);
@@ -139,7 +139,6 @@ public class DatosObra extends JDialog implements ActionListener {
 		lblTitulo.setFont(new Font("Calibri", Font.PLAIN, 28));
 		lblTitulo.setBounds(375, 32, 171, 36);
 		panel.add(lblTitulo);
-
 		// Nombre
 		fieldNombre = new TextField();
 		fieldNombre.setLabelText("Nombre");
@@ -305,7 +304,7 @@ public class DatosObra extends JDialog implements ActionListener {
 		btnBorrarDatos = new MenuButton();
 		Utilidades.configButtons(btnBorrarDatos, null);
 		btnBorrarDatos
-				.setIcon(new ImageIcon(getClass().getResource("/vistas/ventanas/custom/components/img/delete.png")));
+		.setIcon(new ImageIcon(getClass().getResource("/vistas/ventanas/custom/components/img/delete.png")));
 		btnBorrarDatos.setToolTipText("Borrar datos");
 		btnBorrarDatos.setBounds(size.width - 300, size.height - 75, 50, 25);
 		btnBorrarDatos.addActionListener(this);

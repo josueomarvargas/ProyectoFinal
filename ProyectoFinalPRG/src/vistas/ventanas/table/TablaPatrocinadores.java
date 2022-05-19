@@ -106,9 +106,9 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		tabs.setTabPlacement(JTabbedPane.BOTTOM);
 		tabs.setBackground(Color.WHITE);
 		patroPanel.setBackground(Color.WHITE);
-		tabs.add("Pelicula", patroPanel);
+		tabs.add(patroPanel);
 		contentPanel.add(tabs);
-		tablePatro = tabla(patroPanel, ClasesEnum.PELICULA.getName(), tablePatro);
+		tablePatro = tabla(patroPanel, ClasesEnum.PATROCINADOR.getName(), tablePatro);
 		
 	}
 	private void openData(int i, TableModel tableModel) {
@@ -180,7 +180,7 @@ private void menuFiltro() {
 
 	// TextField: Id
 	idField = new TextField();
-	idField.setBounds(780, 50, 160, 25);
+	idField.setBounds(780, 50, 160, 45);
 	idField.setLabelText("Id");
 	contentPanel.add(idField);
 
@@ -192,7 +192,7 @@ private void menuFiltro() {
 
 	// TextField: Nombre
 	nombreField = new TextField();
-	nombreField.setBounds(780, 100, 160, 25);
+	nombreField.setBounds(780, 100, 160, 45);
 	nombreField.setLabelText("Nombre");
 	contentPanel.add(nombreField);
 
@@ -203,19 +203,15 @@ private void menuFiltro() {
 
 	// TextField: Cantidad
 	cantField = new TextField();
-	cantField.setBounds(780, 150, 160, 25);
+	cantField.setBounds(780, 150, 160, 45);
 	cantField.setLabelText("Cantidad");
-
 	contentPanel.add(cantField);
 
-	// Etiqueta: Num Trabajadores
-	//JLabel condLabel = new JLabel("Numero Trabajadores");
-	//condLabel.setBounds(780, 45, 160, 20);
-	//panel.add(condLabel);
 
-	// TextField: Num Trabajadores
+
+	// TextField: condicion
 	condField = new TextField();
-	condField.setBounds(780, 200, 160, 25);
+	condField.setBounds(780, 200, 160, 45);
 	condField.setLabelText("Condicion");
 	contentPanel.add(condField);
 
@@ -267,7 +263,7 @@ private JTable tabla(JPanel panel, String patrocinador, JTable table) {
 }
 
 private DefaultTableModel tableModel(String patocinador) {
-	// Recoger los datos de las pelis/series
+	// Recoger los datos de las patrocinadores
 	Object[][] data=FactoryDAO.getGetData().dataManage(patocinador);
 	String[] column=null;
 	// Inicializar la tabla
@@ -280,12 +276,14 @@ private DefaultTableModel tableModel(String patocinador) {
 
 @Override
 public void actionPerformed(ActionEvent e) {
+	dataPatro= new DatosPatrocinador(thisDialog,true, null,ClasesEnum.PATROCINADOR.getName());
 	if (e.getSource().equals(btnBuscar)) {
 
 	}
 	else if (e.getSource().equals(btnAnadir)) {
-		dataPatro= new DatosPatrocinador(thisDialog,true, null,ClasesEnum.PATROCINADOR.getName());
-
+	
+			dataPatro= new DatosPatrocinador(thisDialog,true, null,ClasesEnum.PATROCINADOR.getName());
+		
 	}
 	if (dataPatro != null) {
 		thisDialog.setVisible(false);

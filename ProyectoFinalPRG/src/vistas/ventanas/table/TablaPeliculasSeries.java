@@ -155,8 +155,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		contentPanel.add(btnAnadir);
 
 		btnRefrescar = new MenuButton();
-		btnRefrescar.setIcon(new ImageIcon(
-				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
+		btnRefrescar.setIcon(new ImageIcon(TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
 		btnRefrescar.setBounds(835, 455, 50, 30);
 		Utilidades.configButtons(btnRefrescar, "");
 		btnRefrescar.addActionListener(this);

@@ -56,10 +56,10 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 	private boolean valido = true;
 	private Dimension size;
 	private TitleBar bar;
-	private Patrocinador patro = null;
+	private Patrocinador patro=null;
 	private String type;
 	private CustomTab tabs;
-	private JPanel patroPanel;
+	private JPanel patroPanel= new JPanel();
 	private TextField fieldNombre, fieldCant, fieldCond;
 
 
@@ -70,9 +70,10 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 	 * @param pa 
 	 * @param b 
 	 */
-	public DatosPatrocinador(Window parent, boolean modal, Patrocinador pa, String type) {
+	public DatosPatrocinador(Window parent, boolean modal, Patrocinador patro, String type) {
 		super(parent);
 		setModal(modal);
+		this.parent=parent;
 		this.thisDialog=this;
 		this.setUndecorated(true);
 		size=Utilidades.resizeWindow(this);
@@ -86,6 +87,7 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 		if (patro != null) {
 			this.patro = patro;
 			init();
+			initValues(patro);
 		} else {
 			// Cuando se va ha añadir uno nuevo
 			this.type = type;
@@ -99,15 +101,26 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 		tabs.setTabPlacement(JTabbedPane.BOTTOM);
 		tabs.setBackground(Color.WHITE);
 		patroPanel.setBackground(Color.WHITE);
-		tabs.add("Patrocinadores", patroPanel);
+		tabs.add(patroPanel);
 		patroPanel.setLayout(null);
 		getContentPane().add(tabs);
+		initTabs();
+
 
 
 	}
+	private void initTabs() {
+		tabs.setSelectedIndex(0);
+		tabsFields(patroPanel);
+		this.patro=new Patrocinador();
+
+
+
+	}
+
 	private void tabsFields(JPanel panel) {
 		JLabel lblTitulo = new JLabel();
-		lblTitulo.setText("Datos Obra");
+		lblTitulo.setText("Datos Patrocinador");
 		lblTitulo.setFont(new Font("Calibri", Font.PLAIN, 28));
 		lblTitulo.setBounds(375, 32, 171, 36);
 		panel.add(lblTitulo);
@@ -121,22 +134,13 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 		fieldCant = new TextField();
 		fieldCant.setLabelText("Cantidad");
 		fieldCant.setBounds(462, 79, 150, 50);
-		fieldCant.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if ((c < '0') || (c > '9') && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();
-				}
-			}
-		});
-
 		panel.add(fieldCant);
+
 		fieldCond = new TextField();
 		fieldCond.setLabelText("Condicion");
-		fieldCond.setBounds(462, 79, 150, 50);
+		fieldCond.setBounds(645, 79, 150, 50);
 		panel.add(fieldCond);
-
+		tabsButtons(panel,patro);
 
 	}
 	private void tabsButtons(JPanel panel, Patrocinador obra) {
@@ -174,19 +178,44 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 		btnAddPatro.setBounds(size.width - 150, size.height - 75, 50, 25);
 		btnAddPatro.addActionListener(this);
 		panel.add(btnAddPatro);
-		
+
+		fotoLabel = new JLabel("Imagen no proporcionada");
+		fotoLabel.setBounds(462, 201, 298, 292);
+		panel.add(fotoLabel);
+
 		addLogo = new MenuButton();
 		Utilidades.configButtons(addLogo, "A\u00F1adir Logo");
-		addLogo.setBounds(10, 200, 125, 23);
+		addLogo.setBounds(462, 200, 125, 23);
 		addLogo.addActionListener(this);
 		addLogo.setEnabled(true);
 		panel.add(addLogo);
+
+		if (type == null) {
+			btnAddPatro.setEnabled(false);
+			btnBorrarDatos.setEnabled(true);
+			btnModificar.setEnabled(true);
+		} else {
+			btnAddPatro.setEnabled(true);
+			btnBorrarDatos.setEnabled(false);
+			btnModificar.setEnabled(false);
+		}
+	}
+	private void initValues(Patrocinador patro) {
+		fieldNombre.setText(patro.getNombre());
+		fieldCant.setText(Integer.toString(patro.getCantDinero()));
+		fieldCond.setText(patro.getCondicion());
+		if (patro.getImgPath() != null) {
+			if (!patro.getImgPath().isBlank()) {
+				fotoLabel.setIcon(
+						Utilidades.resizeIcon(fotoLabel, new File(Utilidades.basePath + "/" + patro.getImgPath())));
+			}
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(btnBorrarDatos)) {
-			if(patro==null) {
+			if(patro!=null) {
 				int i =OptionPanel.showOptionMessage(thisDialog,"¿Estas seguro que quieres eliminar ese patrocinador?", "Confirmacion", OptionPanel.CONFIRM);
 				if(i==OptionPanel.CONFIRM) {
 					boolean ok= FactoryDAO.getDeleteData().dataManage(new String[] {ClasesEnum.PATROCINADOR.getName(),Integer.toString(patro.getIdPatro())});
@@ -243,7 +272,7 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 				thisDialog.dispose();
 				parent.setVisible(true);
 			}
-			
+
 		}else if(e.getSource().equals(addLogo)) {
 			img =Utilidades.addFoto();
 			if (img != null) {

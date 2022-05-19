@@ -16,15 +16,18 @@ public class Principal {
 		//LogIn vprincipal = new LogIn();
 		//vprincipal.setVisible(true);
 
-		TablaPeliculasSeries tps = new TablaPeliculasSeries(null, true);
-		tps.setVisible(true);
-		//TablaPatrocinadores tp= new TablaPatrocinadores(null, true);
-		//tp.setVisible(true);
+		//TablaPeliculasSeries tps = new TablaPeliculasSeries(null, true);
+		//tps.setVisible(true);
+
+		//DatosObra do = new DatosObra(null, true, null, null);
+		//do.setVisible(true);
+		TablaPatrocinadores tp= new TablaPatrocinadores(null, true);
+		tp.setVisible(true);
 
 		//		DatosObra datosObra = new DatosObra();
 		//		datosObra.setVisible(true);
-//		DatosObra datosObra = new DatosObra(null, true, "pelicula");
-//		datosObra.setVisible(true);
+		//		DatosObra datosObra = new DatosObra(null, true, "pelicula");
+		//		datosObra.setVisible(true);
 
 	}
 

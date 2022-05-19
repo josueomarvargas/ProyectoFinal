@@ -64,6 +64,19 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 		}
 	}
 
+	private void rollback(Exception e) {
+		try {
+			// Revertir los cambios en el objecto Connection
+			con.rollback();
+			con.setAutoCommit(true);
+			System.err.println(e + "\nProcediendo a revertir los cambios, iniciando rollback...");
+		} catch (SQLException e1) {
+			e.printStackTrace();
+
+		}
+
+	}
+
 	/**
 	 * Método para insertar los datos de un patrocinador
 	 * 
@@ -74,20 +87,27 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 	public boolean create(Patrocinador clase) {
 
 		this.openConnection();
-
+		//ResultSet rs;
 		// Prepare Statement - Create
 		try (PreparedStatement stat = con.prepareStatement(CREATE);) {
 
 			// Añadimos los datos al Prepare Statement
-			stat.setInt(1, clase.getIdPatro());
-			stat.setString(2, clase.getNombre());
-			stat.setInt(3, clase.getCantDinero());
-			stat.setString(4, clase.getCondicion());
+			//stat.setInt(1, clase.getIdPatro());
+			stat.setString(1, clase.getNombre());
+			stat.setInt(2, clase.getCantDinero());
+			stat.setString(3, clase.getCondicion());
+			stat.setString(4, clase.getImgPath());
 
 			// Ejecutar consulta y devolver true o false
-			return stat.executeUpdate() > 0 ? true : false;
+			stat.executeUpdate();
 
+			//con.commit();
+			// Establecer autocommit al valor por defecto
+			//con.setAutoCommit(true);
+			return true;
 		} catch (SQLException e) {
+
+			rollback(e);
 			return false;
 		} finally {
 			this.closeConnection();
