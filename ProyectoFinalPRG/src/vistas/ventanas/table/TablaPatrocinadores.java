@@ -83,6 +83,7 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		//Utilidades.centerWindow(parent,this);
 		thisDialog=this;
 		contentPanel.setBackground(Color.WHITE);
+		init();
 	}
 	private void init() { 
 		bar = new TitleBar(this);
