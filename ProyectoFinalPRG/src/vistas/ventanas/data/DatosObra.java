@@ -35,7 +35,6 @@ import javax.swing.Timer;
 
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
-import controlador.utils.exceptions.CustomExceptions;
 import controlador.utils.views.Utilidades;
 import modelo.clases.ObraAudiovisual;
 import modelo.clases.Pelicula;

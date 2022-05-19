@@ -4,34 +4,35 @@ import java.awt.Color;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
-import java.util.Iterator;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
 import modelo.clases.Equipamiento;
-import modelo.clases.ObraAudiovisual;
 import vistas.dao.GetData;
 import vistas.ventanas.custom.components.MenuButton;
 import vistas.ventanas.custom.components.TextField;
 import vistas.ventanas.custom.containers.TitleBar;
 import vistas.ventanas.data.DatosEquipamiento;
-import vistas.ventanas.data.DatosObra;
 
 public class TablaEquipamiento extends JDialog implements ActionListener {
 
@@ -44,8 +45,7 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 	private final JDialog thisDialog;
 	private JTable table = null;
 	private TextField nombreField;
-	private JComboBox<String> comboBox;
-	private MenuButton btnBuscar;
+	private TextField tipoField;
 	private MenuButton btnRefrescar;
 	private MenuButton btnAnadir;
 	private MenuButton btnVolver;
@@ -79,46 +79,61 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 		menuFiltro();
 
 		getContentPane().add(contentPanel);
+
 	}
 
 	private void menuFiltro() {
+
 		nombreField = new TextField();
+		nombreField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tableSort();
+			}
+		});
+
 		nombreField.setLabelText("Nombre");
-		nombreField.setBounds(thisDialog.getWidth() - 180, 120, 160, 45);
+		nombreField.setBounds(780, 128, 160, 45);
 		contentPanel.add(nombreField);
 
-		JLabel tipo = new JLabel("Tipo:");
-		tipo.setBounds(780, 190, 50, 14);
-		contentPanel.add(tipo);
+		tipoField = new TextField();
+		tipoField.setLabelText("Filtro");
+		tipoField.setBounds(780, 201, 160, 45);
+		tipoField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tableSort();
+			}
+		});
+		contentPanel.add(tipoField);
 
 		TableModel tableModel = table.getModel();
-		comboBox = new JComboBox<>(tipoEquip);
-		comboBox.setBounds(780, 215, 160, 25);
 		for (int i = 0; i < tableModel.getRowCount(); i++) {
 			if (tipoEquip.getIndexOf(tableModel.getValueAt(i, 2)) == -1) {
 				tipoEquip.addElement((String) table.getModel().getValueAt(i, 2));
 			}
 		}
-		contentPanel.add(comboBox);
-		comboBox.setSelectedIndex(-1);
+	}
 
-		// Boton para buscar
-		btnBuscar = new MenuButton();
-		btnBuscar.setBounds(780, 280, 160, 35);
-		btnBuscar.setIcon(new ImageIcon(
-				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/search.png")));
-		Utilidades.configButtons(btnBuscar, "");
-		btnBuscar.setEnabled(false);
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		contentPanel.add(btnBuscar);
+	private void tableSort() {
+		try {
+			TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableModel());
+			List<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel, Object>>();
+			RowFilter<TableModel, Object> compoundRowFilter = null;
+
+			filters.add(RowFilter.regexFilter("(?i)" + nombreField.getText(), 1));
+			filters.add(RowFilter.regexFilter("(?i)" + tipoField.getText(), 2));
+			compoundRowFilter = RowFilter.andFilter(filters);
+			sorter.setRowFilter(compoundRowFilter);
+			table.setRowSorter(sorter);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	private void buttons() {
 		btnAnadir = new MenuButton();
-		btnAnadir.setBounds(890, 455, 50, 30);
+		btnAnadir.setBounds(890, 302, 50, 30);
 		btnAnadir.setIcon(new ImageIcon(
 				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/plus.png")));
 		Utilidades.configButtons(btnAnadir, "");
@@ -129,14 +144,14 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 		btnRefrescar = new MenuButton();
 		btnRefrescar.setIcon(new ImageIcon(
 				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
-		btnRefrescar.setBounds(835, 455, 50, 30);
+		btnRefrescar.setBounds(835, 302, 50, 30);
 		Utilidades.configButtons(btnRefrescar, "");
 		btnRefrescar.setEnabled(true);
 		btnRefrescar.addActionListener(this);
 		contentPanel.add(btnRefrescar);
 
 		btnVolver = new MenuButton();
-		btnVolver.setBounds(780, 455, 50, 30);
+		btnVolver.setBounds(780, 302, 50, 30);
 		btnVolver.setIcon(new ImageIcon(
 				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/arrow.png")));
 		Utilidades.configButtons(btnVolver, "");
@@ -151,7 +166,7 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(40, 48, 710, 437);
+		scrollPane.setBounds(40, 48, 715, 437);
 
 		// Crear una tabla
 		table = new JTable() {
@@ -210,9 +225,8 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(btnBuscar)) {
 
-		} else if (e.getSource().equals(btnAnadir)) {
+		if (e.getSource().equals(btnAnadir)) {
 			DatosEquipamiento vEquipamiento = new DatosEquipamiento(thisDialog, true, null);
 			vEquipamiento.setVisible(true);
 

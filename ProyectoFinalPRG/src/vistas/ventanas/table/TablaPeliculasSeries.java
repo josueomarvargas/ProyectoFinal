@@ -4,22 +4,25 @@ import java.awt.Color;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
@@ -48,9 +51,8 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	private CustomTab tabs = null;
 	private JTable tablePeli = null;
 	private JTable tableSerie = null;
-	private JComboBox<String> comboBox;
-	private TextField nombreField, directorField, guionistaField, numTfield;
-	private MenuButton btnBuscar, btnAnadir, btnVolver, btnRefrescar;
+	private TextField nombreField, duracion, fechaField, presupuestoField;
+	private MenuButton btnAnadir, btnVolver, btnRefrescar;
 	private DatosObra dataObra;
 
 	public TablaPeliculasSeries(Window parent, boolean modal) {
@@ -145,7 +147,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	private void buttons() {
 
 		btnAnadir = new MenuButton();
-		btnAnadir.setBounds(890, 455, 50, 30);
+		btnAnadir.setBounds(890, 355, 50, 30);
 		btnAnadir.setIcon(new ImageIcon(
 				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/plus.png")));
 		Utilidades.configButtons(btnAnadir, "");
@@ -155,13 +157,13 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		btnRefrescar = new MenuButton();
 		btnRefrescar.setIcon(new ImageIcon(
 				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
-		btnRefrescar.setBounds(835, 455, 50, 30);
+		btnRefrescar.setBounds(835, 355, 50, 30);
 		Utilidades.configButtons(btnRefrescar, "");
 		btnRefrescar.addActionListener(this);
 		contentPanel.add(btnRefrescar);
 
 		btnVolver = new MenuButton();
-		btnVolver.setBounds(780, 455, 50, 30);
+		btnVolver.setBounds(780, 355, 50, 30);
 		btnVolver.setIcon(new ImageIcon(
 				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/arrow.png")));
 		Utilidades.configButtons(btnVolver, "");
@@ -170,54 +172,79 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 
 	}
 
+	private String selectedTab() {
+		return tabs.getSelectedIndex() == 0 ? ClasesEnum.PELICULA.getName() : ClasesEnum.SERIE.getName();
+	}
+
 	private void menuFiltro() {
 
 		// TextField: Nombre
 		nombreField = new TextField();
-		nombreField.setBounds(780, 50, 160, 45);
+		nombreField.setBounds(780, 100, 160, 45);
 		nombreField.setLabelText("Nombre");
+		nombreField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tableSort(selectedTab());
+			}
+		});
 		contentPanel.add(nombreField);
 
 		// TextField: Director
-		directorField = new TextField();
-		directorField.setBounds(780, 100, 160, 45);
-		directorField.setLabelText("Director");
-		contentPanel.add(directorField);
-
-		// TextField: Guionista
-		guionistaField = new TextField();
-		guionistaField.setBounds(780, 150, 160, 45);
-		guionistaField.setLabelText("Guionista");
-		contentPanel.add(guionistaField);
-
-		// TextField: Num Trabajadores
-		numTfield = new TextField();
-		numTfield.setBounds(780, 200, 160, 45);
-		numTfield.setLabelText("Numero de trabajadores");
-		contentPanel.add(numTfield);
-
-		JLabel presupuesto = new JLabel("Presupuesto");
-		presupuesto.setBounds(780, 250, 160, 25);
-		contentPanel.add(presupuesto);
-
-		// ComboBox: presupuesto
-		comboBox = new JComboBox<>();
-		comboBox.setBounds(780, 275, 160, 25);
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "Mayor a Menor", "Menor a Mayor" }));
-		contentPanel.add(comboBox);
-
-		// Boton para buscar
-		btnBuscar = new MenuButton();
-		btnBuscar.setBounds(780, 320, 160, 35);
-		btnBuscar.setIcon(new ImageIcon(
-				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/search.png")));
-		Utilidades.configButtons(btnBuscar, "");
-		btnBuscar.setEnabled(false);
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		duracion = new TextField();
+		duracion.setBounds(780, 160, 160, 45);
+		duracion.setLabelText("Duracion");
+		duracion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tableSort(selectedTab());
 			}
 		});
-		contentPanel.add(btnBuscar);
+		contentPanel.add(duracion);
+
+		// TextField: Guionista
+		fechaField = new TextField();
+		fechaField.setBounds(780, 210, 160, 45);
+		fechaField.setLabelText("Fecha de estreno");
+		fechaField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tableSort(selectedTab());
+			}
+		});
+		contentPanel.add(fechaField);
+
+		// TextField: Presupuesto
+		presupuestoField = new TextField();
+		presupuestoField.setBounds(780, 270, 160, 45);
+		presupuestoField.setLabelText("Presupuesto");
+		presupuestoField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tableSort(selectedTab());
+			}
+		});
+		contentPanel.add(presupuestoField);
+
+	}
+
+	private void tableSort(String obra) {
+		JTable table = obra.equalsIgnoreCase(ClasesEnum.PELICULA.getName()) ? tablePeli : tableSerie;
+		try {
+			TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableModel(obra));
+			List<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel, Object>>();
+			RowFilter<TableModel, Object> compoundRowFilter = null;
+
+			filters.add(RowFilter.regexFilter("(?i)" + nombreField.getText(), 1));
+			filters.add(RowFilter.regexFilter("(?i)" + duracion.getText(), 2));
+			filters.add(RowFilter.regexFilter("(?i)" + fechaField.getText(), 3));
+			filters.add(RowFilter.regexFilter("(?i)" + presupuestoField.getText(), 4));
+			compoundRowFilter = RowFilter.andFilter(filters);
+			sorter.setRowFilter(compoundRowFilter);
+			table.setRowSorter(sorter);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	private JTable tablas(JPanel panel, String obra, JTable table) {
@@ -268,9 +295,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(btnBuscar)) {
-
-		} else if (e.getSource().equals(btnAnadir)) {
+		if (e.getSource().equals(btnAnadir)) {
 			int i = OptionPanel.showOptionMessage(thisDialog, "¿Qué tipo de obra audiovisual desea añadir?",
 					"Añadir obra audiovisual", "Pelicula", "Serie", OptionPanel.CONFIRM);
 			if (i == 0) {

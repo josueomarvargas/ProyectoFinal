@@ -16,11 +16,11 @@ public class Principal {
 //		LogIn vprincipal = new LogIn();
 //		vprincipal.setVisible(true);
 
-//		TablaPeliculasSeries tps = new TablaPeliculasSeries(null, true);
-//		tps.setVisible(true);
+		TablaPeliculasSeries tps = new TablaPeliculasSeries(null, true);
+		tps.setVisible(true);
 
-		TablaEquipamiento tequip = new TablaEquipamiento(null, true);
-		tequip.setVisible(true);
+//		TablaEquipamiento tequip = new TablaEquipamiento(null, true);
+//		tequip.setVisible(true);
 
 //		DatosObra datosObra = new DatosObra(null, true, "pelicula");
 //		datosObra.setVisible(true);
