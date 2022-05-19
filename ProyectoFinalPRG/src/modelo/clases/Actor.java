@@ -30,5 +30,4 @@ public class Actor extends Trabajador {
 		return especialidades;
 	}
 
-
 }

@@ -160,7 +160,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			trabajadorStat.setInt(5, clase.getNumPremios());
 			trabajadorStat.setString(6, clase.getDireccion());
 			trabajadorStat.setString(7, clase.getTipo());
-			trabajadorStat.setDate(8, Date.valueOf(clase.getFechaNac()));
+			trabajadorStat.setDate(8, clase.getFechaNac() != null ? Date.valueOf(clase.getFechaNac()) : null);
 
 			// Ejecutar consulta
 			trabajadorStat.executeUpdate();
@@ -260,8 +260,11 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			// Añadir datos al Prepare Statement
 			stat.setString(1, id[0]);
 
-			// Ejecutar consulta y guardarlo en el Result Set
-			rs = stat.executeQuery();
+			// Ejecutar consulta
+			stat.execute();
+
+			// Guardarlo en el Result Set
+			rs = stat.getResultSet();
 
 			// Comprobar que RS a recuperado informacion del executeQuery
 			if (rs.next()) {
@@ -299,14 +302,28 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 						trabajador = addToList(rs, trabajador);
 					} while (rs.next());
 					break;
+				case "administrador":
+					/**
+					 * Clase {@code Administrador} que extiende de Trabajador anidada en el switch,
+					 * como no necesitamos una clase específica para los administradores, ya que no
+					 * guardamos ningún dato adicional, solo guardaremos el tipo y devolvemos el
+					 * objecto.
+					 *
+					 * @author yeguo
+					 **/
+					class Administrador extends Trabajador {
+					}
+					trabajador = new Administrador();
+					trabajador.setTipo(rs.getString(1));
+					return trabajador;
 
 				}
-
 				// Volver al primer RS para recoger la información que nos falta
 				rs.first();
 				// Añadir los valores del RS al objecto
 				trabajador.setDatos(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),
-						rs.getInt(6), rs.getString(7), rs.getString(8), rs.getDate(9).toLocalDate());
+						rs.getInt(6), rs.getString(7), rs.getString(8),
+						rs.getDate(9) != null ? rs.getDate(9).toLocalDate() : null);
 
 			}
 
@@ -353,8 +370,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 		Trabajador trabajador = null;
 
 		// Prepare Statement - ReadAll
-		try (CallableStatement stat = con.prepareCall(READALL, ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY)) {
+		try (CallableStatement stat = con.prepareCall(READALL)) {
 
 			// Ejecutar el procedimiento y guardarlo en el result set
 			rs = stat.executeQuery();
@@ -399,7 +415,8 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 					}
 					// Añadimos los datos del trabajador
 					trabajador.setDatos(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),
-							rs.getInt(6), rs.getString(7), rs.getString(8), rs.getDate(9).toLocalDate());
+							rs.getInt(6), rs.getString(7), rs.getString(8),
+							rs.getDate(9) != null ? rs.getDate(9).toLocalDate() : null);
 				}
 
 				// Añadimos al map el key-ID, value-Trabajador
@@ -482,7 +499,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 			stat.setInt(3, clase.getNumTel());
 			stat.setInt(4, clase.getNumPremios());
 			stat.setString(5, clase.getDireccion());
-			stat.setDate(6, Date.valueOf(clase.getFechaNac()));
+			stat.setDate(6, clase.getFechaNac() != null ? Date.valueOf(clase.getFechaNac()) : null);
 			stat.setInt(7, clase.getIdTrabajador());
 
 			// Ejecutar consulta

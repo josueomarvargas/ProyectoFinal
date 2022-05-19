@@ -1,5 +1,6 @@
 package modelo.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,37 +8,51 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import controlador.interfaz.BDgeneric;
+import controlador.interfaz.DataManager;
+import controlador.utils.dao.FactoryDAO;
 import controlador.utils.dao.SQLCon;
+import modelo.clases.Trabajador;
 import modelo.clases.Usuario;
 
 /**
- * La clase {@code UsuarioDAO} es una clase que implementa la interfaz genÈrica
- * {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea mÈtodos
- * CRUD necesarios para gestionar la clase {@link modelo.clases.Usuario Usuario}
+ * La clase {@code UsuarioDAO} es una clase que implementa la interfaz gen√©rica
+ * {@link controlador.interfaz.BDgeneric BDgeneric}, esta interfaz crea m√©todos
+ * CRUD necesarios para gestionar la clase {@link modelo.clases.Usuario
+ * Usuario}, tambi√©n usaremos la interfaz {@link DataManager} para recoger los
+ * datos de un trabajador mediante su {@link Usuario}.
+ * <p>
+ * Esta clase tambi√©n implementa la interfaz {@link DataManager} especificando
+ * las clases {@link Usuario} y {@link Trabajador} para hacer uso del m√©todo
+ * {@link #recogerInfo} que nos servir√° para el login.
+ * 
  * 
  * @author Henrique Yeguo
  * 
  **/
-public class UserDAO implements BDgeneric<Usuario> { 
+
+public class UserDAO implements BDgeneric<Usuario>, DataManager<Usuario, Trabajador> {
 
 	// MySQL Consultas
 	// Insertar usuarios
-	private final String CREATE = "INSERT INTO usuario(idUsuario, passwd, idTrabajdor) VALUES(?, ?, ?)";
+	private final String CREATE = "INSERT INTO usuario VALUES(?, ?, ?)";
 
 	// Buscar buscar info del usuario
 	private final String SEARCH = "SELECT * FROM usuario WHERE idTrabajador = ?";
 
-	// Actualizar el usuario y/o contraseÒa
+	// Actualizar el usuario y/o contrase√±a
 	private final String UPDATE = "UPDATE usuario SET idUsuario = ?, passwd = ? WHERE idTrabajador = ?";
 
 	// Eliminar usuario
 	private final String DELETE = "DELETE FROM usuario WHERE idTrabajador = ?";
 
-	// Establecer conexiÛn a la base de datos
+	// Logging
+	private final String LOGGING = "CALL login(?, ?)";
+
+	// Establecer conexi√≥n a la base de datos
 	private static Connection con;
 
 	/**
-	 * MÈtodo para abrir la conexiÛn, este mÈtodo llama al
+	 * M√©todo para abrir la conexi√≥n, este m√©todo llama al
 	 * {@link SQLCon#openConnection}.
 	 **/
 	private void openConnection() {
@@ -45,13 +60,13 @@ public class UserDAO implements BDgeneric<Usuario> {
 	}
 
 	/**
-	 * MÈtodo para cerrar la conexiÛn, este mÈtodo llama al
-	 * {@link SQLCon#closeConnection()} y {@code con.Close} para cerra la conexiÛn
-	 * aquÌ y en el objecto {@code SQLCon}
+	 * M√©todo para cerrar la conexi√≥n, este m√©todo llama al
+	 * {@link SQLCon#closeConnection()} y {@code con.Close} para cerra la conexi√≥n
+	 * aqu√≠ y en el objecto {@code SQLCon}
 	 **/
 	private void closeConnection() {
 		try {
-			// Cerrar la conexiÛn aquÌ y en el SQLCon
+			// Cerrar la conexi√≥n aqu√≠ y en el SQLCon
 			con.close();
 			SQLCon.closeConnection();
 		} catch (SQLException e) {
@@ -60,9 +75,9 @@ public class UserDAO implements BDgeneric<Usuario> {
 	}
 
 	/**
-	 * MÈtodo para insertar los datos del usuario.
+	 * M√©todo para insertar los datos del usuario.
 	 * 
-	 * @param clase usuario con la informaciÛn que se introducir· en la BD
+	 * @param clase usuario con la informaci√≥n que se introducir√° en la BD
 	 * @return true si se ha ejecutado correctamente la consulta
 	 **/
 	@Override
@@ -73,7 +88,7 @@ public class UserDAO implements BDgeneric<Usuario> {
 		// Prepare Statement - Create
 		try (PreparedStatement stat = con.prepareStatement(CREATE)) {
 
-			// AÒadir datos al Prepare Statement
+			// A√±adir datos al Prepare Statement
 			stat.setString(1, clase.getIdUsuario());
 			stat.setString(2, clase.getPasswd());
 			stat.setInt(3, clase.getIdTrabajador());
@@ -91,10 +106,10 @@ public class UserDAO implements BDgeneric<Usuario> {
 	}
 
 	/**
-	 * MÈtodo para buscar la informaciÛn de un usuario mediante su ID trabajador.
+	 * M√©todo para buscar la informaci√≥n de un usuario mediante su ID trabajador.
 	 * 
-	 * @param id id del trabajador que se usar· para buscar
-	 * @return informaciÛn del usuario
+	 * @param id id del trabajador que se usar√° para buscar
+	 * @return informaci√≥n del usuario
 	 **/
 	@Override
 	public Usuario search(String[] id) {
@@ -108,7 +123,7 @@ public class UserDAO implements BDgeneric<Usuario> {
 		// Prepare Statement - Search
 		try (PreparedStatement stat = con.prepareStatement(SEARCH)) {
 
-			// AÒadir datos al Prepare Statement
+			// A√±adir datos al Prepare Statement
 			stat.setString(1, id[0]);
 
 			// Ejecutar consulta y guardarlo en el Result Set
@@ -116,7 +131,7 @@ public class UserDAO implements BDgeneric<Usuario> {
 
 			// Comprobar que RS a recuperado informacion del executeQuery
 			if (rs.next()) {
-				// Creamos una instancia del objecto y aÒadimos los valores del RS al objecto
+				// Creamos una instancia del objecto y a√±adimos los valores del RS al objecto
 				user = new Usuario();
 				user.setIdUsuario(rs.getString(1));
 				user.setPasswd(rs.getString(2));
@@ -131,12 +146,12 @@ public class UserDAO implements BDgeneric<Usuario> {
 			this.closeConnection();
 		}
 
-		// Devolvemos el objecto, si RS NO ha devuelto nada, devolver· NULL
+		// Devolvemos el objecto, si RS NO ha devuelto nada, devolver√° NULL
 		return user;
 	}
 
 	/**
-	 * Este mÈtodo no se usar· por lo tanto devolver· null
+	 * Este m√©todo no se usar√° por lo tanto devolver√° null
 	 * 
 	 * @return null
 	 * @deprecated
@@ -147,7 +162,7 @@ public class UserDAO implements BDgeneric<Usuario> {
 	}
 
 	/**
-	 * MÈtodo para actualizar los datos de un usuario
+	 * M√©todo para actualizar los datos de un usuario
 	 *
 	 * @param clase objecto clase que se usara para actualizar los datos
 	 * @return true si la consulta se ha ejecutado correctamente
@@ -161,7 +176,7 @@ public class UserDAO implements BDgeneric<Usuario> {
 		// Prepare Statement - Update
 		try (PreparedStatement stat = con.prepareStatement(UPDATE)) {
 
-			// AÒadir datos al Prepare Statement
+			// A√±adir datos al Prepare Statement
 			stat.setString(1, clase.getIdUsuario());
 			stat.setString(2, clase.getPasswd());
 			stat.setInt(2, clase.getIdTrabajador());
@@ -171,7 +186,7 @@ public class UserDAO implements BDgeneric<Usuario> {
 
 		} catch (SQLException e) {
 			System.err.println(e);
-			return false; // Si hay alguna excepcion devolver· false
+			return false; // Si hay alguna excepcion devolver√° false
 		} finally {
 			this.closeConnection();
 		}
@@ -179,9 +194,9 @@ public class UserDAO implements BDgeneric<Usuario> {
 	}
 
 	/**
-	 * MÈtodo para eliminar un usuario
+	 * M√©todo para eliminar un usuario
 	 * 
-	 * @param id id identificado que se usar· para eliminar el usuario
+	 * @param id id identificado que se usar√° para eliminar el usuario
 	 * @return true si se ha ejecutado correctamente la consulta
 	 **/
 	@Override
@@ -192,7 +207,7 @@ public class UserDAO implements BDgeneric<Usuario> {
 		// Prepare Statement - Delete
 		try (PreparedStatement stat = con.prepareStatement(DELETE)) {
 
-			// AÒadir datos al Prepare Statement
+			// A√±adir datos al Prepare Statement
 			stat.setString(1, id[0]);
 
 			// Ejecutar consulta
@@ -200,9 +215,46 @@ public class UserDAO implements BDgeneric<Usuario> {
 
 		} catch (SQLException e) {
 			System.err.println(e);
-			return false; // Si hay alguna excepcion devolver· false
+			return false; // Si hay alguna excepcion devolver√° false
 		} finally {
 			this.closeConnection();
 		}
 	}
+
+	/**
+	 * M√©todo para recuperar la informaci√≥n del trabajador al iniciar sesi√≥n.
+	 * 
+	 * 
+	 * @param clase informaci√≥n del usuario para identificarse; user y pass
+	 * @return informaci√≥n del trabajador
+	 **/
+	@Override
+	public Trabajador dataManage(Usuario clase) {
+
+		this.openConnection();
+		ResultSet rs = null;
+
+		// Procedimiento para logearse
+		try (CallableStatement stat = con.prepareCall(LOGGING)) {
+
+			stat.setString(1, clase.getIdUsuario());
+			stat.setString(2, clase.getPasswd());
+
+			rs = stat.executeQuery();
+
+			// Si el RS a devuelto informaci√≥n, significa que los datos s√≥n correctos
+			if (rs.next()) {
+				String[] id = { rs.getString(1) };
+
+				return FactoryDAO.getTrabajador().search(id);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return null;
+	}
+
 }

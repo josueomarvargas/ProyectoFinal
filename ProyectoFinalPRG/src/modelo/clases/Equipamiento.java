@@ -8,6 +8,7 @@ public class Equipamiento {
 	private int idEquip;
 	private String nombre;
 	private String tipo;
+	private String imgPath;
 	private List<String> caracteristicas;
 
 	public Equipamiento() {
@@ -55,10 +56,13 @@ public class Equipamiento {
 		this.caracteristicas = caracteristicas;
 	}
 
-	@Override
-	public String toString() {
-		return "Equipamiento [idEquip=" + idEquip + ", nombre=" + nombre + ", tipo=" + tipo + ", caracteristicas="
-				+ caracteristicas + "]";
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
 }

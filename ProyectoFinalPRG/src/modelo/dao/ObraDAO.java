@@ -18,19 +18,19 @@ import modelo.clases.Pelicula;
 import modelo.clases.Serie;
 
 /**
- * Esta clase implementa la interfaz genÈrica
+ * Esta clase implementa la interfaz gen√©rica
  * {@link controlador.interfaz.BDgeneric BDgeneric}, el CRUD de este DAO
  * gestiona las tablas {@code ObraAudiovisual, Serie y Pelicula}.
  * <p>
- * Varios mÈtodos de este DAO sÛn transacciÛnes SQL, ya que es necesario
- * escribir/actualizar informaciÛn en dos tablas para la integridad de los
+ * Varios m√©todos de este DAO s√≥n transacci√≥nes SQL, ya que es necesario
+ * escribir/actualizar informaci√≥n en dos tablas para la integridad de los
  * datos.
  * <p>
  * En los {@code try-catch} se usan recursos, estos nos permite declarar
- * objectos que al finalizar el bloque se cierren autom·ticamente sin uso de un
- * finally, se tienen que declarar antes o en el try. Esto nos ser· ˙til para
+ * objectos que al finalizar el bloque se cierren autom√°ticamente sin uso de un
+ * finally, se tienen que declarar antes o en el try. Esto nos ser√° √∫til para
  * declarar los {@code PrepareStatements} como recursos del try y no tener que
- * preocuparnos por no haberlo cerrado. TambiÈn hay try sin catch esto se puede
+ * preocuparnos por no haberlo cerrado. Tambi√©n hay try sin catch esto se puede
  * hacer, pero es necesario poner un finally o tener un recurso en el try.
  * 
  * @author Henrique Yeguo
@@ -47,14 +47,14 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	// Insert Serie
 	private final String INSERTSERIE = "INSERT INTO serie VALUE(?, ?, ?, ?)";
 
-	// Buscar una ˙nica obra
+	// Buscar una √∫nica obra
 	private final String SEARCH = "CALL searchObra(?)";
 
 	// Leer todas las obras
 	private final String READALL = "CALL showObras()";
 
 	// Actualizar datos
-	private final String UPDATE = "UPDATE obraaudiovisual SET nombre = ?, duracion = ?, FechaEstreno = ?, presupuesto = ? WHERE idObra = ?";
+	private final String UPDATE = "UPDATE obraaudiovisual SET nombre = ?, duracion = ?, FechaEstreno = ?, presupuesto = ?, imgPath = ? WHERE idObra = ?";
 	private final String UPDATEPELI = "UPDATE pelicula SET esTaquillera = ? WHERE idObra = ?";
 
 	// Eliminar obra
@@ -63,11 +63,11 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	// Eliminar en la tabla serie
 	private final String DELETESERIE = "DELETE FROM serie WHERE idObra = ?";
 
-	// Establecer conexiÛn a la base de datos
+	// Establecer conexi√≥n a la base de datos
 	private static Connection con;
 
 	/**
-	 * MÈtodo para abrir la conexiÛn, este mÈtodo llama al
+	 * M√©todo para abrir la conexi√≥n, este m√©todo llama al
 	 * {@link SQLCon#openConnection}.
 	 **/
 	private void openConnection() {
@@ -75,13 +75,13 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	}
 
 	/**
-	 * MÈtodo para cerrar la conexiÛn, este mÈtodo llama al
-	 * {@link SQLCon#closeConnection()} y {@code con.Close} para cerra la conexiÛn
-	 * aquÌ y en el objecto {@code SQLCon}
+	 * M√©todo para cerrar la conexi√≥n, este m√©todo llama al
+	 * {@link SQLCon#closeConnection()} y {@code con.Close} para cerra la conexi√≥n
+	 * aqu√≠ y en el objecto {@code SQLCon}
 	 **/
 	private void closeConnection() {
 		try {
-			// Cerrar la conexiÛn aquÌ y en el SQLCon
+			// Cerrar la conexi√≥n aqu√≠ y en el SQLCon
 			con.close();
 			SQLCon.closeConnection();
 		} catch (SQLException e) {
@@ -90,9 +90,9 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	}
 
 	/**
-	 * MÈtodo para revertir los cambios
+	 * M√©todo para revertir los cambios
 	 * 
-	 * @param e Se pasa por par·metros la exceptiÛn que recoge el catch,
+	 * @param e Se pasa por par√°metros la excepti√≥n que recoge el catch,
 	 **/
 	private void rollback(Exception e) {
 		try {
@@ -108,20 +108,20 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	}
 
 	/**
-	 * MÈtodo para insertar {@code ObrasAudiovisuales}, e informaciÛn adicional
-	 * dependiendo de si sÛn {@code Peliculas} o {@code Series}. <br>
-	 * <b>CÛmo funciona el mÈtodo:</b> <blockquote> Primero de todo insertaremos en
+	 * M√©todo para insertar {@code ObrasAudiovisuales}, e informaci√≥n adicional
+	 * dependiendo de si s√≥n {@code Peliculas} o {@code Series}. <br>
+	 * <b>C√≥mo funciona el m√©todo:</b> <blockquote> Primero de todo insertaremos en
 	 * el {@code PreparedStatement} los datos necesarios para insertar una obra,
 	 * ejecutaremos la consulta y recogemos el ID que se ha generado. <br>
 	 * Comprobamos que el RS nos ha devuelto la clave, y comprobamos si la obra es
-	 * una pelÌcula o serie. En el caso de que sea una pelÌcula solo tenemos que
-	 * aÒadir si es taquillera o no, en cambio si es una serie llamamos al mÈtodo
+	 * una pel√≠cula o serie. En el caso de que sea una pel√≠cula solo tenemos que
+	 * a√±adir si es taquillera o no, en cambio si es una serie llamamos al m√©todo
 	 * {@link #insertSerie} y luego llamamos al {@link java.sql.Connection#commit()}
 	 * para aplicar las inserciones. </blockquote>
 	 * 
 	 * 
-	 * @param clase el objecto con la informaciÛn para insertar en su tabla
-	 * @return true si se ha ejecutado correctamente la inserciÛn
+	 * @param clase el objecto con la informaci√≥n para insertar en su tabla
+	 * @return true si se ha ejecutado correctamente la inserci√≥n
 	 **/
 	@Override
 	public boolean create(ObraAudiovisual clase) {
@@ -133,13 +133,13 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 		try (PreparedStatement stat = con.prepareStatement(CREATE, PreparedStatement.RETURN_GENERATED_KEYS);
 				PreparedStatement peli = con.prepareStatement(INSERTPELI)) {
 
-			// Inicio de la transacciÛn
+			// Inicio de la transacci√≥n
 			con.setAutoCommit(false);
 
-			// AÒadir datos al Prepare Statement
+			// A√±adir datos al Prepare Statement
 			stat.setString(1, clase.getNombre());
 			stat.setInt(2, clase.getDuracion());
-			stat.setDate(3, Date.valueOf(clase.getFechaEstreno()));
+			stat.setDate(3, clase.getFechaEstreno() != null ? Date.valueOf(clase.getFechaEstreno()) : null);
 			stat.setInt(4, clase.getPresupuesto());
 			stat.setString(5, clase.getTipo());
 			stat.setString(6, clase.getImgPath());
@@ -170,29 +170,29 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 		} catch (SQLException e) {
 			rollback(e);
-			return false; // Si hay alguna excepcion devolver· false
+			return false; // Si hay alguna excepcion devolver√° false
 		} finally {
 			this.closeConnection();
 		}
 	}
 
 	/**
-	 * MÈtodo para insertar la informaciÛn de una serie, se ha creado este mÈtodo
-	 * para reducir el cÛdigo repetitivo.
+	 * M√©todo para insertar la informaci√≥n de una serie, se ha creado este m√©todo
+	 * para reducir el c√≥digo repetitivo.
 	 * 
-	 * Para inserter una serie debemos de aÒadir, la temporada, el n˙mero del
-	 * capÌtulo junto con su nombre, esto se hace iterando por una lista de
-	 * 2-dimensiones, por el Ìndice de las listas sabemos el n˙mero de la
-	 * temporadas, y el n˙mero del capitulo con el nombre, java empieza por cero las
-	 * listas por lo que hay que sumar uno para mostrar los n˙meros correctos. En
-	 * cada iteraciÛn se aÒade la inserciÛn a un batch, al acabar se ejecuta este
+	 * Para inserter una serie debemos de a√±adir, la temporada, el n√∫mero del
+	 * cap√≠tulo junto con su nombre, esto se hace iterando por una lista de
+	 * 2-dimensiones, por el √≠ndice de las listas sabemos el n√∫mero de la
+	 * temporadas, y el n√∫mero del capitulo con el nombre, java empieza por cero las
+	 * listas por lo que hay que sumar uno para mostrar los n√∫meros correctos. En
+	 * cada iteraci√≥n se a√±ade la inserci√≥n a un batch, al acabar se ejecuta este
 	 * batch. <br>
-	 * Ej: En el Ìndice 0 de la lista de fuera ser· la temporada 1, y en la lista
-	 * interior indice 0 ser· el capÌtulo 1 con su nombre.
+	 * Ej: En el √≠ndice 0 de la lista de fuera ser√° la temporada 1, y en la lista
+	 * interior indice 0 ser√° el cap√≠tulo 1 con su nombre.
 	 * 
 	 * 
 	 * @param id    Id de la obra
-	 * @param clase el objecto clase con la informaciÛn que se aÒadir·
+	 * @param clase el objecto clase con la informaci√≥n que se a√±adir√°
 	 **/
 	private void insertSerie(Integer id, ObraAudiovisual clase) throws SQLException {
 		List<List<String>> aux = ((Serie) clase).getNombreCap();
@@ -204,7 +204,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 				// Iterar por el array interior
 				for (int j = 0; j < aux.get(i).size(); j++) {
 
-					// AÒadir los datos de la serie al STAT
+					// A√±adir los datos de la serie al STAT
 					serieStat.setInt(1, id);
 					serieStat.setInt(2, i + 1);
 					serieStat.setInt(3, j + 1);
@@ -219,17 +219,17 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	}
 
 	/**
-	 * MÈtodo para buscar una obra audiovisual, tambiÈn se recoger· la informaciÛn
-	 * dependiendo de si es una pelÌcula o serie. <br>
-	 * <b>CÛmo funciona el mÈtodo:</b><blockquote> Buscamos la obra por su ID
-	 * llamando al procedimiento guardado en el servidor, si la obra es una pelÌcula
-	 * guardamos si es taquillera, en la base de datos est· guardado como un 1 y 0
+	 * M√©todo para buscar una obra audiovisual, tambi√©n se recoger√° la informaci√≥n
+	 * dependiendo de si es una pel√≠cula o serie. <br>
+	 * <b>C√≥mo funciona el m√©todo:</b><blockquote> Buscamos la obra por su ID
+	 * llamando al procedimiento guardado en el servidor, si la obra es una pel√≠cula
+	 * guardamos si es taquillera, en la base de datos est√° guardado como un 1 y 0
 	 * (True/False), en el caso de que sea una serie debemos de guardar las
-	 * temporadas, capÌtulos y los nombres de estos capÌtulos, esto se hace en el
-	 * mÈtodo {@link #addToList}, y al finalizar devolvemos la obra.</blockquote>
+	 * temporadas, cap√≠tulos y los nombres de estos cap√≠tulos, esto se hace en el
+	 * m√©todo {@link #addToList}, y al finalizar devolvemos la obra.</blockquote>
 	 * 
 	 * @param id identificador para buscar la obra
-	 * @return objecto con la informaciÛn de una obra audiovisual, ya sea
+	 * @return objecto con la informaci√≥n de una obra audiovisual, ya sea
 	 **/
 	@Override
 	public ObraAudiovisual search(String[] id) {
@@ -244,7 +244,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 		try (CallableStatement stat = con.prepareCall(SEARCH, ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY)) {
 
-			// AÒadir datos al Prepare Statement
+			// A√±adir datos al Prepare Statement
 			stat.setString(1, id[0]);
 
 			// Ejecutar consulta y guardarlo en el Result Set
@@ -269,7 +269,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 				oa.setIdObra(rs.getInt(1));
 				oa.setNombre(rs.getString(2));
 				oa.setDuracion(rs.getInt(3));
-				oa.setFechaEstreno(rs.getDate(4).toLocalDate());
+				oa.setFechaEstreno(rs.getDate(4) != null ? rs.getDate(4).toLocalDate() : null);
 				oa.setPresupuesto(rs.getInt(5));
 				oa.setTipo(rs.getString(6));
 				oa.setImgPath(rs.getString(7));
@@ -281,24 +281,24 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			this.closeConnection();
 		}
 
-		// Devolvemos el objecto, si RS NO ha devuelto nada, devolver· NULL
+		// Devolvemos el objecto, si RS NO ha devuelto nada, devolver√° NULL
 		return oa;
 	}
 
 	/**
-	 * Este mÈtodo es para aÒadir los datos de una serie, estos datos sÛn; la
-	 * temporada, el n˙mero del capÌtulo y el nombre. <br>
-	 * <b>CÛmo funciona el mÈtodo:</b> <blockquote> Primero de todo recogemos la
-	 * lista que se encuentra en la obra, el n˙mero de la temporada del
-	 * {@code ResultSet}, y comprobamos si el capÌtulo tiene nombre.<br>
-	 * Posteriormente comprobamos el n˙mero de temporada que nos devuelve la
-	 * consulta con el tamaÒo de la lista, si no es el mismo significa que es
-	 * diferente temporada por lo que aÒadimos a la lista una nueva sublista.
-	 * DespuÈs aÒadimos a la sublista el nombre del capÌtulo. <br>
+	 * Este m√©todo es para a√±adir los datos de una serie, estos datos s√≥n; la
+	 * temporada, el n√∫mero del cap√≠tulo y el nombre. <br>
+	 * <b>C√≥mo funciona el m√©todo:</b> <blockquote> Primero de todo recogemos la
+	 * lista que se encuentra en la obra, el n√∫mero de la temporada del
+	 * {@code ResultSet}, y comprobamos si el cap√≠tulo tiene nombre.<br>
+	 * Posteriormente comprobamos el n√∫mero de temporada que nos devuelve la
+	 * consulta con el tama√±o de la lista, si no es el mismo significa que es
+	 * diferente temporada por lo que a√±adimos a la lista una nueva sublista.
+	 * Despu√©s a√±adimos a la sublista el nombre del cap√≠tulo. <br>
 	 * </blockquote> <note>Nota: La lista es una lista de 2-dimensiones, la exterior
-	 * guarda las temporadas, y la interior guardar· los nombres de los capÌtulos,
-	 * por el Ìndice de estas listas sabemos el n˙mero de temporada y el n˙mero de
-	 * capÌtulo.<note>
+	 * guarda las temporadas, y la interior guardar√° los nombres de los cap√≠tulos,
+	 * por el √≠ndice de estas listas sabemos el n√∫mero de temporada y el n√∫mero de
+	 * cap√≠tulo.<note>
 	 * 
 	 * @param rs   ResultSet con los datos a insertar
 	 * @param obra la obra a donde se van a insertar los datos
@@ -309,7 +309,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 		// Recoger la lista de 2Dimensiones
 		List<List<String>> nombreCap = ((Serie) obra).getNombreCap();
-		int numTemporada = rs.getInt("NumTemporada");
+		int numTemporada = rs.getInt("Temporada");
 		String nomCap = "";
 
 		// Comprobar si el capitulo tiene nombre
@@ -319,15 +319,17 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			nomCap = rs.getString("nombreCap");
 		}
 
-		//EJ: el RS nos devuelve la temporada 3 y el tamaÒo de la lista es de 2 crear
-		// una nueva temporada/lista
-		if (numTemporada != nombreCap.size()) {
+		/**
+		 * Ejemplo: En el caso del que RS nos de la temporada 3 y el tama√±o de la lista
+		 * es de 1, por X razones no han a√±adido la temporada 2, se crear√° listas hasta
+		 * que el tama√±o de la lista sea igual al n√∫mero de temporada.
+		 **/
+		while (numTemporada != nombreCap.size()) {
 			// Crear una nueva lista
 			nombreCap.add(new ArrayList<>());
 		}
-
-		// AÒadir a la temporada, el capÌtulo y su nombre
-		// Ej: temporada 1 el Ìndice en la lista ser· la 0
+		// A√±adir a la temporada (-1 porque las listas empiezan por el √≠ndice 0) y el
+		// nombre del cap√≠tulo
 		nombreCap.get(numTemporada - 1).add(nomCap);
 
 		// Guardar la lista a la obra
@@ -336,31 +338,31 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 	}
 
 	/**
-	 * MÈtodo para leer todos los datos de las obras, si es una pelÌcula se guarda
+	 * M√©todo para leer todos los datos de las obras, si es una pel√≠cula se guarda
 	 * si es taquillera, y en el caso de las series se guarda en una lista de
-	 * 2-dimensiones, la temporada, el capÌtulo y el nombre de este. <br>
-	 * <b>CÛmo funciona el mÈtodo:</b> <blockquote> Al recoger la informaciÛn del
+	 * 2-dimensiones, la temporada, el cap√≠tulo y el nombre de este. <br>
+	 * <b>C√≥mo funciona el m√©todo:</b> <blockquote> Al recoger la informaci√≥n del
 	 * procedimiento almacenado, comprobamos si el map ya tiene la clave de la obra.
 	 * En el caso de que ya la tiene y es una serie, recogemos la obra del map y
-	 * aÒadimos m·s capÌtulos a su lista usando el mÈtodo {@link #addToList}. En el
+	 * a√±adimos m√°s cap√≠tulos a su lista usando el m√©todo {@link #addToList}. En el
 	 * caso de que no lo contenga instanciamos la clase dependiendo de que tipo de
-	 * obra sea, si es una serie aÒadimos los datos de la serie en su lista llamando
-	 * al mÈtodo mencionado anteriormente, en el caso de que sea una pelÌcula solo
-	 * se aÒade si es taquillera.<br>
+	 * obra sea, si es una serie a√±adimos los datos de la serie en su lista llamando
+	 * al m√©todo mencionado anteriormente, en el caso de que sea una pel√≠cula solo
+	 * se a√±ade si es taquillera.<br>
 	 * Y al finalzar guardamos los datos de la obra y lo guardamos en el map junto
 	 * con su ID. </blockquote>
 	 * 
 	 * 
 	 * 
-	 * @return Map<Integer, ObraAudiovisual>, la clave ser· el ID de la obra y el
-	 *         valor el objecto completo con su informaciÛn.
+	 * @return Map<Integer, ObraAudiovisual>, la clave ser√° el ID de la obra y el
+	 *         valor el objecto completo con su informaci√≥n.
 	 **/
 	@Override
 	public Map<Integer, ObraAudiovisual> readAll() {
 
 		this.openConnection();
 
-		// RS y la clase para recoger los datos, adem·s un map para guardar
+		// RS y la clase para recoger los datos, adem√°s un map para guardar
 		Map<Integer, ObraAudiovisual> obras = new HashMap<>();
 		ResultSet rs = null;
 		ObraAudiovisual oa = null;
@@ -371,7 +373,7 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			// Ejecutar consulta y guardarlo en el result set
 			rs = stat.executeQuery();
 
-			// Mientras que RS sigua teniendo filas con informaciÛn
+			// Mientras que RS sigua teniendo filas con informaci√≥n
 			while (rs.next()) {
 
 				if (obras.containsKey(rs.getInt(1)) && rs.getString("tipo").equalsIgnoreCase("serie")) {
@@ -389,16 +391,17 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 						oa = new Pelicula();
 						((Pelicula) oa).setEsTaquillera(rs.getInt("esTaquillera") == 1 ? true : false);
 					}
-					// AÒadimos los datos de la obra
+					// A√±adimos los datos de la obra
 					oa.setIdObra(rs.getInt(1));
 					oa.setNombre(rs.getString(2));
 					oa.setDuracion(rs.getInt(3));
-					oa.setFechaEstreno(rs.getDate(4).toLocalDate());
+					oa.setFechaEstreno(rs.getDate(4) != null ? rs.getDate(4).toLocalDate() : null);
 					oa.setPresupuesto(rs.getInt(5));
 					oa.setTipo(rs.getString(6));
+					oa.setImgPath(rs.getString(7));
 				}
 
-				// AÒadimos la clave y el objecto al map
+				// A√±adimos la clave y el objecto al map
 				obras.put(oa.getIdObra(), oa);
 			}
 
@@ -408,22 +411,22 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 			this.closeConnection();
 		}
 
-		// Devolver· un map con los datos, o un map vacÌo
+		// Devolver√° un map con los datos, o un map vac√≠o
 		return obras;
 	}
 
 	/**
-	 * MÈtodo para actualizar los datos de una obra. <br>
-	 * <b>CÛmo funciona este mÈtodo:</b><blockquote> Primero de todo actualizamos
-	 * los datos de la obra, luego dependiendo de si es una pelÌcula tambiÈn
-	 * actualizaremos su informaciÛn, en el caso de que sea una serie, eliminaremos
+	 * M√©todo para actualizar los datos de una obra. <br>
+	 * <b>C√≥mo funciona este m√©todo:</b><blockquote> Primero de todo actualizamos
+	 * los datos de la obra, luego dependiendo de si es una pel√≠cula tambi√©n
+	 * actualizaremos su informaci√≥n, en el caso de que sea una serie, eliminaremos
 	 * los datos de esa esa serie y luego insertaremos los datos nuevos, al
 	 * finalizar aplicamos los cambios llamando al
 	 * {@link java.sql.Connection#commit}.</blockquote>
 	 * 
 	 * 
 	 * 
-	 * @param clase la obra con la nueva informaciÛn que se quiere actualizar
+	 * @param clase la obra con la nueva informaci√≥n que se quiere actualizar
 	 * @return true si se ha ejecutado correctamente la consulta
 	 **/
 	@Override
@@ -436,31 +439,31 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 				PreparedStatement updatePeli = con.prepareStatement(UPDATEPELI);
 				PreparedStatement delSerie = con.prepareStatement(DELETESERIE);) {
 
-			// Inicio de la trasnacciÛn
+			// Inicio de la trasnacci√≥n
 			con.setAutoCommit(false);
 
-			// AÒadir datos al Prepare Statement
+			// A√±adir datos al Prepare Statement
 			stat.setString(1, clase.getNombre());
 			stat.setInt(2, clase.getDuracion());
-			stat.setDate(3, Date.valueOf(clase.getFechaEstreno()));
+			stat.setDate(3, clase.getFechaEstreno() != null ? Date.valueOf(clase.getFechaEstreno()) : null);
 			stat.setInt(4, clase.getPresupuesto());
-			stat.setInt(5, clase.getIdObra());
+			stat.setString(5, clase.getImgPath());
+			stat.setInt(6, clase.getIdObra());
 
 			// Ejecutar consulta
 			stat.executeUpdate();
-
 			if (clase instanceof Pelicula) {
 				// Actualizamos si es taquillera
 				updatePeli.setInt(1, ((Pelicula) clase).isEsTaquillera() == true ? 1 : 0);
+				updatePeli.setInt(2, clase.getIdObra());
 				updatePeli.executeUpdate();
 			} else {
 				// Eliminamos las series
 				delSerie.setInt(1, clase.getIdObra());
 				delSerie.executeUpdate();
+				// Insertamos de nuevo las series
+				insertSerie(clase.getIdObra(), clase);
 			}
-
-			// Insertamos de nuevo las series
-			insertSerie(clase.getIdObra(), clase);
 
 			// Aplicar los cambios
 			con.commit();
@@ -473,14 +476,14 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 
 		} catch (SQLException e) {
 			rollback(e);
-			return false; // Si hay alguna excepcion devolver· false
+			return false; // Si hay alguna excepcion devolver√° false
 		} finally {
 			this.closeConnection();
 		}
 	}
 
 	/**
-	 * MÈtodo para eliminar todos los datos relacionados con la obra
+	 * M√©todo para eliminar todos los datos relacionados con la obra
 	 * 
 	 * @param id el identificador de la obra que se quiere eliminar
 	 * @return true si se a ejecutado correctamente la consulta
@@ -493,14 +496,14 @@ public class ObraDAO implements BDgeneric<ObraAudiovisual> {
 		// Prepare Statement - Delete
 		try (PreparedStatement stat = con.prepareStatement(DELETE)) {
 
-			// AÒadir datos al Prepare Statement
+			// A√±adir datos al Prepare Statement
 			stat.setString(1, id[0]);
 
 			// Ejecutar consulta
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
-			return false; // Si hay alguna excepcion devolver· false
+			return false; // Si hay alguna excepcion devolver√° false
 		} finally {
 			this.closeConnection();
 		}

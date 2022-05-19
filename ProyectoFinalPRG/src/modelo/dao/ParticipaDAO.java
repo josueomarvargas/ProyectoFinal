@@ -145,8 +145,11 @@ public class ParticipaDAO implements BDgeneric<Participa> {
 	 * por trabajadores se guardará los IDs de las obras en las que ha participado
 	 * ese trabajador.
 	 * 
-	 * @param id el ID es un array para saber que ID se quiere buscar, el ID en el
-	 *           índice 0: obra, 1: trabajador.
+	 * @param id el ID es un array para saber que ID se quiere buscar, el ID en el:
+	 *           <li>índice 0: se le pasa el ID del trabajador para buscar las obras
+	 *           en las que está
+	 *           <li>índice 1: se le pasa el ID de la obra para buscar los
+	 *           trabajadores que participan en ella
 	 * @return objecto equip-obra con los datos los IDs de equipamientos u obras
 	 **/
 	@Override
@@ -168,7 +171,7 @@ public class ParticipaDAO implements BDgeneric<Participa> {
 				obraStat.setString(1, id[0]);
 				rs = obraStat.executeQuery();
 				searchObra = true;
-				// Si no, esta en el índice 1, buscar por equipamiento
+				// Si no, esta en el índice 1, buscar por trabajador
 			} else {
 				trabajadorStat.setString(1, id[1]);
 				rs = trabajadorStat.executeQuery();
