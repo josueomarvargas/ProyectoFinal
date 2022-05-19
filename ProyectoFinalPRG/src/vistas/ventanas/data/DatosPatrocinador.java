@@ -7,18 +7,29 @@ import java.awt.Window;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
+import controlador.utils.ClasesEnum;
 import controlador.utils.views.Utilidades;
+import modelo.clases.ObraAudiovisual;
 import modelo.clases.Patrocinador;
+import modelo.clases.Pelicula;
+import vistas.ventanas.custom.components.TextField;
+import vistas.ventanas.custom.containers.CustomTab;
+import vistas.ventanas.custom.containers.TitleBar;
 
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Color;
+import java.awt.Dimension;
 
 public class DatosPatrocinador extends JDialog implements ActionListener {
 
@@ -35,7 +46,21 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 	private JButton btnAceptar;
 	private JButton btnVolver;
 	private JButton btnCerrarSystem;
+	private Window parent;
+	private JDialog thisDialog;
+	private JLabel fotoLabel;
+	private File img = null;
+	private boolean valido = true;
+	private Dimension size;
+	private TitleBar bar;
+	private Patrocinador patro = null;
+	private String type;
+	private CustomTab tabs;
+	private JPanel patroPanel;
+	private TextField fieldNombre, fieldCant, fieldCond;
 
+
+ 
 	/**
 	 * Create the dialog.
 	 * @param object 
@@ -43,7 +68,78 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 	 * @param b 
 	 */
 	public DatosPatrocinador(Window parent, boolean modal, Patrocinador pa, String type) {
-		setUndecorated(true);
+		super(parent);
+		setModal(modal);
+		this.thisDialog=this;
+		this.setUndecorated(true);
+		size=Utilidades.resizeWindow(this);
+		setSize(size);
+		contentPanel.setLayout(null);
+		bar = new TitleBar(this);
+		bar.setBounds(0, 0, this.getWidth(), 25);
+		getContentPane().add(bar);
+		
+		// Cuando se va ha modificar la obra
+		if (patro != null) {
+			this.patro = patro;
+			init();
+			initValues(patro);
+		} else {
+			// Cuando se va ha añadir uno nuevo
+			this.type = type;
+			init();
+		}
+
+	}
+	private void init() {
+		tabs = new CustomTab();
+		tabs.setTabPlacement(JTabbedPane.BOTTOM);
+		tabs.setBackground(Color.WHITE);
+		patroPanel.setBackground(Color.WHITE);
+		tabs.add("Patrocinadores", patroPanel);
+		patroPanel.setLayout(null);
+		getContentPane().add(tabs);
+
+	
+	}
+	private void tabsFields(JPanel panel) {
+		JLabel lblTitulo = new JLabel();
+		lblTitulo.setText("Datos Obra");
+		lblTitulo.setFont(new Font("Calibri", Font.PLAIN, 28));
+		lblTitulo.setBounds(375, 32, 171, 36);
+		panel.add(lblTitulo);
+		
+		// Nombre
+				fieldNombre = new TextField();
+				fieldNombre.setLabelText("Nombre");
+				fieldNombre.setBounds(279, 79, 150, 50);
+				panel.add(fieldNombre);
+				
+				fieldCant = new TextField();
+				fieldCant.setLabelText("Cantidad");
+				fieldCant.setBounds(462, 79, 150, 50);
+				fieldCant.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent e) {
+						char c = e.getKeyChar();
+						if ((c < '0') || (c > '9') && (c != KeyEvent.VK_BACK_SPACE)) {
+							e.consume();
+						}
+					}
+				});
+				
+				panel.add(fieldCant);
+				fieldCond = new TextField();
+				fieldCond.setLabelText("Condicion");
+				fieldCond.setBounds(462, 79, 150, 50);
+				panel.add(fieldCond);
+
+
+	}
+	
+	
+		
+		
 		setSize(Utilidades.resizeWindow(this));
 		Utilidades.centerWindow(parent, this);
 		getContentPane().setLayout(new BorderLayout());

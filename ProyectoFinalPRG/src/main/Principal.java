@@ -18,7 +18,7 @@ public class Principal {
 
 		TablaPeliculasSeries tps = new TablaPeliculasSeries(null, true);
 		tps.setVisible(true);
-		//TablaPatrocinadores tp= new TablaPatrocinadores();
+		//TablaPatrocinadores tp= new TablaPatrocinadores(null, true);
 		//tp.setVisible(true);
 
 		//		DatosObra datosObra = new DatosObra();
