@@ -180,6 +180,7 @@ public class ParticipaDAO implements BDgeneric<Participa> {
 
 			// Comprobar que RS a recuperado informacion del executeQuery
 			while (rs.next()) {
+
 				// Creamos una instancia del objecto
 				if (part == null) {
 					part = new Participa();

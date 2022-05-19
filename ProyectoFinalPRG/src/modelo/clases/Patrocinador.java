@@ -61,5 +61,11 @@ public class Patrocinador {
 		this.imgPath = imgPath;
 	}
 
+	@Override
+	public String toString() {
+		return "Patrocinador [idPatro=" + idPatro + ", nombre=" + nombre + ", cantDinero=" + cantDinero + ", condicion="
+				+ condicion + ", imgPath=" + imgPath + "]";
+	}
+
 	
 }

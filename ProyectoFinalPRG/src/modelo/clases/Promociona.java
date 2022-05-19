@@ -31,4 +31,9 @@ public class Promociona {
 		this.idObra = idObra;
 	}
 
+	@Override
+	public String toString() {
+		return "Promociona [idPatro=" + idPatro + ", idObra=" + idObra + "]";
+	}
+
 }
