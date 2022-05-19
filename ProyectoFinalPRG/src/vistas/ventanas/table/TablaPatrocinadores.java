@@ -1,14 +1,11 @@
 package vistas.ventanas.table;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.lang.StackWalker.Option;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
@@ -27,15 +23,15 @@ import javax.swing.table.TableModel;
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
-import modelo.clases.ObraAudiovisual;
 import modelo.clases.Patrocinador;
 import vistas.dao.GetData;
 import vistas.ventanas.custom.components.MenuButton;
 import vistas.ventanas.custom.containers.CustomTab;
 import vistas.ventanas.custom.containers.OptionPanel;
 import vistas.ventanas.custom.containers.TitleBar;
-import vistas.ventanas.data.DatosObra;
 import vistas.ventanas.data.DatosPatrocinador;
+import vistas.ventanas.custom.components.TextField;
+
 
 public class TablaPatrocinadores extends JDialog implements ActionListener {
 
@@ -44,29 +40,18 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	private final JPanel patroPanel=new JPanel();
 	private final JDialog thisDialog;
 	private JTable tablePatro=null;
-	private JTextField idField;
-	private JTextField nombreField;
-	private JTextField cantField;
-	private JTextField condField;
-	private JTextField textField;
-	private JButton btnAceptar;
-	private JButton btnBuscar;
-	private JButton btnAnadir;
-	private JButton btnVolver;
-	private JButton btnRefrescar;
+	private TextField idField;
+	private TextField nombreField;
+	private TextField cantField;
+	private TextField condField;
+	private MenuButton btnBuscar;
+	private MenuButton btnAnadir;
+	private MenuButton btnVolver;
+	private MenuButton btnRefrescar;
 	private Window parent;
-	private JButton btnCerrarSystem;
-	private int x = 780;
-	private int y = 20;
 	private JScrollPane scrollPane;
-	private Object[][] data;
-	private String[] column;
 	private TitleBar bar;
-	private int filterX = 780;
-	private int filterY = 20;
-	private int filterWidth = 160;
-	private int filterHeight = 20; 
-	private TableModel model;
+		private TableModel model;
 	private int index;
 	private DatosPatrocinador dataPatro;
 	private CustomTab tabs = null;
@@ -170,9 +155,10 @@ private void buttons() {
 	contentPanel.add(btnAnadir);
 
 	btnRefrescar = new MenuButton();
+	btnRefrescar.setBounds(835, 455, 50, 30);
 	btnRefrescar.setIcon(new ImageIcon(
 			TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
-	btnRefrescar.setBounds(835, 455, 50, 30);
+	
 	Utilidades.configButtons((MenuButton) btnRefrescar, "");
 	btnRefrescar.addActionListener(this);
 	contentPanel.add(btnRefrescar);
@@ -186,7 +172,6 @@ private void buttons() {
 	contentPanel.add(btnVolver);
 }
 private void menuFiltro() {
-	filterY = 20;
 	patroPanel.setLayout(null);
 	// Etiqueta: Id
 	//	JLabel idLabel = new JLabel("Id:");
@@ -194,8 +179,9 @@ private void menuFiltro() {
 	//panel.add(idLabel);
 
 	// TextField: Id
-	idField = new JTextField();
-	idField.setBounds(780, 20, 160, 25);
+	idField = new TextField();
+	idField.setBounds(780, 50, 160, 25);
+	idField.setLabelText("Id");
 	contentPanel.add(idField);
 
 	// Etiqueta: Nombre
@@ -205,8 +191,9 @@ private void menuFiltro() {
 
 
 	// TextField: Nombre
-	nombreField = new JTextField();
-	nombreField.setBounds(780, 20, 160, 25);
+	nombreField = new TextField();
+	nombreField.setBounds(780, 100, 160, 25);
+	nombreField.setLabelText("Nombre");
 	contentPanel.add(nombreField);
 
 	// Etiqueta: Cantidad
@@ -215,8 +202,10 @@ private void menuFiltro() {
 	//panel.add(cantLabel);
 
 	// TextField: Cantidad
-	cantField = new JTextField();
-	cantField.setBounds(780, 20, 160, 25);
+	cantField = new TextField();
+	cantField.setBounds(780, 150, 160, 25);
+	cantField.setLabelText("Cantidad");
+
 	contentPanel.add(cantField);
 
 	// Etiqueta: Num Trabajadores
@@ -225,18 +214,16 @@ private void menuFiltro() {
 	//panel.add(condLabel);
 
 	// TextField: Num Trabajadores
-	condField = new JTextField();
-	condField.setBounds(780, 20, 160, 25);
+	condField = new TextField();
+	condField.setBounds(780, 200, 160, 25);
+	condField.setLabelText("Condicion");
 	contentPanel.add(condField);
 
-	// Etiqueta: Id
-	JLabel idLabel = new JLabel("Id:");
-	idLabel.setBounds(780, 250, 160, 25);
-	contentPanel.add(idLabel);
+
 
 	// Boton para buscar
 	btnBuscar = new MenuButton();
-	btnBuscar.setBounds(780, 320, 160, 35);
+	btnBuscar.setBounds(780, 250, 160, 35);
 	btnBuscar.setIcon(new ImageIcon(
 			TablaPatrocinadores.class.getResource("/vistas/ventanas/custom/components/img/search.png")));
 	Utilidades.configButtons( (MenuButton) btnBuscar, "");

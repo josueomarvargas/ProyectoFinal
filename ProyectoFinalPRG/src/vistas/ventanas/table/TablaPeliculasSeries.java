@@ -20,7 +20,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
@@ -74,7 +73,6 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		loadTables();
-
 		buttons();
 		menuFiltro();
 
