@@ -12,7 +12,7 @@ import modelo.clases.Trabajador;
 /**
  * Clase que implementa la interfaz {@link UIcontrol} para recoger los datos de
  * una tabla y transformarlo a un array de dos dimensiones facilitar el
- * rellenado de informaciÛn en los JTables.
+ * rellenado de informaci√≥n en los JTables.
  * 
  * 
  * @author Henrique Yeguo
@@ -20,8 +20,8 @@ import modelo.clases.Trabajador;
 public class GetData implements DataManager<String, Object[][]> {
 
 	/**
-	 * Estos atributos guardar·n maps con la informaciÛn completa de las tablas,
-	 * esto ser· util cuando se necesite enseÒar todos los datos que no estan en la
+	 * Estos atributos guardar√°n maps con la informaci√≥n completa de las tablas,
+	 * esto ser√° util cuando se necesite ense√±ar todos los datos que no estan en la
 	 * JTable.
 	 **/
 	private static Map<Integer, ObraAudiovisual> obra = null;
@@ -30,11 +30,11 @@ public class GetData implements DataManager<String, Object[][]> {
 	private static Map<Integer, Trabajador> trabajador = null;
 
 	/**
-	 * Este mÈtodo devolver· el array de objetos de dos dimensiones, los posibles
-	 * datos que podr· devolver ser·n de las clases: {@link ObraAudiovisual},
+	 * Este m√©todo devolver√° el array de objetos de dos dimensiones, los posibles
+	 * datos que podr√° devolver ser√°n de las clases: {@link ObraAudiovisual},
 	 * {@link Equipamiento}, {@link Patrocinador} y {@link Trabajador}.
 	 * 
-	 * @param en la lista que solo recoger· un valor, que ser· el nombre del objecto
+	 * @param en la lista que solo recoger√° un valor, que ser√° el nombre del objecto
 	 *           que se quiere recuperar de la base de datos
 	 **/
 	@Override

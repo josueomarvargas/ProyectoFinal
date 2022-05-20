@@ -83,7 +83,9 @@ public class DatosObra extends JDialog implements ActionListener {
 		this.setUndecorated(true);
 		size = Utilidades.resizeWindow(this);
 		setSize(size);
+
 		Utilidades.centerWindow(parent, this);
+
 		contentPanel.setLayout(null);
 
 		bar = new TitleBar(this);
@@ -96,7 +98,7 @@ public class DatosObra extends JDialog implements ActionListener {
 			init();
 			initValues();
 		} else {
-			// Cuando se va ha añadir uno nuevo
+			// Cuando se va ha aÃ±adir uno nuevo
 			this.type = type;
 			this.valido = false;
 			init();
@@ -154,10 +156,12 @@ public class DatosObra extends JDialog implements ActionListener {
 		lblTitulo.setBounds(375, 32, 171, 36);
 		panel.add(lblTitulo);
 
+
 		JLabel invalidCharacter = new JLabel();
-		invalidCharacter.setText("Ese caracter es inválido.");
+		invalidCharacter.setText("Ese caracter es invÃ¡lido.");
 		invalidCharacter.setFont(new Font("Calibri", Font.PLAIN, 14));
 		invalidCharacter.setForeground(Color.RED);
+
 
 		// Nombre
 		fieldNombre = new TextField();
@@ -275,7 +279,7 @@ public class DatosObra extends JDialog implements ActionListener {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (SwingUtilities.isRightMouseButton(e)) {
-						int i = OptionPanel.showOptionMessage(thisDialog, "¿Quieres eliminar este capítulo?",
+						int i = OptionPanel.showOptionMessage(thisDialog, "Â¿Quieres eliminar este capÃ­tulo?",
 								"Eliminar caracteristica", OptionPanel.CONFIRM);
 						if (i == 1) {
 							listModel = (DefaultListModel<String>) listCap.getModel();
@@ -304,7 +308,7 @@ public class DatosObra extends JDialog implements ActionListener {
 
 			addCap = new TextField();
 			addCap.setLabelText("Introducir nuevos capitulos");
-			addCap.setToolTipText("Dale Enter para introducir un capítulo");
+			addCap.setToolTipText("Dale Enter para introducir un capÃ­tulo");
 			addCap.setBounds(660, 301, 260, 50);
 			addCap.addKeyListener(new KeyAdapter() {
 				@Override
@@ -330,7 +334,7 @@ public class DatosObra extends JDialog implements ActionListener {
 						addCap.setText("");
 					} else {
 						Popup p = PopupFactory.getSharedInstance().getPopup(thisDialog,
-								new JLabel("Error, no se puede introducir un tipo vacío"), 285, 140);
+								new JLabel("Error, no se puede introducir un tipo vacÃ­o"), 285, 140);
 						toolTip(p);
 					}
 				}
@@ -338,7 +342,7 @@ public class DatosObra extends JDialog implements ActionListener {
 			panel.add(addCap);
 
 			addTemporada = new MenuButton();
-			Utilidades.configButtons(addTemporada, "Añadir temporada");
+			Utilidades.configButtons(addTemporada, "AÃ±adir temporada");
 			addTemporada.setBounds(size.width - 190, 120, 150, 25);
 			addTemporada.setEnabled(true);
 			addTemporada.addActionListener(this);
@@ -375,7 +379,7 @@ public class DatosObra extends JDialog implements ActionListener {
 		btnBorrarDatos = new MenuButton();
 		Utilidades.configButtons(btnBorrarDatos, null);
 		btnBorrarDatos
-				.setIcon(new ImageIcon(getClass().getResource("/vistas/ventanas/custom/components/img/delete.png")));
+		.setIcon(new ImageIcon(getClass().getResource("/vistas/ventanas/custom/components/img/delete.png")));
 		btnBorrarDatos.setToolTipText("Borrar datos");
 		btnBorrarDatos.setBounds(size.width - 300, size.height - 75, 50, 25);
 		btnBorrarDatos.addActionListener(this);
@@ -484,7 +488,7 @@ public class DatosObra extends JDialog implements ActionListener {
 		if (e.getSource().equals(btnBorrarDatos)) {
 			if (obra != null) {
 				int i = OptionPanel.showOptionMessage(thisDialog,
-						"¿Está usted seguro de que quiere eliminar esta obra audiovisual?", "Confirmación",
+						"Â¿EstÃ¡ usted seguro de que quiere eliminar esta obra audiovisual?", "ConfirmaciÃ³n",
 						OptionPanel.CONFIRM);
 				if (i == OptionPanel.CONFIRM) {
 					ok = FactoryDAO.getDeleteData()
@@ -505,33 +509,33 @@ public class DatosObra extends JDialog implements ActionListener {
 				updateData();
 				if (FactoryDAO.getUpdateData().dataManage(obra)) {
 					OptionPanel.showMessage(thisDialog, "Se ha modificado correctamente los datos de la obra",
-							"Modificación de datos", OptionPanel.MESSAGE);
+							"ModificaciÃ³n de datos", OptionPanel.MESSAGE);
 				}
 			} else {
-				OptionPanel.showMessage(thisDialog, "Error al modificar, compruebe los datos e inténtelo de nuevo",
+				OptionPanel.showMessage(thisDialog, "Error al modificar, compruebe los datos e intÃ©ntelo de nuevo",
 						"Error al intentar modificar", OptionPanel.MESSAGE);
 			}
 		} else if (e.getSource().equals(btnAddObra)) {
 			if (valido) {
 				updateData();
-				int i = OptionPanel.showOptionMessage(thisDialog, "¿Estás segur@ de que quieres insertar esta obra?",
-						"Confirmación", OptionPanel.CONFIRM);
+				int i = OptionPanel.showOptionMessage(thisDialog, "Â¿EstÃ¡s segur@ de que quieres insertar esta obra?",
+						"ConfirmaciÃ³n", OptionPanel.CONFIRM);
 				if (i == OptionPanel.CONFIRM) {
 					ok = FactoryDAO.getInsertData().dataManage(obra);
 				}
 			}
 			if (ok) {
-				OptionPanel.showMessage(thisDialog, "Se ha añadido correctamente los datos de la obra",
-						"Modificación de datos", OptionPanel.MESSAGE);
+				OptionPanel.showMessage(thisDialog, "Se ha aÃ±adido correctamente los datos de la obra",
+						"ModificaciÃ³n de datos", OptionPanel.MESSAGE);
 				thisDialog.dispose();
 			} else if (!valido || !ok) {
-				OptionPanel.showMessage(thisDialog, "Error al añadir la obra, compruebe los datos e inténtelo de nuevo",
+				OptionPanel.showMessage(thisDialog, "Error al aÃ±adir la obra, compruebe los datos e intÃ©ntelo de nuevo",
 						"Error al intentar insertar", OptionPanel.MESSAGE);
 			}
 
 		} else if (e.getSource().equals(btnVolver)) {
 			int i = OptionPanel.showOptionMessage(thisDialog,
-					"¿Estas segur@ de que quieres volver a la ventana anterior?", "Volver", OptionPanel.CONFIRM);
+					"Â¿Estas segur@ de que quieres volver a la ventana anterior?", "Volver", OptionPanel.CONFIRM);
 			if (i == OptionPanel.CONFIRM) {
 				thisDialog.dispose();
 				parent.setVisible(true);
@@ -549,13 +553,13 @@ public class DatosObra extends JDialog implements ActionListener {
 
 		} else if (e.getSource().equals(btnVerEquipamiento)) {
 			viewRelationData(ClasesEnum.EQUIPOBRA.getName(), ClasesEnum.OBRA.getName(),
-					"Equipamiento que se usa en la obra", "Añadir equipamiento a la obra");
+					"Equipamiento que se usa en la obra", "AÃ±adir equipamiento a la obra");
 		} else if (e.getSource().equals(btnVerTrabajadores)) {
 			viewRelationData(ClasesEnum.PARTICIPA.getName(), ClasesEnum.OBRA.getName(),
-					"Trabajadores que participan en la obra", "Añadir trabajador a la obra");
+					"Trabajadores que participan en la obra", "AÃ±adir trabajador a la obra");
 		} else if (e.getSource().equals(btnVerPatrocinadores)) {
 			viewRelationData(ClasesEnum.PROMOCIONA.getName(), ClasesEnum.OBRA.getName(),
-					"Patrocinadores que patrocinan en la obra", "Añadir patrocinadores a la obra");
+					"Patrocinadores que patrocinan en la obra", "AÃ±adir patrocinadores a la obra");
 		}
 
 	}
@@ -583,11 +587,11 @@ public class DatosObra extends JDialog implements ActionListener {
 					.updateRelation(new String[] { relationTable, individualTable, Integer.toString(newID) });
 
 			if (okUpdate) {
-				OptionPanel.showMessage(thisDialog, "se ha insertado correctamente la información a la obra",
-						"Inserción de datos", OptionPanel.MESSAGE);
+				OptionPanel.showMessage(thisDialog, "se ha insertado correctamente la informaciÃ³n a la obra",
+						"InserciÃ³n de datos", OptionPanel.MESSAGE);
 			} else {
-				OptionPanel.showMessage(thisDialog, "Error al añadir información a la obra, inténtelo más tarde",
-						"Error en la conexión a la base de datos", OptionPanel.MESSAGE);
+				OptionPanel.showMessage(thisDialog, "Error al aÃ±adir informaciÃ³n a la obra, intÃ©ntelo mÃ¡s tarde",
+						"Error en la conexiÃ³n a la base de datos", OptionPanel.MESSAGE);
 			}
 		}
 	}

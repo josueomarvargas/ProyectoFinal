@@ -133,6 +133,7 @@ public class GestionDatos extends JDialog implements ActionListener {
 			vTrabajadores.setVisible(true);
 
 		} else if (e.getSource().equals(btnGObrasAudiovisuales)) {
+
 			TablaPeliculasSeries vAudiovisual = new TablaPeliculasSeries(thisDialog, true);
 			thisDialog.dispose();
 			vAudiovisual.setVisible(true);
@@ -144,6 +145,7 @@ public class GestionDatos extends JDialog implements ActionListener {
 		} else if (e.getSource().equals(btnGEquipamiento)) {
 			TablaEquipamiento vEquipamiento = new TablaEquipamiento(thisDialog, true);
 			thisDialog.dispose();
+
 			vEquipamiento.setVisible(true);
 
 		}

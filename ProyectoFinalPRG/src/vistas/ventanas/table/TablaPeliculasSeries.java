@@ -22,7 +22,9 @@ import javax.swing.RowFilter;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
 import javax.swing.table.TableRowSorter;
+
 
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
@@ -77,7 +79,6 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		contentPanel.add(bar);
 
 		loadTables();
-
 		buttons();
 		menuFiltro();
 
@@ -150,12 +151,12 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 
 		table.setBackground(new Color(255, 255, 255));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		// Añadir los datos a la tabla
+		// AÃ±adir los datos a la tabla
 		table.setModel(tableModel(obra));
 		Utilidades.resizeColumnWidth(table); // Redimensionar columnas
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollPane.setViewportView(table); // Añadir la tabla al scroll panel
-		panel.add(scrollPane); // Añadir el scroll panel al panel de la pestaña
+		scrollPane.setViewportView(table); // AÃ±adir la tabla al scroll panel
+		panel.add(scrollPane); // AÃ±adir el scroll panel al panel de la pestaÃ±a
 
 		return table;
 	}
@@ -227,6 +228,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		btnRefrescar.setIcon(new ImageIcon(
 				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
 		btnRefrescar.setBounds(835, 355, 50, 30);
+
 		Utilidades.configButtons(btnRefrescar, "");
 		btnRefrescar.addActionListener(this);
 		contentPanel.add(btnRefrescar);
@@ -296,8 +298,8 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnAnadir)) {
 
-			int i = OptionPanel.showOptionMessage(thisDialog, "¿Qué tipo de obra audiovisual desea añadir?",
-					"Añadir obra audiovisual", "Pelicula", "Serie", OptionPanel.CONFIRM);
+			int i = OptionPanel.showOptionMessage(thisDialog, "Â¿QuÃ© tipo de obra audiovisual desea aÃ±adir?",
+					"AÃ±adir obra audiovisual", "Pelicula", "Serie", OptionPanel.CONFIRM);
 			if (i == 0) {
 				dataObra = new DatosObra(thisDialog, true, null, ClasesEnum.SERIE.getName());
 			} else {
@@ -312,7 +314,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 			}
 		} else if (e.getSource().equals(btnVolver)) {
 			int i = OptionPanel.showOptionMessage(thisDialog,
-					"¿Estas segur@ de que quieres volver a la ventana anterior?", "¿Quieres volver?",
+					"Â¿Estas segur@ de que quieres volver a la ventana anterior?", "Â¿Quieres volver?",
 					OptionPanel.CONFIRM);
 			if (i == 1) {
 				thisDialog.dispose();

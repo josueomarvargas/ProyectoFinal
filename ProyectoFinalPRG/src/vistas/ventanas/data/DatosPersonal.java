@@ -14,7 +14,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
-//import com.toedter.calendar.JDateChooser;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -78,6 +77,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 	private MenuButton btnUsuario;
 	private JCalendar calendar;
 	private JScrollPane scrollPane;
+
 	private JPanel panelDirector;
 	private JPanel panelActor;
 	private JPanel panelGuionista;
@@ -109,6 +109,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 	public DatosPersonal(Window parent, boolean modal, Trabajador trabajador, Usuario user) {
 		super(parent);
 		setModal(modal);
+
 		this.setUndecorated(true);
 		this.parent = parent;
 		thisDialog = this;
@@ -189,7 +190,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e)) {
-					int i = OptionPanel.showOptionMessage(thisDialog, "¿Quieres eliminar este dato?",
+					int i = OptionPanel.showOptionMessage(thisDialog, "Â¿Quieres eliminar este dato?",
 							"Eliminar caracteristica", OptionPanel.CONFIRM);
 					if (i == 1) {
 						tecListModel = (DefaultListModel<String>) tecnicoList.getModel();
@@ -225,7 +226,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e)) {
-					int i = OptionPanel.showOptionMessage(thisDialog, "¿Quieres eliminar este dato?",
+					int i = OptionPanel.showOptionMessage(thisDialog, "Â¿Quieres eliminar este dato?",
 							"Eliminar caracteristica", OptionPanel.CONFIRM);
 					if (i == 1) {
 						actorListModel = (DefaultListModel<String>) actorList.getModel();
@@ -275,7 +276,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e)) {
-					int i = OptionPanel.showOptionMessage(thisDialog, "¿Quieres eliminar este dato?",
+					int i = OptionPanel.showOptionMessage(thisDialog, "Â¿Quieres eliminar este dato?",
 							"Eliminar caracteristica", OptionPanel.CONFIRM);
 					if (i == 1) {
 						guionListModel = (DefaultListModel<String>) guionistaList.getModel();
@@ -297,7 +298,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 
 	private void fields() {
 		JLabel error = new JLabel();
-		error.setText("Ese carácter es inválido");
+		error.setText("Ese carÃ¡cter es invÃ¡lido");
 		error.setFont(new Font("Calibri", Font.PLAIN, 12));
 		error.setForeground(Color.RED);
 
@@ -363,9 +364,9 @@ public class DatosPersonal extends JDialog implements ActionListener {
 		r.setLimit(9);
 		contentPanel.add(dniField);
 
-		// Dirección
+		// DirecciÃ³n
 		direccionField = new TextField();
-		direccionField.setLabelText("Dirección");
+		direccionField.setLabelText("DirecciÃ³n");
 		direccionField.setBounds(594, 206, 148, 45);
 		direccionField.addKeyListener(new KeyAdapter() {
 			@Override
@@ -415,7 +416,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 		contentPanel.add(textFecha);
 
 		JLabel telferror = new JLabel();
-		telferror.setText("El número de teléfono debe de ser de 9 dígitios y sin caracteres especiales");
+		telferror.setText("El nÃºmero de telÃ©fono debe de ser de 9 dÃ­gitios y sin caracteres especiales");
 		telferror.setFont(new Font("Calibri", Font.PLAIN, 12));
 		telferror.setForeground(Color.RED);
 
@@ -476,7 +477,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 					datoField.setText("");
 					valido = true;
 				} else {
-					JLabel textoVacio = new JLabel("Error, no se puede insertar un dato vacío");
+					JLabel textoVacio = new JLabel("Error, no se puede insertar un dato vacÃ­o");
 					textoVacio.setForeground(Color.RED);
 					textoVacio.setFont(new Font("Calibri", Font.PLAIN, 14));
 					Popup p = PopupFactory.getSharedInstance().getPopup(thisDialog, textoVacio, 660, 395);
@@ -656,6 +657,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 			}
 		}
 
+
 	}
 
 	private void radioPanels(String type) {
@@ -722,6 +724,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 		trabajador.setDireccion(direccionField.getText());
 		trabajador.setFechaNac(Utilidades.validateDate(textFecha.getText()));
 
+Â¡
 	}
 
 	@Override
@@ -729,7 +732,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 		boolean ok = false;
 		if (e.getSource().equals(btnVolver)) {
 			int i = OptionPanel.showOptionMessage(thisDialog,
-					"¿Estas segur@ de que quieres volver a la ventana anterior?", "Volver", OptionPanel.CONFIRM);
+					"Â¿Estas segur@ de que quieres volver a la ventana anterior?", "Volver", OptionPanel.CONFIRM);
 			if (i == OptionPanel.CONFIRM) {
 				thisDialog.dispose();
 				parent.setVisible(true);
@@ -739,30 +742,30 @@ public class DatosPersonal extends JDialog implements ActionListener {
 				recogerData();
 				if (FactoryDAO.getUpdateData().dataManage(trabajador)) {
 					OptionPanel.showMessage(thisDialog, "Se ha modificado correctamente los datos del trabajador",
-							"Modificación de datos", OptionPanel.MESSAGE);
+							"ModificaciÃ³n de datos", OptionPanel.MESSAGE);
 				}
 				if (user != null) {
 					FactoryDAO.getInsertData().dataManage(user);
 				}
 			} else {
-				OptionPanel.showMessage(thisDialog, "Error al modificar, compruebe los datos e inténtelo de nuevo",
+				OptionPanel.showMessage(thisDialog, "Error al modificar, compruebe los datos e intÃ©ntelo de nuevo",
 						"Error al intentar modificar", OptionPanel.MESSAGE);
 			}
 		} else if (e.getSource().equals(btnAdd)) {
 			if (valido) {
 				recogerData();
 				int i = OptionPanel.showOptionMessage(thisDialog,
-						"¿Estás segur@ de que quieres insertar esta trabajador?", "Confirmación", OptionPanel.CONFIRM);
+						"Â¿EstÃ¡s segur@ de que quieres insertar esta trabajador?", "ConfirmaciÃ³n", OptionPanel.CONFIRM);
 				if (i == OptionPanel.CONFIRM) {
 					ok = FactoryDAO.getInsertData().dataManage(trabajador);
 				}
 			}
 			if (ok) {
-				OptionPanel.showMessage(thisDialog, "Se ha añadido correctamente los datos de la obra",
-						"Modificación de datos", OptionPanel.MESSAGE);
+				OptionPanel.showMessage(thisDialog, "Se ha aÃ±adido correctamente los datos de la obra",
+						"ModificaciÃ³n de datos", OptionPanel.MESSAGE);
 				thisDialog.dispose();
 			} else if (!valido || !ok) {
-				OptionPanel.showMessage(thisDialog, "Error al añadir la obra, compruebe los datos e inténtelo de nuevo",
+				OptionPanel.showMessage(thisDialog, "Error al aÃ±adir la obra, compruebe los datos e intÃ©ntelo de nuevo",
 						"Error al intentar insertar", OptionPanel.MESSAGE);
 			}
 		} else if (e.getSource().equals(btnUsuario)) {
@@ -788,6 +791,7 @@ public class DatosPersonal extends JDialog implements ActionListener {
 
 				panelCalendar.setVisible(false);
 				entra = false;
+
 			}
 		}
 
