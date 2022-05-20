@@ -1,4 +1,4 @@
-package junitPruebas;
+package junit;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import controlador.utils.dao.DAOFactory;
+import controlador.utils.dao.FactoryDAO;
 import modelo.clases.Actor;
 import modelo.clases.Director;
 import modelo.clases.Trabajador;
@@ -24,7 +24,7 @@ class DirectorDAOTest {
 
 	static Trabajador dir = null;
 	boolean estado;
-	TrabajadorDAO dDao = (TrabajadorDAO) DAOFactory.TRABAJADOR.getInstance();
+	TrabajadorDAO dDao = (TrabajadorDAO) FactoryDAO.getTrabajador();
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {

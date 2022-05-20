@@ -21,6 +21,8 @@ public abstract class Trabajador {
 	private String direccion;
 	private String tipo;
 	private LocalDate fechaNac;
+	
+	
 
 	public int getIdTrabajador() {
 		return idTrabajador;
