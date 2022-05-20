@@ -126,24 +126,6 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	 * 
 	 **/
 
-
-	/*
-	 * CustomTab tabs= new CustomTab(); //tabs.setTabPlacement(JTabbedPane.BOTTOM);
-	 * tabs.setBackground(Color.WHITE); patroPanel.setBackground(Color.WHITE);
-	 * tabs.add("Patrocinador",patroPanel); patroPanel.setLayout(null);
-	 * getContentPane().add(tabs);
-	 * 
-	 * 
-	 * menuFiltro(patroPanel); buttons(patroPanel);
-	 * 
-	 * 
-	 * btnCerrarSystem = new JButton("X"); btnCerrarSystem.setForeground(Color.RED);
-	 * btnCerrarSystem.setFont(new Font("Tahoma", Font.BOLD, 11));
-	 * btnCerrarSystem.setBounds(496, 0, 55, 29);
-	 * btnCerrarSystem.addActionListener(this); contentPanel.add(btnCerrarSystem);
-	 * textField = new JTextField(); textField.setBounds(x, 317, 100, 20);
-	 * contentPanel.add(textField);
-	 */
 
 	private void buttons() {
 		btnAnadir = new MenuButton();
@@ -173,33 +155,20 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	}
 	private void menuFiltro() {
 		patroPanel.setLayout(null);
-		// Etiqueta: Id
-		//	JLabel idLabel = new JLabel("Id:");
-		//idLabel.setBounds(780, 45, 160, 20);
-		//panel.add(idLabel);
-
+	
 		// TextField: Id
 		idField = new TextField();
 		idField.setBounds(780, 50, 160, 45);
 		idField.setLabelText("Id");
 		contentPanel.add(idField);
-
-		// Etiqueta: Nombre
-		//JLabel nombreLabel = new JLabel("Nombre:");
-		//nombreLabel.setBounds(780, 45, 160, 20);
-		//panel.add(nombreLabel);
-
-
+		
 		// TextField: Nombre
 		nombreField = new TextField();
 		nombreField.setBounds(780, 100, 160, 45);
 		nombreField.setLabelText("Nombre");
 		contentPanel.add(nombreField);
 
-		// Etiqueta: Cantidad
-		//JLabel cantLabel = new JLabel("Guionista:");
-		//cantLabel.setBounds(780, 45, 160, 20);
-		//panel.add(cantLabel);
+	
 
 		// TextField: Cantidad
 		cantField = new TextField();

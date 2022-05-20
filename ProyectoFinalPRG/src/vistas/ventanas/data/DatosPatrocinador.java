@@ -233,7 +233,7 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 			}
 
 		}else if(e.getSource().equals(btnModificar)) {
-			if(patro!=null ) {
+			if(patro!=null && valido ) {
 				patro.setNombre(fieldNombre.getText());
 				patro.setCantDinero(Integer.parseInt(fieldCant.getText()));
 				patro.setCondicion(fieldCond.getText());

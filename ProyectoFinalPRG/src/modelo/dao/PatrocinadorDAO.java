@@ -33,7 +33,7 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 	private final String READALL = "SELECT * FROM patrocinador";
 
 	// Actualizar un patrocinador
-	private final String UPDATE = "UPDATE patrocinador SET nombre = ?, cantDinero = ?, condición = ?, imgPath = ? WHERE idPatro = ?";
+	private final String UPDATE = "UPDATE patrocinador SET nombre = ?, cantDinero = ?, condicion = ?, imgPath = ? WHERE idPatro = ?";
 
 	// Eliminar un patrocinador
 	private final String DELETE = "DELETE FROM patrocinador WHERE idPatro = ?";

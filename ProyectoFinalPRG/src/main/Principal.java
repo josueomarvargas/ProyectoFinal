@@ -24,7 +24,7 @@ public class Principal {
 		//do.setVisible(true);
 		TablaPatrocinadores tp= new TablaPatrocinadores(null, true);
 		tp.setVisible(true);
-	
+
 		//		DatosObra datosObra = new DatosObra();
 		//		datosObra.setVisible(true);
 		//		DatosObra datosObra = new DatosObra(null, true, "pelicula");
