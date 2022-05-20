@@ -56,6 +56,7 @@ public class Equipamiento {
 		this.caracteristicas = caracteristicas;
 	}
 
+
 	public String getImgPath() {
 		return imgPath;
 	}
