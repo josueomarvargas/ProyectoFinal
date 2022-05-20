@@ -1,40 +1,28 @@
 package vistas.ventanas.data;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.border.EmptyBorder;
-
 
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
-import modelo.clases.ObraAudiovisual;
 import modelo.clases.Patrocinador;
-import modelo.clases.Pelicula;
 import vistas.ventanas.custom.components.MenuButton;
 import vistas.ventanas.custom.components.TextField;
 import vistas.ventanas.custom.containers.CustomTab;
 import vistas.ventanas.custom.containers.OptionPanel;
 import vistas.ventanas.custom.containers.TitleBar;
-
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
-import java.awt.Color;
-import java.awt.Dimension;
 
 public class DatosPatrocinador extends JDialog implements ActionListener {
 

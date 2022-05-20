@@ -22,9 +22,7 @@ import javax.swing.RowFilter;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
 import javax.swing.table.TableRowSorter;
-
 
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
@@ -104,13 +102,18 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 			}
 		});
 
-		switch (new String("administrador")) {
+		switch (trabajador.getTipo()) {
 		case "administrador":
+		case "director":
 			btnAnadir.setEnabled(true);
 			btnVolver.setEnabled(true);
 			btnRefrescar.setEnabled(true);
 			break;
-
+		case "tecnicoaudiovisual":
+			btnAnadir.setEnabled(false);
+			btnVolver.setEnabled(true);
+			btnRefrescar.setEnabled(true);
+			break;
 		}
 
 		getContentPane().add(contentPanel);

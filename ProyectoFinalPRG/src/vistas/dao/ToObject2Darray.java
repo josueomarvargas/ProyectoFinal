@@ -10,8 +10,24 @@ import modelo.clases.Pelicula;
 import modelo.clases.Serie;
 import modelo.clases.Trabajador;
 
+/**
+ * Esta clase es para transformar un map a un array de Objecto de dos
+ * dimensiones.
+ *
+ * @author yeguo
+ */
 public abstract class ToObject2Darray {
 
+	/**
+	 * Este método lo que hace es iterara por el map y guardar sus valores en el
+	 * array de objectos.
+	 * 
+	 * @param <K>  tipo de objecto que es la clave
+	 * @param <V>  tipo de objecto que es el valor
+	 * @param map  mapa con la información
+	 * @param tipo
+	 * @return array de objecto de dos dimensiones
+	 */
 	public static <K, V> Object[][] toObjectArray(Map<K, V> map, String tipo) {
 
 		Object[][] array2D = null;
@@ -102,6 +118,14 @@ public abstract class ToObject2Darray {
 		return array2D;
 	}
 
+	/**
+	 * Obtener la longitud del map solo contando si es pelicula o serie
+	 * 
+	 * @param <K> tipo de objecto que es la clave
+	 * @param <V> tipo de objecto que es el valor
+	 * @param map mapa con la información
+	 * @return un número que será el tamaño del map
+	 */
 	public static <K, V> int[] getMapObraLength(Map<K, V> map) {
 		Iterator<?> iterObra = map.values().iterator();
 		int[] size = { 0, 0 };

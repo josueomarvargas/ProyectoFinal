@@ -8,6 +8,12 @@ import modelo.clases.Patrocinador;
 import modelo.clases.Trabajador;
 import modelo.clases.Usuario;
 
+/**
+ * Clase que implementa la interfaz {@link DataManager}, que se utilizará para
+ * insertar datos.
+ *
+ * @author yeguo
+ */
 public class InsertData implements DataManager<Object, Boolean> {
 
 	@Override

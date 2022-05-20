@@ -4,21 +4,25 @@ import java.awt.Color;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
@@ -26,25 +30,23 @@ import controlador.utils.views.Utilidades;
 import modelo.clases.Patrocinador;
 import vistas.dao.GetData;
 import vistas.ventanas.custom.components.MenuButton;
+import vistas.ventanas.custom.components.TextField;
 import vistas.ventanas.custom.containers.CustomTab;
 import vistas.ventanas.custom.containers.OptionPanel;
 import vistas.ventanas.custom.containers.TitleBar;
 import vistas.ventanas.data.DatosPatrocinador;
-import vistas.ventanas.custom.components.TextField;
-
 
 public class TablaPatrocinadores extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private final JPanel patroPanel=new JPanel();
+	private final JPanel patroPanel = new JPanel();
 	private final JDialog thisDialog;
-	private JTable tablePatro=null;
+	private JTable tablePatro = null;
 	private TextField idField;
 	private TextField nombreField;
 	private TextField cantField;
 	private TextField condField;
-	private MenuButton btnBuscar;
 	private MenuButton btnAnadir;
 	private MenuButton btnVolver;
 	private MenuButton btnRefrescar;
@@ -56,21 +58,22 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	private DatosPatrocinador dataPatro;
 	private CustomTab tabs = null;
 
-
 	/**
 	 * Create the dialog.
 	 */
 	public TablaPatrocinadores(Window parent, boolean modal) {
+		super(parent);
 		setModal(true);
 		this.setUndecorated(true);
 		this.parent = parent;
 		setSize(Utilidades.resizeWindow(this));
-		//Utilidades.centerWindow(parent,this);
-		thisDialog=this;
+		Utilidades.centerWindow(parent, this);
+		thisDialog = this;
 		contentPanel.setBackground(Color.WHITE);
 		init();
 	}
-	private void init() { 
+
+	private void init() {
 		bar = new TitleBar(this);
 		bar.setBounds(0, 0, this.getWidth(), 25);
 		contentPanel.add(bar);
@@ -89,17 +92,18 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 				thisDialog.dispose();
 			}
 		});
-		switch(new String("administrador")) {
+		switch (new String("administrador")) {
 		case "administrador":
 			btnAnadir.setEnabled(true);
 			btnVolver.setEnabled(true);
 			btnRefrescar.setEnabled(true);
 			break;
 		default:
-			break;	
+			break;
 		}
 		getContentPane().add(contentPanel);
 	}
+
 	private void loadTables() {
 		tabs = new CustomTab();
 		tabs.setBounds(15, 50, 750, 480);
@@ -108,9 +112,10 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		patroPanel.setBackground(Color.WHITE);
 		tabs.add(patroPanel);
 		contentPanel.add(tabs);
-		tablePatro = tabla(patroPanel, ClasesEnum.PATROCINADOR.getName(), tablePatro);
+		tablePatro = tabla(patroPanel, tablePatro);
 
 	}
+
 	private void openData(int i, TableModel tableModel) {
 		thisDialog.setVisible(false);
 		int id = Integer.parseInt(tableModel.getValueAt(i, 0).toString());
@@ -118,6 +123,7 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		dataPatro = new DatosPatrocinador(thisDialog, true, pa, null);
 		dataPatro.setVisible(true);
 	}
+
 	/**
 	 * Abrir ventana con los datos
 	 * 
@@ -126,12 +132,11 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	 * 
 	 **/
 
-
 	private void buttons() {
 		btnAnadir = new MenuButton();
 		btnAnadir.setBounds(890, 455, 50, 30);
 		btnAnadir.setIcon(new ImageIcon(
-				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/plus.png")));
+				TablaPatrocinadores.class.getResource("/vistas/ventanas/custom/components/img/plus.png")));
 		Utilidades.configButtons((MenuButton) btnAnadir, "");
 		btnAnadir.addActionListener(this);
 		contentPanel.add(btnAnadir);
@@ -153,57 +158,61 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		btnVolver.addActionListener(this);
 		contentPanel.add(btnVolver);
 	}
+
 	private void menuFiltro() {
 		patroPanel.setLayout(null);
-	
+
 		// TextField: Id
 		idField = new TextField();
 		idField.setBounds(780, 50, 160, 45);
 		idField.setLabelText("Id");
+		idField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tableSort();
+			}
+		});
 		contentPanel.add(idField);
-		
+
 		// TextField: Nombre
 		nombreField = new TextField();
 		nombreField.setBounds(780, 100, 160, 45);
 		nombreField.setLabelText("Nombre");
+		nombreField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tableSort();
+			}
+		});
 		contentPanel.add(nombreField);
-
-	
 
 		// TextField: Cantidad
 		cantField = new TextField();
 		cantField.setBounds(780, 150, 160, 45);
 		cantField.setLabelText("Cantidad");
+		cantField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tableSort();
+			}
+		});
 		contentPanel.add(cantField);
-
-
 
 		// TextField: condicion
 		condField = new TextField();
 		condField.setBounds(780, 200, 160, 45);
 		condField.setLabelText("Condicion");
+		condField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tableSort();
+			}
+		});
 		contentPanel.add(condField);
-
-
-
-		// Boton para buscar
-		btnBuscar = new MenuButton();
-		btnBuscar.setBounds(780, 250, 160, 35);
-		btnBuscar.setIcon(new ImageIcon(
-				TablaPatrocinadores.class.getResource("/vistas/ventanas/custom/components/img/search.png")));
-		Utilidades.configButtons( (MenuButton) btnBuscar, "");
-		btnBuscar.setEnabled(false);
-		btnBuscar.addActionListener(this);
-		contentPanel.add(btnBuscar);
 
 	}
 
-
-	private JTable tabla(JPanel panel, String patrocinador, JTable table) {
-
-		// Recoger los datos de los trabajdores
-		//data = FactoryDAO.getGetData().checkInfo(GetData.PATROCINADOR);
-		//column = new String[] { "ID", "Nombre", "Dinero" };
+	private JTable tabla(JPanel panel, JTable table) {
 
 		// Scroll panel
 		scrollPane = new JScrollPane();
@@ -220,10 +229,10 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 			}
 
 		};
-		table.setBackground(new Color(255,255,255));
+		table.setBackground(new Color(255, 255, 255));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		// Añadir los datos a la tabla
-		table.setModel(tableModel(patrocinador)); 
+		table.setModel(tableModel());
 		Utilidades.resizeColumnWidth(table); // Redimensionar columnas
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table); // Añadir la tabla al scroll panel
@@ -231,32 +240,46 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		return table;
 	}
 
-	private DefaultTableModel tableModel(String patocinador) {
+	private DefaultTableModel tableModel() {
 		// Recoger los datos de las patrocinadores
-		Object[][] data=FactoryDAO.getGetData().dataManage(patocinador);
-		String[] column=null;
-		// Inicializar la tabla
-		column = new String[] {"ID", "Nombre", "Cantidad(mil)","Condicion"};
+		Object[][] data = FactoryDAO.getGetData().dataManage(ClasesEnum.PATROCINADOR.getName());
+		String[] column = { "ID", "Nombre", "Cantidad(mil)", "Condicion" };
 
-		return new DefaultTableModel(data,column);
+		return new DefaultTableModel(data, column);
 
 	}
 
+	private void tableSort() {
+		try {
+			TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableModel());
+			List<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel, Object>>();
+			RowFilter<TableModel, Object> compoundRowFilter = null;
+
+			filters.add(RowFilter.regexFilter("(?i)" + idField.getText(), 0));
+			filters.add(RowFilter.regexFilter("(?i)" + nombreField.getText(), 1));
+			filters.add(RowFilter.regexFilter("(?i)" + cantField.getText(), 2));
+			filters.add(RowFilter.regexFilter("(?i)" + condField.getText(), 3));
+			compoundRowFilter = RowFilter.andFilter(filters);
+			sorter.setRowFilter(compoundRowFilter);
+			tablePatro.setRowSorter(sorter);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(btnBuscar)) {
 
-		}else if (e.getSource().equals(btnAnadir)) {
+		if (e.getSource().equals(btnAnadir)) {
 
-			dataPatro= new DatosPatrocinador(thisDialog,true, null,ClasesEnum.PATROCINADOR.getName());
+			dataPatro = new DatosPatrocinador(thisDialog, true, null, ClasesEnum.PATROCINADOR.getName());
 
 			if (dataPatro != null) {
 				thisDialog.setVisible(false);
 				dataPatro.setVisible(true);
 			}
-			
-		}else if (e.getSource().equals(btnVolver)) {
+
+		} else if (e.getSource().equals(btnVolver)) {
 			int i = OptionPanel.showOptionMessage(thisDialog,
 					"¿Estas segur@ de que quieres volver a la ventana anterior?", "¿Quieres volver?",
 					OptionPanel.CONFIRM);
@@ -264,9 +287,9 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 				thisDialog.dispose();
 				parent.setVisible(true);
 			}
-			
-		}else if (e.getSource().equals(btnRefrescar)) {
-			tablePatro.setModel(tableModel(ClasesEnum.PATROCINADOR.getName()));
+
+		} else if (e.getSource().equals(btnRefrescar)) {
+			tablePatro.setModel(tableModel());
 			Utilidades.resizeColumnWidth(tablePatro);
 
 		}

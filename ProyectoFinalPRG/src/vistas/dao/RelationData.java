@@ -16,41 +16,74 @@ import modelo.clases.Patrocinador;
 import modelo.clases.Promociona;
 import modelo.clases.Trabajador;
 
+/**
+ * Clase para que implementa la interfaz {@link DataManager} que nos servirá
+ * para gestionar las relaciones de las tablas.
+ *
+ * @author yeguo
+ */
 public class RelationData implements DataManager<String[], DefaultTableModel> {
 
+	/** Objecto de relación EquipObra **/
 	private static EquipObra equipObra;
+	/** Objecto de relación Participa **/
 	private static Participa participa;
+	/** Objecto de relación Promociona **/
 	private static Promociona promociona;
 
+	/** Modelo de tabla de equipamiento **/
 	private static DefaultTableModel equipModel;
+	/** Modelo de tabla de obra **/
 	private static DefaultTableModel obraModel;
+	/** Modelo de tabla de trabajador **/
 	private static DefaultTableModel trabajadorModel;
+	/** Modelo de tabla de patrocinador **/
 	private static DefaultTableModel patroModel;
 
+	/** Nombre de las columnas para la tabla obra **/
 	private static final String[] columnObra = { "ID", "Nombre", "Duración", "Fecha Estreno", "Presupuesto", "Tipo" };;
+	/** Nombre de las columnas para la tabla equipamiento **/
 	private static final String[] columnEquip = { "ID", "Nombre", "Tipo" };;
+	/** Nombre de las columnas para la tabla Trabajador **/
 	private static final String[] columnTrabajador = { "ID", "DNI", "Nombre", "Apellido", "Num. Tel", "Num. Premios",
 			"Dirección", "Tipo", "Fecha Nacimiento" };;
+	/** Nombre de las columnas para la tabla Patrocinador **/
 	private static final String[] columnPatrocinador = { "ID", "Nombre", "CantidadDinero", "Condicion" };;
 
+	/**
+	 * 
+	 * @return modelo de tabla de equipamiento
+	 */
 	public static DefaultTableModel getEquipModel() {
 		return equipModel;
 	}
 
+	/**
+	 * 
+	 * @return modelo de tabla obra
+	 */
 	public static DefaultTableModel getObraModel() {
 		return obraModel;
 	}
 
+	/**
+	 * 
+	 * @return modelo de tabla de trabajador
+	 */
 	public static DefaultTableModel getTrabajadorModel() {
 		return trabajadorModel;
 	}
 
+	/**
+	 * 
+	 * @return modelo de tabla de patrocinador
+	 */
 	public static DefaultTableModel getPatroModel() {
 		return patroModel;
 	}
 
 	/**
-	 * 
+	 * Este método nos devulve un modelo de tabla
 	 * 
 	 * 
 	 * @param data index 0: que relacion entre clases se va buscar <br>
@@ -200,6 +233,7 @@ public class RelationData implements DataManager<String[], DefaultTableModel> {
 	}
 
 	/**
+	 * Actualizar los datos de la relación.
 	 * 
 	 * @param data array con los datos necesarios para actualizar la relacion de las
 	 *             tablas. Se deberá de pasar los datos de la siguiente manera:

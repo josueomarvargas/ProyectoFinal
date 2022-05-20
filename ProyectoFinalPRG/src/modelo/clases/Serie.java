@@ -35,18 +35,30 @@ import java.util.List;
  **/
 public class Serie extends ObraAudiovisual {
 
+	/** Arry de dos dimensiones para guardar los capitulos **/
 	private List<List<String>> nombreCap;
 
+	/**
+	 * Constructor vacío
+	 */
 	public Serie() {
 		super();
 		this.nombreCap = new ArrayList<List<String>>();
 		this.nombreCap.add(new ArrayList<>());
 	}
 
+	/**
+	 * 
+	 * @return lista con todos los datos de la serie
+	 */
 	public List<List<String>> getNombreCap() {
 		return nombreCap;
 	}
 
+	/**
+	 * 
+	 * @param nombreCap lista de 2 dimensiones con toda la información de la serie
+	 */
 	public void setNombreCap(List<List<String>> nombreCap) {
 		this.nombreCap = nombreCap;
 	}

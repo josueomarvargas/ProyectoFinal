@@ -7,6 +7,11 @@ import modelo.clases.ObraAudiovisual;
 import modelo.clases.Patrocinador;
 import modelo.clases.Trabajador;
 
+/**
+ * Clase para actualizar los datos
+ *
+ * @author yeguo
+ */
 public class UpdateData implements DataManager<Object, Boolean> {
 
 	@Override
