@@ -67,7 +67,7 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 	private final String DELETE = "DELETE FROM trabajador WHERE idtrabajador = ? ";
 
 	// Eliminar un atributo Ej: una especialidad de un actor
-	private final String DELETEATRIBUTO = "CALL deleteAtributo(?)";
+	private final String DELETEATRIBUTO = "CALL deleteAtributo(?)"; 
 
 	// Establecer conexión a la base de datos
 	private static Connection con;
@@ -546,7 +546,6 @@ public class TrabajadorDAO implements BDgeneric<Trabajador> {
 
 			// Añadir datos al Prepare Statement
 			stat.setString(1, id[0]);
-
 			// Ejecutar consulta
 			return stat.executeUpdate() > 0 ? true : false;
 

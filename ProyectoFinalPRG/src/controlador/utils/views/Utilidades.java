@@ -9,8 +9,6 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,25 +17,15 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Objects;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import javax.swing.text.Document;
-import javax.swing.text.JTextComponent;
 
 import vistas.ventanas.custom.components.MenuButton;
 

@@ -137,8 +137,11 @@ public class PromocionaDAO implements BDgeneric<Promociona> {
 	 * {@code Patrocinadores} que se patrocinan en esa obra, y viceversa si se busca
 	 * por patrocinadores se guardará los IDs de las obras en las que promociona.
 	 * 
-	 * @param id el ID es un array para saber que ID se quiere buscar, el ID en el
-	 *           índice 0: obra, 1: patrocinador.
+	 * @param id el ID es un array para saber que ID se quiere buscar:
+	 *           <li>índice 0: se le pasa el ID del patrocinador para buscar las
+	 *           obras
+	 *           <li>índice 1: se le pasa el ID de la obra para buscar los
+	 *           patrocinadores
 	 * @return objecto equip-obra con los datos los IDs de equipamientos u obras
 	 **/
 	@Override
@@ -156,7 +159,7 @@ public class PromocionaDAO implements BDgeneric<Promociona> {
 		try (PreparedStatement obraStat = con.prepareStatement(SEARCHOBRA);
 				PreparedStatement patroStat = con.prepareStatement(SEARCHPATRO)) {
 
-			// Si hay ID en el índice 0, buscar por obra
+			// Si hay ID en el índice 0, buscar obras por la ID del patro
 			if (!id[0].isBlank()) {
 				obraStat.setString(1, id[0]);
 				rs = obraStat.executeQuery();
@@ -175,21 +178,21 @@ public class PromocionaDAO implements BDgeneric<Promociona> {
 					pro = new Promociona();
 					aux = new ArrayList<>();
 				}
-				aux.add(rs.getInt(2));
-			}
-			// Si el RS está en la última fila
-			if (rs.isLast()) {
-				// En el caso de que se ha buscado por obras
-				if (searchObra) {
-					// Añadir ID a la lista
-					idAux.add(Integer.parseInt(id[0]));
-					// Añadir las listas al objecto
-					pro.setIdObra(idAux);
-					pro.setIdPatro(aux);
-				} else {
-					idAux.add(Integer.parseInt(id[1]));
-					pro.setIdPatro(idAux);
-					pro.setIdObra(aux);
+				aux.add(rs.getInt(1));
+				// Si el RS está en la última fila
+				if (rs.isLast()) {
+					// En el caso de que se ha buscado por obras
+					if (searchObra) {
+						// Añadir ID a la lista
+						idAux.add(Integer.parseInt(id[0]));
+						// Añadir las listas al objecto
+						pro.setIdPatro(idAux);
+						pro.setIdObra(aux);
+					} else {
+						idAux.add(Integer.parseInt(id[1]));
+						pro.setIdObra(idAux);
+						pro.setIdPatro(aux);
+					}
 				}
 			}
 

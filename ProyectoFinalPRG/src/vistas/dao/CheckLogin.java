@@ -18,7 +18,8 @@ import modelo.dao.UserDAO;
 public class CheckLogin implements DataManager<Usuario, Trabajador> {
 
 	private static Trabajador tData;
-
+	
+	
 	/**
 	 * Este método será el encarcado de llamar al método
 	 * {@link UserDAO#recogerInfo}, para recoger la información del
