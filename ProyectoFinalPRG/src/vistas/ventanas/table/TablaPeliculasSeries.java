@@ -28,6 +28,8 @@ import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
 import modelo.clases.ObraAudiovisual;
+import modelo.clases.Trabajador;
+import vistas.dao.CheckLogin;
 import vistas.dao.GetData;
 import vistas.ventanas.custom.components.MenuButton;
 import vistas.ventanas.custom.components.TextField;
@@ -47,7 +49,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	private final JPanel seriePanel = new JPanel();
 	private final Window parent;
 	private final JDialog thisDialog;
-//	private final Trabajador trabajador = CheckLogin.getLogin();
+	private final Trabajador trabajador = CheckLogin.getLogin();
 	private CustomTab tabs = null;
 	private JTable tablePeli = null;
 	private JTable tableSerie = null;
@@ -56,7 +58,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	private DatosObra dataObra;
 
 	public TablaPeliculasSeries(Window parent, boolean modal) {
-//		super(parent);
+		super(parent);
 		setModal(modal);
 		this.parent = parent;
 		thisDialog = this;
@@ -69,7 +71,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	private void init() {
 		this.setUndecorated(true);
 		setSize(Utilidades.resizeWindow(this));
-//		Utilidades.centerWindow(parent, this);
+		Utilidades.centerWindow(parent, this);
 		TitleBar bar = new TitleBar(this);
 		bar.setBounds(0, 0, this.getWidth(), 25);
 		contentPanel.add(bar);
@@ -240,7 +242,6 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	}
 
 	private void menuFiltro() {
-
 		// TextField: Nombre
 		nombreField = new TextField();
 		nombreField.setBounds(780, 100, 160, 45);
@@ -253,7 +254,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		});
 		contentPanel.add(nombreField);
 
-		// TextField: Director
+		// TextField: Durecion
 		duracion = new TextField();
 		duracion.setBounds(780, 160, 160, 45);
 		duracion.setLabelText("Duracion");
@@ -265,7 +266,7 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		});
 		contentPanel.add(duracion);
 
-		// TextField: Guionista
+		// TextField: Fecha
 		fechaField = new TextField();
 		fechaField.setBounds(780, 210, 160, 45);
 		fechaField.setLabelText("Fecha de estreno");

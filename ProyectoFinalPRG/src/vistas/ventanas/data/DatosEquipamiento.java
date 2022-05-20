@@ -112,8 +112,8 @@ public class DatosEquipamiento extends JDialog implements ActionListener {
 						e.consume();
 						toolTip(p);
 					}
-				}
-				valido = true;
+				} else
+					valido = true;
 			}
 		});
 		contentPanel.add(fieldNombre);
@@ -138,6 +138,7 @@ public class DatosEquipamiento extends JDialog implements ActionListener {
 					comboBox.addItem(addTipo.getText());
 					addTipo.setText("");
 					comboBox.setSelectedIndex(comboBox.getModel().getSize());
+					valido = true;
 				} else {
 					Popup p = PopupFactory.getSharedInstance().getPopup(thisDialog,
 							new JLabel("Error, no se puede introducir un tipo vacío"), 350, 325);
@@ -155,7 +156,8 @@ public class DatosEquipamiento extends JDialog implements ActionListener {
 						e.consume();
 						toolTip(p);
 					}
-				}
+				} else
+					valido = true;
 			}
 		});
 		addTipo.setBounds(348, 300, 220, 50);
@@ -202,7 +204,8 @@ public class DatosEquipamiento extends JDialog implements ActionListener {
 						e.consume();
 						toolTip(p);
 					}
-				}
+				} else
+					valido = true;
 			}
 		});
 		addCategoria.addActionListener(new ActionListener() {
