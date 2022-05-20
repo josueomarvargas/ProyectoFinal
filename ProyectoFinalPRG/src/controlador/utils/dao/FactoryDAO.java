@@ -11,6 +11,7 @@ import modelo.dao.UserDAO;
 import vistas.dao.CheckLogin;
 import vistas.dao.DeleteData;
 import vistas.dao.GetData;
+import vistas.dao.RelationData;
 import vistas.dao.InsertData;
 import vistas.dao.UpdateData;
 
@@ -29,6 +30,7 @@ public class FactoryDAO {
 	private static UpdateData updateData;
 	private static DeleteData deleteData;
 	private static InsertData insertData;
+	private static RelationData relationData;
 
 	public static EquipDAO getEquip() {
 		if (equip == null)
@@ -110,5 +112,13 @@ public class FactoryDAO {
 		}
 		return insertData;
 	}
+
+	public static RelationData getRelationData() {
+		if (relationData == null) {
+			relationData = new RelationData();
+		}
+		return relationData;
+	}
+	
 
 }

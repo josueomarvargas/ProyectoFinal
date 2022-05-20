@@ -28,15 +28,15 @@ public class EquipObraDAO implements BDgeneric<EquipObra> {
 	private final String CREATE = "INSERT INTO usa(idObra, idEquip) VALUES(?, ?)";
 
 	// Buscar las obras que usan un equipamiento específico
-	private final String SEARCHOBRA = "SELECT idObra FROM usa WHERE idEquip = ?";
+	private final String SEARCHOBRAS = "SELECT idObra FROM usa WHERE idEquip = ?";
 
 	// BUscar los equipamientos que se usan en esa obra específica
-	private final String SEARCHEQUIP = "SELECT idEquip FROM usa WHERE idObra = ?";
+	private final String SEARCHEQUIPS = "SELECT idEquip FROM usa WHERE idObra = ?";
 
 	// Eliminar un equip - obra
 	private final String DELETEUSA = "DELETE FROM usa WHERE idObra = ? AND idEquip = ?";
-	private final String DELETEOBRA = "DELETE FROM usa WHERE idObra = ? AND idEquip = ?";
-	private final String DELETEEQUIP = "DELETE FROM usa WHERE idObra = ? AND idEquip = ?";
+	private final String DELETEOBRA = "DELETE FROM usa WHERE idObra = ?";
+	private final String DELETEEQUIP = "DELETE FROM usa WHERE idEquip = ?";
 
 	// Establecer conexión a la base de datos
 	private static Connection con;
@@ -147,8 +147,9 @@ public class EquipObraDAO implements BDgeneric<EquipObra> {
 	 * {@code Equipamientos} que se usan en esa obra, y viceversa si se busca por
 	 * equip se guardará los IDs de las obras en las que se usa ese equipamiento.
 	 * 
-	 * @param id el ID es un array para saber que ID se quiere buscar, el ID en el
-	 *           índice 0: obra, 1: equipamiento.
+	 * @param id el ID es un array para saber que ID se quiere buscar><br>
+	 *           índice 0: ID del equip para buscar las obras, <br>
+	 *           1: ID de la obra para buscar los equipamientos.
 	 * @return objecto equip-obra con los datos los IDs de equipamientos u obras
 	 **/
 	@Override
@@ -163,18 +164,18 @@ public class EquipObraDAO implements BDgeneric<EquipObra> {
 		boolean searchObra;
 
 		// Prepare Statement - Search
-		try (PreparedStatement obraStat = con.prepareStatement(SEARCHOBRA);
-				PreparedStatement equipStat = con.prepareStatement(SEARCHEQUIP)) {
+		try (PreparedStatement obrasStat = con.prepareStatement(SEARCHOBRAS);
+				PreparedStatement equipsStat = con.prepareStatement(SEARCHEQUIPS)) {
 
 			// Si hay ID en el índice 0, buscar por obra
 			if (!id[0].isBlank()) {
-				obraStat.setString(1, id[0]);
-				rs = obraStat.executeQuery();
+				obrasStat.setString(1, id[0]);
+				rs = obrasStat.executeQuery();
 				searchObra = true;
 				// Si no, esta en el índice 1, buscar por equipamiento
 			} else {
-				equipStat.setString(1, id[1]);
-				rs = equipStat.executeQuery();
+				equipsStat.setString(1, id[1]);
+				rs = equipsStat.executeQuery();
 				searchObra = false;
 			}
 
@@ -190,17 +191,17 @@ public class EquipObraDAO implements BDgeneric<EquipObra> {
 
 				// Si el RS está en la última fila
 				if (rs.isLast()) {
-					// En el caso de que se ha buscado por obras
+					// En el caso de que se ha buscado las obras
 					if (searchObra) {
 						// Añadir ID a la lista
 						idAux.add(Integer.parseInt(id[0]));
-						// Añadir las listas al objecto
-						eo.setIdObra(idAux);
-						eo.setIdEquip(aux);
-					} else {
-						idAux.add(Integer.parseInt(id[1]));
+						// Añadir las listas al objeto
 						eo.setIdEquip(idAux);
 						eo.setIdObra(aux);
+					} else {// En el caso de que se ha buscado los equipamientos
+						idAux.add(Integer.parseInt(id[1]));
+						eo.setIdObra(idAux);
+						eo.setIdEquip(aux);
 					}
 				}
 			}
@@ -308,7 +309,7 @@ public class EquipObraDAO implements BDgeneric<EquipObra> {
 	public boolean remove(String[] id) {
 
 		this.openConnection();
-		
+
 		// Prepare Statement - Delete
 		try (PreparedStatement stat = con.prepareStatement(DELETEUSA)) {
 
@@ -322,7 +323,7 @@ public class EquipObraDAO implements BDgeneric<EquipObra> {
 		} catch (SQLException e) {
 			System.err.println(e);
 			return false;
-		}finally {
+		} finally {
 			this.closeConnection();
 		}
 	}

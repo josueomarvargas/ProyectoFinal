@@ -11,7 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 
+import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
+import modelo.clases.Trabajador;
+import modelo.clases.Usuario;
 import vistas.dao.CheckLogin;
 import vistas.ventanas.GestionDatos;
 import vistas.ventanas.LogIn;
@@ -22,6 +25,7 @@ import vistas.ventanas.table.TablaPeliculasSeries;
 public class MenuPanel extends CustomPanel {
 
 	private static final long serialVersionUID = 1L;
+	private final Trabajador trabajador = CheckLogin.getLogin();
 	private MenuButton btnMDatos;
 	private MenuButton btnGDatos;
 	private MenuButton btnConsultarObra;
@@ -45,10 +49,14 @@ public class MenuPanel extends CustomPanel {
 		add(lblMenu);
 
 		btnMDatos = new MenuButton();
+		btnMDatos.setEnabled(true);
 		Utilidades.configButtons(btnMDatos, "Mis Datos");
 		btnMDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DatosPersonal vMDatos = new DatosPersonal();
+				Usuario user = (Usuario) FactoryDAO.getUsuario()
+						.search(new String[] { Integer.toString(trabajador.getIdTrabajador()) });
+				DatosPersonal vMDatos = new DatosPersonal(parent, true, trabajador, user);
+				parent.dispose();
 				vMDatos.setVisible(true);
 			}
 		});
@@ -56,10 +64,12 @@ public class MenuPanel extends CustomPanel {
 		add(btnMDatos);
 
 		btnGDatos = new MenuButton();
+		btnGDatos.setEnabled(true);
 		Utilidades.configButtons(btnGDatos, "Gestionar Datos");
 		btnGDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GestionDatos vGDatos = new GestionDatos(parent, true);
+				parent.dispose();
 				vGDatos.setVisible(true);
 			}
 		});
@@ -67,11 +77,12 @@ public class MenuPanel extends CustomPanel {
 		add(btnGDatos);
 
 		btnConsultarObra = new MenuButton();
+		btnConsultarObra.setEnabled(true);
 		Utilidades.configButtons(btnConsultarObra, "Consultar obras audiovisuales");
 		btnConsultarObra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parent.dispose();
 				TablaPeliculasSeries vCObras = new TablaPeliculasSeries(parent, true);
+				parent.dispose();
 				vCObras.setVisible(true);
 			}
 		});

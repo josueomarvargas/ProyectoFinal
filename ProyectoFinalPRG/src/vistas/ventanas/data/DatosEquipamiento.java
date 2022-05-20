@@ -26,16 +26,18 @@ import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
-import controlador.utils.exceptions.CustomExceptions;
 import controlador.utils.views.Utilidades;
 import modelo.clases.Equipamiento;
+import vistas.dao.RelationData;
 import vistas.ventanas.custom.components.MenuButton;
 import vistas.ventanas.custom.components.TextField;
 import vistas.ventanas.custom.containers.OptionPanel;
 import vistas.ventanas.custom.containers.TitleBar;
+import vistas.ventanas.table.TablaRelaciones;
 
 public class DatosEquipamiento extends JDialog implements ActionListener {
 
@@ -110,8 +112,8 @@ public class DatosEquipamiento extends JDialog implements ActionListener {
 						e.consume();
 						toolTip(p);
 					}
-				}
-				valido = true;
+				} else
+					valido = true;
 			}
 		});
 		contentPanel.add(fieldNombre);
@@ -136,6 +138,7 @@ public class DatosEquipamiento extends JDialog implements ActionListener {
 					comboBox.addItem(addTipo.getText());
 					addTipo.setText("");
 					comboBox.setSelectedIndex(comboBox.getModel().getSize());
+					valido = true;
 				} else {
 					Popup p = PopupFactory.getSharedInstance().getPopup(thisDialog,
 							new JLabel("Error, no se puede introducir un tipo vacío"), 350, 325);
@@ -153,7 +156,8 @@ public class DatosEquipamiento extends JDialog implements ActionListener {
 						e.consume();
 						toolTip(p);
 					}
-				}
+				} else
+					valido = true;
 			}
 		});
 		addTipo.setBounds(348, 300, 220, 50);
@@ -200,7 +204,8 @@ public class DatosEquipamiento extends JDialog implements ActionListener {
 						e.consume();
 						toolTip(p);
 					}
-				}
+				} else
+					valido = true;
 			}
 		});
 		addCategoria.addActionListener(new ActionListener() {
@@ -399,7 +404,6 @@ public class DatosEquipamiento extends JDialog implements ActionListener {
 				thisDialog.dispose();
 				parent.setVisible(true);
 			}
-
 		} else if (e.getSource().equals(addFoto)) {
 			img = Utilidades.addFoto();
 			if (img != null) {
@@ -408,7 +412,25 @@ public class DatosEquipamiento extends JDialog implements ActionListener {
 				thisDialog.repaint();
 			}
 		} else if (e.getSource().equals(btnVerObras)) {
+			String[] id = { ClasesEnum.EQUIPOBRA.getName(), ClasesEnum.EQUIPAMIENTO.getName(),
+					Integer.toString(equip.getIdEquip()) };
+			DefaultTableModel relationData = FactoryDAO.getRelationData().dataManage(id);
+			DefaultTableModel allData = RelationData.getObraModel();
 
+			thisDialog.dispose();
+			int newID = TablaRelaciones.showDataRelation(thisDialog, relationData, allData,
+					"Obras en las que participa", "Añadir obras");
+
+			if (newID == -1) {
+				boolean okUpdate = FactoryDAO.getRelationData().updateRelation(new String[] {
+						ClasesEnum.EQUIPOBRA.getName(), ClasesEnum.EQUIPAMIENTO.getName(), Integer.toString(newID) });
+
+				if (!okUpdate) {
+					OptionPanel.showMessage(thisDialog,
+							"Error al añadir la obra que usa este equipamiento, inténtelo más tarde",
+							"Añadir Equipamiento a la obra", OptionPanel.MESSAGE);
+				}
+			}
 		}
 	}
 }
