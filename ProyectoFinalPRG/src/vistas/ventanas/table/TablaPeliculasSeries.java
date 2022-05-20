@@ -58,17 +58,18 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 	public TablaPeliculasSeries(Window parent, boolean modal) {
 //		super(parent);
 		setModal(modal);
-		this.setUndecorated(true);
-		setSize(Utilidades.resizeWindow(this));
-//		Utilidades.centerWindow(parent, this);
 		this.parent = parent;
 		thisDialog = this;
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setLayout(null);
+
 		init();
 	}
 
 	private void init() {
+		this.setUndecorated(true);
+		setSize(Utilidades.resizeWindow(this));
+//		Utilidades.centerWindow(parent, this);
 		TitleBar bar = new TitleBar(this);
 		bar.setBounds(0, 0, this.getWidth(), 25);
 		contentPanel.add(bar);
@@ -88,7 +89,6 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 				}
 			}
 		});
-
 		tableSerie.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -108,8 +108,6 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 			btnRefrescar.setEnabled(true);
 			break;
 
-		default:
-			break;
 		}
 
 		getContentPane().add(contentPanel);
@@ -127,6 +125,75 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		contentPanel.add(tabs);
 		tablePeli = tablas(peliPanel, ClasesEnum.PELICULA.getName(), tablePeli);
 		tableSerie = tablas(seriePanel, ClasesEnum.SERIE.getName(), tableSerie);
+	}
+
+	private JTable tablas(JPanel panel, String obra, JTable table) {
+		panel.setLayout(null);
+
+		// Scroll panel
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 5, 725, 428);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+		// Crear una tabla
+		table = new JTable() {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+
+		};
+
+		table.setBackground(new Color(255, 255, 255));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		// Añadir los datos a la tabla
+		table.setModel(tableModel(obra));
+		Utilidades.resizeColumnWidth(table); // Redimensionar columnas
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(table); // Añadir la tabla al scroll panel
+		panel.add(scrollPane); // Añadir el scroll panel al panel de la pestaña
+
+		return table;
+	}
+
+	private DefaultTableModel tableModel(String obra) {
+		// Recoger los datos de las pelis/series
+		Object[][] data = FactoryDAO.getGetData().dataManage(obra);
+		String[] column = null;
+
+		// Inicializar el nombre de las columnas dependiendo de que tabla es
+		if (obra.equals(ClasesEnum.PELICULA.getName())) {
+			column = new String[] { "ID", "Nombre", "Duracion", "Fecha Estreno", "Presupuesto", "Es Taquillero" };
+		} else {
+			column = new String[] { "ID", "Nombre", "Duracion", "Fecha Estreno", "Presupuesto", "Temporadas" };
+		}
+
+		return new DefaultTableModel(data, column);
+	}
+
+	private void tableSort(String obra) {
+		JTable table = obra.equalsIgnoreCase(ClasesEnum.PELICULA.getName()) ? tablePeli : tableSerie;
+		try {
+			TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableModel(obra));
+			List<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel, Object>>();
+			RowFilter<TableModel, Object> compoundRowFilter = null;
+
+			filters.add(RowFilter.regexFilter("(?i)" + nombreField.getText(), 1));
+			filters.add(RowFilter.regexFilter("(?i)" + duracion.getText(), 2));
+			filters.add(RowFilter.regexFilter("(?i)" + fechaField.getText(), 3));
+			filters.add(RowFilter.regexFilter("(?i)" + presupuestoField.getText(), 4));
+			compoundRowFilter = RowFilter.andFilter(filters);
+			sorter.setRowFilter(compoundRowFilter);
+			table.setRowSorter(sorter);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private String selectedTab() {
+		return tabs.getSelectedIndex() == 0 ? ClasesEnum.PELICULA.getName() : ClasesEnum.SERIE.getName();
 	}
 
 	/**
@@ -170,10 +237,6 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		btnVolver.addActionListener(this);
 		contentPanel.add(btnVolver);
 
-	}
-
-	private String selectedTab() {
-		return tabs.getSelectedIndex() == 0 ? ClasesEnum.PELICULA.getName() : ClasesEnum.SERIE.getName();
 	}
 
 	private void menuFiltro() {
@@ -228,74 +291,10 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 
 	}
 
-	private void tableSort(String obra) {
-		JTable table = obra.equalsIgnoreCase(ClasesEnum.PELICULA.getName()) ? tablePeli : tableSerie;
-		try {
-			TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableModel(obra));
-			List<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel, Object>>();
-			RowFilter<TableModel, Object> compoundRowFilter = null;
-
-			filters.add(RowFilter.regexFilter("(?i)" + nombreField.getText(), 1));
-			filters.add(RowFilter.regexFilter("(?i)" + duracion.getText(), 2));
-			filters.add(RowFilter.regexFilter("(?i)" + fechaField.getText(), 3));
-			filters.add(RowFilter.regexFilter("(?i)" + presupuestoField.getText(), 4));
-			compoundRowFilter = RowFilter.andFilter(filters);
-			sorter.setRowFilter(compoundRowFilter);
-			table.setRowSorter(sorter);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	private JTable tablas(JPanel panel, String obra, JTable table) {
-		panel.setLayout(null);
-
-		// Scroll panel
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 5, 725, 428);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-		// Crear una tabla
-		table = new JTable() {
-			private static final long serialVersionUID = 1L;
-
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-
-		};
-
-		table.setBackground(new Color(255, 255, 255));
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		// Añadir los datos a la tabla
-		table.setModel(tableModel(obra));
-		Utilidades.resizeColumnWidth(table); // Redimensionar columnas
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollPane.setViewportView(table); // Añadir la tabla al scroll panel
-		panel.add(scrollPane); // Añadir el scroll panel al panel de la pestaña
-
-		return table;
-	}
-
-	private DefaultTableModel tableModel(String obra) {
-		// Recoger los datos de las pelis/series
-		Object[][] data = FactoryDAO.getGetData().dataManage(obra);
-		String[] column = null;
-
-		// Inicializar el nombre de las columnas dependiendo de que tabla es
-		if (obra.equals(ClasesEnum.PELICULA.getName())) {
-			column = new String[] { "ID", "Nombre", "Duracion", "Fecha Estreno", "Presupuesto", "Es Taquillero" };
-		} else {
-			column = new String[] { "ID", "Nombre", "Duracion", "Fecha Estreno", "Presupuesto", "Temporadas" };
-		}
-
-		return new DefaultTableModel(data, column);
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnAnadir)) {
+
 			int i = OptionPanel.showOptionMessage(thisDialog, "¿Qué tipo de obra audiovisual desea añadir?",
 					"Añadir obra audiovisual", "Pelicula", "Serie", OptionPanel.CONFIRM);
 			if (i == 0) {
@@ -307,6 +306,8 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 			if (dataObra != null) {
 				thisDialog.setVisible(false);
 				dataObra.setVisible(true);
+			} else {
+
 			}
 		} else if (e.getSource().equals(btnVolver)) {
 			int i = OptionPanel.showOptionMessage(thisDialog,

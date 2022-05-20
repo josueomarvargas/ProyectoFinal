@@ -166,12 +166,12 @@ public class ParticipaDAO implements BDgeneric<Participa> {
 		try (PreparedStatement obraStat = con.prepareStatement(SEARCHOBRA);
 				PreparedStatement trabajadorStat = con.prepareStatement(SEARCHTRABAJADOR)) {
 
-			// Si hay ID en el índice 0, buscar por obra
+			// Si hay ID en el índice 0, buscar las obras
 			if (!id[0].isBlank()) {
 				obraStat.setString(1, id[0]);
 				rs = obraStat.executeQuery();
 				searchObra = true;
-				// Si no, esta en el índice 1, buscar por trabajador
+				// Si no, esta en el índice 1, buscar los trabajadores
 			} else {
 				trabajadorStat.setString(1, id[1]);
 				rs = trabajadorStat.executeQuery();
@@ -191,17 +191,17 @@ public class ParticipaDAO implements BDgeneric<Participa> {
 
 				// Si el RS está en la última fila
 				if (rs.isLast()) {
-					// En el caso de que se ha buscado por obras
+					// En el caso de que se ha buscado las obra
 					if (searchObra) {
 						// Añadir ID a la lista
 						idAux.add(Integer.parseInt(id[0]));
 						// Añadir las listas al objecto
-						part.setIdObra(idAux);
-						part.setIdTrabajador(aux);
-					} else {
-						idAux.add(Integer.parseInt(id[1]));
 						part.setIdTrabajador(idAux);
 						part.setIdObra(aux);
+					} else { // En el caso de que se ha buscado los trabajadores
+						idAux.add(Integer.parseInt(id[1]));
+						part.setIdObra(idAux);
+						part.setIdTrabajador(aux);
 					}
 				}
 			}

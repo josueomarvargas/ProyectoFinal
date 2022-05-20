@@ -32,6 +32,7 @@ import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
@@ -39,11 +40,13 @@ import controlador.utils.views.Utilidades;
 import modelo.clases.ObraAudiovisual;
 import modelo.clases.Pelicula;
 import modelo.clases.Serie;
+import vistas.dao.RelationData;
 import vistas.ventanas.custom.components.MenuButton;
 import vistas.ventanas.custom.components.TextField;
 import vistas.ventanas.custom.containers.CustomTab;
 import vistas.ventanas.custom.containers.OptionPanel;
 import vistas.ventanas.custom.containers.TitleBar;
+import vistas.ventanas.table.TablaRelaciones;
 
 public class DatosObra extends JDialog implements ActionListener {
 
@@ -80,8 +83,9 @@ public class DatosObra extends JDialog implements ActionListener {
 		this.setUndecorated(true);
 		size = Utilidades.resizeWindow(this);
 		setSize(size);
-//		Utilidades.centerWindow(parent, this);
+		Utilidades.centerWindow(parent, this);
 		contentPanel.setLayout(null);
+
 		bar = new TitleBar(this);
 		bar.setBounds(0, 0, this.getWidth(), 25);
 		getContentPane().add(bar);
@@ -543,13 +547,48 @@ public class DatosObra extends JDialog implements ActionListener {
 			((Serie) obra).getNombreCap().add(new ArrayList<>());
 			comboBox.addItem(comboBox.getItemCount() + 1);
 
-		} else if (e.getSource().equals(btnVerPatrocinadores)) {
-
 		} else if (e.getSource().equals(btnVerEquipamiento)) {
-
+			viewRelationData(ClasesEnum.EQUIPOBRA.getName(), ClasesEnum.OBRA.getName(),
+					"Equipamiento que se usa en la obra", "Añadir equipamiento a la obra");
 		} else if (e.getSource().equals(btnVerTrabajadores)) {
-
+			viewRelationData(ClasesEnum.PARTICIPA.getName(), ClasesEnum.OBRA.getName(),
+					"Trabajadores que participan en la obra", "Añadir trabajador a la obra");
+		} else if (e.getSource().equals(btnVerPatrocinadores)) {
+			viewRelationData(ClasesEnum.PROMOCIONA.getName(), ClasesEnum.OBRA.getName(),
+					"Patrocinadores que patrocinan en la obra", "Añadir patrocinadores a la obra");
 		}
 
+	}
+
+	private void viewRelationData(String relationTable, String individualTable, String title1, String title2) {
+		int newID = -1;
+		String[] id = { relationTable, individualTable, Integer.toString(obra.getIdObra()) };
+		DefaultTableModel relationData = FactoryDAO.getRelationData().dataManage(id);
+		DefaultTableModel allData = null;
+
+		if (relationTable.equals(ClasesEnum.EQUIPOBRA.getName())) {
+			allData = RelationData.getEquipModel();
+		} else if (relationTable.equals(ClasesEnum.PARTICIPA.getName())) {
+			allData = RelationData.getTrabajadorModel();
+		} else {
+			allData = RelationData.getPatroModel();
+		}
+		if (relationData != null && allData != null) {
+			newID = TablaRelaciones.showDataRelation(thisDialog, relationData, allData, title1, title2);
+		} else {
+			newID = TablaRelaciones.addDataToRelation(thisDialog, allData, title2);
+		}
+		if (newID != -1 && newID != -2) {
+			boolean okUpdate = FactoryDAO.getRelationData()
+					.updateRelation(new String[] { relationTable, individualTable, Integer.toString(newID) });
+
+			if (okUpdate) {
+				OptionPanel.showMessage(thisDialog, "se ha insertado correctamente la información a la obra",
+						"Inserción de datos", OptionPanel.MESSAGE);
+			} else {
+				OptionPanel.showMessage(thisDialog, "Error al añadir información a la obra, inténtelo más tarde",
+						"Error en la conexión a la base de datos", OptionPanel.MESSAGE);
+			}
+		}
 	}
 }
