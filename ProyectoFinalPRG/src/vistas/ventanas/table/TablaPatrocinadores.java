@@ -51,7 +51,7 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	private Window parent;
 	private JScrollPane scrollPane;
 	private TitleBar bar;
-		private TableModel model;
+	private TableModel model;
 	private int index;
 	private DatosPatrocinador dataPatro;
 	private CustomTab tabs = null;
@@ -109,7 +109,7 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 		tabs.add(patroPanel);
 		contentPanel.add(tabs);
 		tablePatro = tabla(patroPanel, ClasesEnum.PATROCINADOR.getName(), tablePatro);
-		
+
 	}
 	private void openData(int i, TableModel tableModel) {
 		thisDialog.setVisible(false);
@@ -145,165 +145,163 @@ public class TablaPatrocinadores extends JDialog implements ActionListener {
 	 * contentPanel.add(textField);
 	 */
 
-private void buttons() {
-	btnAnadir = new MenuButton();
-	btnAnadir.setBounds(890, 455, 50, 30);
-	btnAnadir.setIcon(new ImageIcon(
-			TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/plus.png")));
-	Utilidades.configButtons((MenuButton) btnAnadir, "");
-	btnAnadir.addActionListener(this);
-	contentPanel.add(btnAnadir);
+	private void buttons() {
+		btnAnadir = new MenuButton();
+		btnAnadir.setBounds(890, 455, 50, 30);
+		btnAnadir.setIcon(new ImageIcon(
+				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/plus.png")));
+		Utilidades.configButtons((MenuButton) btnAnadir, "");
+		btnAnadir.addActionListener(this);
+		contentPanel.add(btnAnadir);
 
-	btnRefrescar = new MenuButton();
-	btnRefrescar.setBounds(835, 455, 50, 30);
-	btnRefrescar.setIcon(new ImageIcon(
-			TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
-	
-	Utilidades.configButtons((MenuButton) btnRefrescar, "");
-	btnRefrescar.addActionListener(this);
-	contentPanel.add(btnRefrescar);
+		btnRefrescar = new MenuButton();
+		btnRefrescar.setBounds(835, 455, 50, 30);
+		btnRefrescar.setIcon(new ImageIcon(
+				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
 
-	btnVolver = new MenuButton();
-	btnVolver.setBounds(780, 455, 50, 30);
-	btnVolver.setIcon(new ImageIcon(
-			TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/arrow.png")));
-	Utilidades.configButtons((MenuButton) btnVolver, "");
-	btnVolver.addActionListener(this);
-	contentPanel.add(btnVolver);
-}
-private void menuFiltro() {
-	patroPanel.setLayout(null);
-	// Etiqueta: Id
-	//	JLabel idLabel = new JLabel("Id:");
-	//idLabel.setBounds(780, 45, 160, 20);
-	//panel.add(idLabel);
+		Utilidades.configButtons((MenuButton) btnRefrescar, "");
+		btnRefrescar.addActionListener(this);
+		contentPanel.add(btnRefrescar);
 
-	// TextField: Id
-	idField = new TextField();
-	idField.setBounds(780, 50, 160, 45);
-	idField.setLabelText("Id");
-	contentPanel.add(idField);
+		btnVolver = new MenuButton();
+		btnVolver.setBounds(780, 455, 50, 30);
+		btnVolver.setIcon(new ImageIcon(
+				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/arrow.png")));
+		Utilidades.configButtons((MenuButton) btnVolver, "");
+		btnVolver.addActionListener(this);
+		contentPanel.add(btnVolver);
+	}
+	private void menuFiltro() {
+		patroPanel.setLayout(null);
+		// Etiqueta: Id
+		//	JLabel idLabel = new JLabel("Id:");
+		//idLabel.setBounds(780, 45, 160, 20);
+		//panel.add(idLabel);
 
-	// Etiqueta: Nombre
-	//JLabel nombreLabel = new JLabel("Nombre:");
-	//nombreLabel.setBounds(780, 45, 160, 20);
-	//panel.add(nombreLabel);
+		// TextField: Id
+		idField = new TextField();
+		idField.setBounds(780, 50, 160, 45);
+		idField.setLabelText("Id");
+		contentPanel.add(idField);
 
-
-	// TextField: Nombre
-	nombreField = new TextField();
-	nombreField.setBounds(780, 100, 160, 45);
-	nombreField.setLabelText("Nombre");
-	contentPanel.add(nombreField);
-
-	// Etiqueta: Cantidad
-	//JLabel cantLabel = new JLabel("Guionista:");
-	//cantLabel.setBounds(780, 45, 160, 20);
-	//panel.add(cantLabel);
-
-	// TextField: Cantidad
-	cantField = new TextField();
-	cantField.setBounds(780, 150, 160, 45);
-	cantField.setLabelText("Cantidad");
-	contentPanel.add(cantField);
+		// Etiqueta: Nombre
+		//JLabel nombreLabel = new JLabel("Nombre:");
+		//nombreLabel.setBounds(780, 45, 160, 20);
+		//panel.add(nombreLabel);
 
 
+		// TextField: Nombre
+		nombreField = new TextField();
+		nombreField.setBounds(780, 100, 160, 45);
+		nombreField.setLabelText("Nombre");
+		contentPanel.add(nombreField);
 
-	// TextField: condicion
-	condField = new TextField();
-	condField.setBounds(780, 200, 160, 45);
-	condField.setLabelText("Condicion");
-	contentPanel.add(condField);
+		// Etiqueta: Cantidad
+		//JLabel cantLabel = new JLabel("Guionista:");
+		//cantLabel.setBounds(780, 45, 160, 20);
+		//panel.add(cantLabel);
+
+		// TextField: Cantidad
+		cantField = new TextField();
+		cantField.setBounds(780, 150, 160, 45);
+		cantField.setLabelText("Cantidad");
+		contentPanel.add(cantField);
 
 
 
-	// Boton para buscar
-	btnBuscar = new MenuButton();
-	btnBuscar.setBounds(780, 250, 160, 35);
-	btnBuscar.setIcon(new ImageIcon(
-			TablaPatrocinadores.class.getResource("/vistas/ventanas/custom/components/img/search.png")));
-	Utilidades.configButtons( (MenuButton) btnBuscar, "");
-	btnBuscar.setEnabled(false);
-	btnBuscar.addActionListener(this);
-	contentPanel.add(btnBuscar);
-
-}
+		// TextField: condicion
+		condField = new TextField();
+		condField.setBounds(780, 200, 160, 45);
+		condField.setLabelText("Condicion");
+		contentPanel.add(condField);
 
 
-private JTable tabla(JPanel panel, String patrocinador, JTable table) {
 
-	// Recoger los datos de los trabajdores
-	//data = FactoryDAO.getGetData().checkInfo(GetData.PATROCINADOR);
-	//column = new String[] { "ID", "Nombre", "Dinero" };
-
-	// Scroll panel
-	scrollPane = new JScrollPane();
-	scrollPane.setBounds(0, 0, 740, 440);
-	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-	// Crear una tabla
-	table = new JTable() {
-		private static final long serialVersionUID = 1L;
-
-		public boolean isCellEditable(int row, int column) {
-			return false;
-		}
-
-	};
-	table.setBackground(new Color(255,255,255));
-	table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	// Añadir los datos a la tabla
-	table.setModel(tableModel(patrocinador)); 
-	Utilidades.resizeColumnWidth(table); // Redimensionar columnas
-	table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	scrollPane.setViewportView(table); // Añadir la tabla al scroll panel
-	panel.add(scrollPane);// Añadir el scroll panel al panel de la pestaña
-	return table;
-}
-
-private DefaultTableModel tableModel(String patocinador) {
-	// Recoger los datos de las patrocinadores
-	Object[][] data=FactoryDAO.getGetData().dataManage(patocinador);
-	String[] column=null;
-	// Inicializar la tabla
-	column = new String[] {"ID", "Nombre", "Cantidad(mil)","Condicion"};
-
-	return new DefaultTableModel(data,column);
-
-}
-
-
-@Override
-public void actionPerformed(ActionEvent e) {
-	dataPatro= new DatosPatrocinador(thisDialog,true, null,ClasesEnum.PATROCINADOR.getName());
-	if (e.getSource().equals(btnBuscar)) {
+		// Boton para buscar
+		btnBuscar = new MenuButton();
+		btnBuscar.setBounds(780, 250, 160, 35);
+		btnBuscar.setIcon(new ImageIcon(
+				TablaPatrocinadores.class.getResource("/vistas/ventanas/custom/components/img/search.png")));
+		Utilidades.configButtons( (MenuButton) btnBuscar, "");
+		btnBuscar.setEnabled(false);
+		btnBuscar.addActionListener(this);
+		contentPanel.add(btnBuscar);
 
 	}
-	else if (e.getSource().equals(btnAnadir)) {
-	
+
+
+	private JTable tabla(JPanel panel, String patrocinador, JTable table) {
+
+		// Recoger los datos de los trabajdores
+		//data = FactoryDAO.getGetData().checkInfo(GetData.PATROCINADOR);
+		//column = new String[] { "ID", "Nombre", "Dinero" };
+
+		// Scroll panel
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 740, 440);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+		// Crear una tabla
+		table = new JTable() {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+
+		};
+		table.setBackground(new Color(255,255,255));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		// Añadir los datos a la tabla
+		table.setModel(tableModel(patrocinador)); 
+		Utilidades.resizeColumnWidth(table); // Redimensionar columnas
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(table); // Añadir la tabla al scroll panel
+		panel.add(scrollPane);// Añadir el scroll panel al panel de la pestaña
+		return table;
+	}
+
+	private DefaultTableModel tableModel(String patocinador) {
+		// Recoger los datos de las patrocinadores
+		Object[][] data=FactoryDAO.getGetData().dataManage(patocinador);
+		String[] column=null;
+		// Inicializar la tabla
+		column = new String[] {"ID", "Nombre", "Cantidad(mil)","Condicion"};
+
+		return new DefaultTableModel(data,column);
+
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(btnBuscar)) {
+
+		}else if (e.getSource().equals(btnAnadir)) {
+
 			dataPatro= new DatosPatrocinador(thisDialog,true, null,ClasesEnum.PATROCINADOR.getName());
-		
-	}
-	if (dataPatro != null) {
-		thisDialog.setVisible(false);
-		dataPatro.setVisible(true);
-	}
-	else if (e.getSource().equals(btnVolver)) {
-		int i = OptionPanel.showOptionMessage(thisDialog,
-				"¿Estas segur@ de que quieres volver a la ventana anterior?", "¿Quieres volver?",
-				OptionPanel.CONFIRM);
-		if (i == 1) {
-			thisDialog.dispose();
-			parent.setVisible(true);
+
+			if (dataPatro != null) {
+				thisDialog.setVisible(false);
+				dataPatro.setVisible(true);
+			}
+			
+		}else if (e.getSource().equals(btnVolver)) {
+			int i = OptionPanel.showOptionMessage(thisDialog,
+					"¿Estas segur@ de que quieres volver a la ventana anterior?", "¿Quieres volver?",
+					OptionPanel.CONFIRM);
+			if (i == 1) {
+				thisDialog.dispose();
+				parent.setVisible(true);
+			}
+			
+		}else if (e.getSource().equals(btnRefrescar)) {
+			tablePatro.setModel(tableModel(ClasesEnum.PATROCINADOR.getName()));
+			Utilidades.resizeColumnWidth(tablePatro);
+
 		}
-	}
-	else if (e.getSource().equals(btnRefrescar)) {
-		tablePatro.setModel(tableModel(ClasesEnum.PATROCINADOR.getName()));
-		Utilidades.resizeColumnWidth(tablePatro);
 
 	}
-		
-}
 
 }

@@ -112,9 +112,9 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 	private void initTabs() {
 		tabs.setSelectedIndex(0);
 		tabsFields(patroPanel);
+		if(this.patro==null) {
 		this.patro=new Patrocinador();
-
-
+		}
 
 	}
 
@@ -224,8 +224,7 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 						thisDialog.dispose();
 						parent.setVisible(true);
 
-					}
-					else {
+					}else {
 						OptionPanel.showMessage(thisDialog, "Ha ocurrido un error inesperado al intentar borrar el patrocinador seleccionado", "Error eliminar Patrocinador", OptionPanel.ERROR);
 					}
 
@@ -234,7 +233,7 @@ public class DatosPatrocinador extends JDialog implements ActionListener {
 			}
 
 		}else if(e.getSource().equals(btnModificar)) {
-			if(patro!=null && valido) {
+			if(patro!=null ) {
 				patro.setNombre(fieldNombre.getText());
 				patro.setCantDinero(Integer.parseInt(fieldCant.getText()));
 				patro.setCondicion(fieldCond.getText());

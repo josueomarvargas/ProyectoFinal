@@ -164,12 +164,13 @@ public class GetData implements DataManager<String, Object[][]> {
 			}
 			break;
 		case "patrocinador":
-			array2D = new Object[map.size()][3];
+			array2D = new Object[map.size()][4];
 			for (; iterObra.hasNext(); i++) {
 				Patrocinador aux = (Patrocinador) iterObra.next();
 				array2D[i][0] = aux.getIdPatro();
 				array2D[i][1] = aux.getNombre();
 				array2D[i][2] = aux.getCantDinero();
+				array2D[i][3] = aux.getCondicion();
 			}
 			break;
 		case "trabajador":

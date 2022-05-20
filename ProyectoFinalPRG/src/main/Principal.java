@@ -3,6 +3,7 @@ package main;
 import vistas.ventanas.LogIn;
 import vistas.ventanas.data.DatosEquipamiento;
 import vistas.ventanas.data.DatosObra;
+import vistas.ventanas.data.DatosPersonal;
 import vistas.ventanas.table.TablaPatrocinadores;
 import vistas.ventanas.table.TablaPeliculasSeries;
 
@@ -23,7 +24,7 @@ public class Principal {
 		//do.setVisible(true);
 		TablaPatrocinadores tp= new TablaPatrocinadores(null, true);
 		tp.setVisible(true);
-
+	
 		//		DatosObra datosObra = new DatosObra();
 		//		datosObra.setVisible(true);
 		//		DatosObra datosObra = new DatosObra(null, true, "pelicula");

@@ -259,8 +259,7 @@ public class PatrocinadorDAO implements BDgeneric<Patrocinador> {
 			return stat.executeUpdate() > 0 ? true : false;
 
 		} catch (SQLException e) {
-			return false;
-
+			return false; //Si hay alguna excepcion devolverá false
 		} finally {
 			this.closeConnection();
 		}

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -48,6 +49,10 @@ public class DatosPersonal extends JDialog implements ActionListener {
 	private JButton btnBorrarDatos;
 	private JButton btnCerrarSystem;
 	private JScrollPane scrollPane;
+	private ButtonGroup grupo1;
+	private ButtonGroup grupoGuion;
+	private ButtonGroup grupoEspecialidad;
+	private ButtonGroup grupoAreaTrabajo;
 
 	/**
 	 * Create the dialog.
@@ -305,6 +310,28 @@ public class DatosPersonal extends JDialog implements ActionListener {
 		contentPanel.setPreferredSize(new Dimension(510, 610));
 		scrollPane.setViewportView(contentPanel);
 		getContentPane().add(scrollPane);
+		
+		 grupo1 = new ButtonGroup();
+
+
+		 JRadioButton rdbDirector = new JRadioButton("DIRECTOR");
+		rdbDirector.setBounds(150, 346, 109, 23);
+		contentPanel.add(rdbDirector);
+		grupo1.add(rdbDirector);
+		rdbDirector.setVisible(false);
+
+		JRadioButton rdbtnActor1 = new JRadioButton("ACTOR");
+		rdbtnActor1.setBounds(150, 376, 109, 23);
+		contentPanel.add(rdbtnActor1);
+		grupo1.add(rdbtnActor1);
+		JRadioButton rdbtnGuionista1 = new JRadioButton("GUIONISTA");
+		rdbtnGuionista1.setBounds(290, 346, 109, 23);
+		contentPanel.add(rdbtnGuionista1);
+		grupo1.add(rdbtnGuionista1);
+		JRadioButton rdbtnTecnicoAudiovisual1 = new JRadioButton("TECNICO AUDIOVISUAL");
+		rdbtnTecnicoAudiovisual1.setBounds(290, 376, 148, 23);
+		contentPanel.add(rdbtnTecnicoAudiovisual1);
+		grupo1.add(rdbtnTecnicoAudiovisual1);
 	}
 
 	@Override
