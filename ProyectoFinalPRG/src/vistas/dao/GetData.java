@@ -1,6 +1,5 @@
 package vistas.dao;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import controlador.interfaz.DataManager;
@@ -8,14 +7,12 @@ import controlador.utils.dao.FactoryDAO;
 import modelo.clases.Equipamiento;
 import modelo.clases.ObraAudiovisual;
 import modelo.clases.Patrocinador;
-import modelo.clases.Pelicula;
-import modelo.clases.Serie;
 import modelo.clases.Trabajador;
 
 /**
  * Clase que implementa la interfaz {@link UIcontrol} para recoger los datos de
  * una tabla y transformarlo a un array de dos dimensiones facilitar el
- * rellenado de informaciÛn en los JTables.
+ * rellenado de informaci√≥n en los JTables.
  * 
  * 
  * @author Henrique Yeguo
@@ -23,8 +20,8 @@ import modelo.clases.Trabajador;
 public class GetData implements DataManager<String, Object[][]> {
 
 	/**
-	 * Estos atributos guardar·n maps con la informaciÛn completa de las tablas,
-	 * esto ser· util cuando se necesite enseÒar todos los datos que no estan en la
+	 * Estos atributos guardar√°n maps con la informaci√≥n completa de las tablas,
+	 * esto ser√° util cuando se necesite ense√±ar todos los datos que no estan en la
 	 * JTable.
 	 **/
 	private static Map<Integer, ObraAudiovisual> obra = null;
@@ -33,11 +30,11 @@ public class GetData implements DataManager<String, Object[][]> {
 	private static Map<Integer, Trabajador> trabajador = null;
 
 	/**
-	 * Este mÈtodo devolver· el array de objetos de dos dimensiones, los posibles
-	 * datos que podr· devolver ser·n de las clases: {@link ObraAudiovisual},
+	 * Este m√©todo devolver√° el array de objetos de dos dimensiones, los posibles
+	 * datos que podr√° devolver ser√°n de las clases: {@link ObraAudiovisual},
 	 * {@link Equipamiento}, {@link Patrocinador} y {@link Trabajador}.
 	 * 
-	 * @param en la lista que solo recoger· un valor, que ser· el nombre del objecto
+	 * @param en la lista que solo recoger√° un valor, que ser√° el nombre del objecto
 	 *           que se quiere recuperar de la base de datos
 	 **/
 	@Override
@@ -50,25 +47,25 @@ public class GetData implements DataManager<String, Object[][]> {
 
 		switch (type) {
 		case "peli":
-			return toObjectArray(FactoryDAO.getObra().readAll(), "peli");
+			return ToObject2Darray.toObjectArray(FactoryDAO.getObra().readAll(), "peli");
 		case "serie":
-			return toObjectArray(FactoryDAO.getObra().readAll(), "serie");
+			return ToObject2Darray.toObjectArray(FactoryDAO.getObra().readAll(), "serie");
 		case "equipamiento":
 			if (equipamiento == null)
 				equipamiento = FactoryDAO.getEquip().readAll();
-			return toObjectArray(equipamiento, "equipamiento");
+			return ToObject2Darray.toObjectArray(equipamiento, "equipamiento");
 
 		case "patrocinador":
 			if (patrocinador == null)
 				patrocinador = FactoryDAO.getPatrocinador().readAll();
-			return toObjectArray(patrocinador, "patrocinador");
+			return ToObject2Darray.toObjectArray(patrocinador, "patrocinador");
 
 		case "trabajador":
 			if (trabajador == null)
 				trabajador = FactoryDAO.getTrabajador().readAll();
-			return toObjectArray(trabajador, "trabajador");
-
+			return ToObject2Darray.toObjectArray(trabajador, "trabajador");
 		}
+
 		return null;
 	}
 
@@ -113,94 +110,6 @@ public class GetData implements DataManager<String, Object[][]> {
 			trabajador = (Map<Integer, Trabajador>) map;
 
 		}
-	}
-
-	private <K, V> Object[][] toObjectArray(Map<K, V> map, String tipo) {
-
-		Object[][] array2D = null;
-		Iterator<?> iterObra = map.values().iterator();
-		ObraAudiovisual obra = null;
-		int i = 0;
-		switch (tipo) {
-		case "peli":
-			array2D = new Object[getMapObraLength(map)[0]][6];
-			while (iterObra.hasNext()) {
-				obra = (ObraAudiovisual) iterObra.next();
-				if (obra instanceof Pelicula) {
-					Pelicula aux = (Pelicula) obra;
-					array2D[i][0] = aux.getIdObra();
-					array2D[i][1] = aux.getNombre();
-					array2D[i][2] = aux.getDuracion();
-					array2D[i][3] = aux.getFechaEstreno();
-					array2D[i][4] = aux.getPresupuesto();
-					array2D[i][5] = aux.isEsTaquillera() == true ? "SÌ" : "No";
-					i++;
-				}
-			}
-			break;
-		case "serie":
-			array2D = new Object[getMapObraLength(map)[1]][6];
-			while (iterObra.hasNext()) {
-				obra = (ObraAudiovisual) iterObra.next();
-				if (obra instanceof Serie) {
-					Serie aux = (Serie) obra;
-					array2D[i][0] = aux.getIdObra();
-					array2D[i][1] = aux.getNombre();
-					array2D[i][2] = aux.getDuracion();
-					array2D[i][3] = aux.getFechaEstreno();
-					array2D[i][4] = aux.getPresupuesto();
-					array2D[i][5] = aux.getNombreCap().size();
-					i++;
-				}
-			}
-			break;
-		case "equipamiento":
-			array2D = new Object[map.size()][3];
-			for (; iterObra.hasNext(); i++) {
-				Equipamiento aux = (Equipamiento) iterObra.next();
-				array2D[i][0] = aux.getIdEquip();
-				array2D[i][1] = aux.getNombre();
-				array2D[i][2] = aux.getTipo();
-			}
-			break;
-		case "patrocinador":
-			array2D = new Object[map.size()][3];
-			for (; iterObra.hasNext(); i++) {
-				Patrocinador aux = (Patrocinador) iterObra.next();
-				array2D[i][0] = aux.getIdPatro();
-				array2D[i][1] = aux.getNombre();
-				array2D[i][2] = aux.getCantDinero();
-			}
-			break;
-		case "trabajador":
-			array2D = new Object[map.size()][9];
-			for (; iterObra.hasNext(); i++) {
-				Trabajador aux = (Trabajador) iterObra.next();
-				array2D[i][0] = aux.getIdTrabajador();
-				array2D[i][1] = aux.getDni();
-				array2D[i][2] = aux.getNombre();
-				array2D[i][3] = aux.getApellido();
-				array2D[i][4] = aux.getNumTel();
-				array2D[i][5] = aux.getNumPremios();
-				array2D[i][6] = aux.getDireccion();
-				array2D[i][7] = aux.getTipo();
-				array2D[i][8] = aux.getFechaNac();
-			}
-		}
-		return array2D;
-	}
-
-	private <K, V> int[] getMapObraLength(Map<K, V> map) {
-		Iterator<?> iterObra = map.values().iterator();
-		int[] size = { 0, 0 };
-		while (iterObra.hasNext()) {
-			ObraAudiovisual obra = (ObraAudiovisual) iterObra.next();
-			if (obra instanceof Pelicula)
-				size[0] += 1;
-			else
-				size[1] += 1;
-		}
-		return size;
 	}
 
 }

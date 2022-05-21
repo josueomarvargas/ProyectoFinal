@@ -1,9 +1,9 @@
 package vistas.ventanas.custom.containers;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,7 +12,6 @@ import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -28,7 +27,7 @@ public class TitleBar extends JPanel {
 	private int y;
 	private Dimension size;
 
-	public TitleBar(Container parent) {
+	public TitleBar(Window parent) {
 		setOpaque(true);
 		setLayout(null);
 		setBackground(new Color(50, 150, 210));
@@ -66,9 +65,9 @@ public class TitleBar extends JPanel {
 		exit.setBounds(size.width - 40, 0, 40, 25);
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int resp = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres cerrar Sesion?", "Alerta!",
-						JOptionPane.YES_NO_OPTION);
-				if (resp == 0) {
+				int i = OptionPanel.showOptionMessage(parent, "¿Estas segur@ de que quieres cerrar el programa",
+						"Cerrar programa", OptionPanel.CONFIRM);
+				if (i == OptionPanel.CONFIRM) {
 					System.exit(0);
 				}
 			}

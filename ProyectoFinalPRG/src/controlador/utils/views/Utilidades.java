@@ -29,18 +29,25 @@ import javax.swing.table.TableColumnModel;
 
 import vistas.ventanas.custom.components.MenuButton;
 
+/**
+ * Esta clase abstracta, que no se va ha poder instanciar, solo tendrá métodos
+ * estáticos que nos serán útiles a lo largo del programa.
+ * 
+ * @author yeguo
+ *
+ */
 public abstract class Utilidades {
 
-	// Screen size
+	/** Tamaño de la pantalla **/
 	private static Dimension size;
 
-	// Img path
+	/** Ruta absoluta del proyecto **/
 	public static String basePath = new File("").getAbsolutePath();
+	/** Ruta absoulta más la ruta relativa donde se guardará las imagenes **/
 	public static Path imgSavePath = Paths.get(basePath, "/src/modelo/img/");
 
 	/**
 	 * Redimensionar las columnas según el valor más largo de la columna.
-	 * 
 	 * 
 	 * @param table la tabla que queremos redimensionar su columna
 	 */
@@ -64,6 +71,14 @@ public abstract class Utilidades {
 		}
 	}
 
+	/**
+	 * Este método lo que hará es redimensionar la ventana para que sea la mitad de
+	 * grande que la pantalla <br>
+	 * Ej; si tienes una pantalla 1920x1080 se redimensionará a 960x540.
+	 * 
+	 * @param window la ventana que queremos que queremos redimensionar
+	 * @return devolveremos la
+	 */
 	public static Dimension resizeWindow(Container window) {
 		if (size == null) {
 			size = getWindowDimension(window);
@@ -84,12 +99,24 @@ public abstract class Utilidades {
 		}
 	}
 
+	/**
+	 * Este método devolverá el tamaño del monitor, por ejemplo 1920x1080
+	 * 
+	 * @param window ventana que se usará para recoger el tamaño de la pantalla
+	 * @return devuelve el tamaño de la pantall
+	 */
 	private static Dimension getWindowDimension(Container window) {
 		Toolkit toolKit = window.getToolkit();
 		return toolKit.getScreenSize();
 
 	}
 
+	/**
+	 * Método para configurar los botones
+	 * 
+	 * @param b    botón que se configurará
+	 * @param text el texto que tendrá el boton
+	 */
 	public static void configButtons(MenuButton b, String text) {
 		b.setBackground(new Color(25, 182, 247));
 		b.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -99,12 +126,26 @@ public abstract class Utilidades {
 
 	}
 
+	/**
+	 * Método para redimensionar una imagen que le añadiremos a una etiqueta.
+	 * 
+	 * @param label etiqueta donde se pondrá la imagen
+	 * @param file  archivo de la imagen que se quiere añadir
+	 * @return imagen ya redimensionada proporcinalmente al tamaño de la etiqueta
+	 */
 	public static ImageIcon resizeIcon(JLabel label, File file) {
 		ImageIcon icon = new ImageIcon(file.getPath());
 		Image img = icon.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
 		return new ImageIcon(img);
 	}
 
+	/**
+	 * Método para crear una etiqueta con una imagen que se usará para el fonto de
+	 * las ventanas.
+	 * 
+	 * @param window ventana para recoger al ruta de la clase
+	 * @return devolverá una etiqueta con una imagen ya definida
+	 */
 	public static JLabel backgroundImg(Container window) {
 
 		return new JLabel(new ImageIcon(
@@ -112,6 +153,12 @@ public abstract class Utilidades {
 
 	}
 
+	/**
+	 * Método para comprobar las fechas.
+	 * 
+	 * @param date texto que se querrá validar como fecha
+	 * @return la fecha ya parseada, si no ha parseado bien devolverá null
+	 */
 	public static LocalDate validateDate(String date) {
 
 		final DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE;
@@ -123,6 +170,13 @@ public abstract class Utilidades {
 		}
 	}
 
+	/**
+	 * Este método permite que el usuario seleccione una foto, al seleccionarla se
+	 * hará una copia en una carpeta preestablecida y se le devolverá un fichero con
+	 * la ruta a esa copia.
+	 * 
+	 * @return archivo con la ruta de la foto
+	 */
 	public static File addFoto() {
 		JFileChooser fileChooser = new JFileChooser("C:\\");
 		FileFilter filter = new FileNameExtensionFilter("JPEG file", "jpg", "jpeg", "png");

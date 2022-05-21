@@ -86,12 +86,12 @@ public class CustomTab extends JTabbedPane {
 			}
 			if (currentRectangle != null) {
 				switch (tabPlacement) {
-				case TOP -> g2.fillRect(currentRectangle.x, currentRectangle.y + currentRectangle.height - 3,
+				case TOP : g2.fillRect(currentRectangle.x, currentRectangle.y + currentRectangle.height - 3,
 						currentRectangle.width, 3);
-				case BOTTOM -> g2.fillRect(currentRectangle.x, currentRectangle.y, currentRectangle.width, 3);
-				case LEFT -> g2.fillRect(currentRectangle.x + currentRectangle.width - 3, currentRectangle.y, 3,
+				case BOTTOM : g2.fillRect(currentRectangle.x, currentRectangle.y, currentRectangle.width, 3);
+				case LEFT : g2.fillRect(currentRectangle.x + currentRectangle.width - 3, currentRectangle.y, 3,
 						currentRectangle.height);
-				case RIGHT -> g2.fillRect(currentRectangle.x, currentRectangle.y, 3, currentRectangle.height);
+				case RIGHT : g2.fillRect(currentRectangle.x, currentRectangle.y, 3, currentRectangle.height);
 				}
 
 				g2.dispose();

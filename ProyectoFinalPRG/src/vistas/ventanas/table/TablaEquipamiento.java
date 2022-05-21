@@ -56,11 +56,11 @@ public class TablaEquipamiento extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public TablaEquipamiento(Window parent, boolean modal) {
-//		super(parent);
+		super(parent);
 		setModal(modal);
 		this.setUndecorated(true);
 		setSize(Utilidades.resizeWindow(this));
-//		Utilidades.centerWindow(parent, this);
+		Utilidades.centerWindow(parent, this);
 		this.parent = parent;
 		thisDialog = this;
 		contentPanel.setBackground(Color.WHITE);
