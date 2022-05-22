@@ -1,21 +1,18 @@
 package junit;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import controlador.utils.dao.FactoryDAO;
+<<<<<<< HEAD
 import modelo.clases.Actor;
+=======
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 import modelo.clases.Director;
 import modelo.clases.Trabajador;
 import modelo.dao.TrabajadorDAO;
@@ -26,7 +23,7 @@ class DirectorDAOTest {
 	boolean estado;
 	TrabajadorDAO dDao = (TrabajadorDAO) FactoryDAO.getTrabajador();
 
-	@BeforeAll
+	@Before
 	static void setUpBeforeClass() throws Exception {
 		dir = new Director();
 		dir.setIdTrabajador(19);
@@ -37,7 +34,7 @@ class DirectorDAOTest {
 		dir.setDireccion("Bergara");
 		dir.setTipo("director");
 		dir.setFechaNac(LocalDate.of(0000, 10, 20));
-		
+
 		((Director) dir).setCategoria("comedia");
 	}
 
@@ -111,15 +108,15 @@ class DirectorDAOTest {
 //
 	@Test
 	void testRemove() {
-		String [] id = {"11"};
-		 try {
-		 estado = dDao.remove(id);
+		String[] id = { "11" };
+		try {
+			estado = dDao.remove(id);
 
 			assertTrue(estado);
-		 } catch (Exception e) {
-		// TODO Auto-generated catch block
-		 e.printStackTrace();
-		 fail("Fallo SQL");
-		 }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		fail("Fallo SQL");
 	}
 }

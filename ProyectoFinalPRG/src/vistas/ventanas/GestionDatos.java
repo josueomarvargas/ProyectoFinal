@@ -5,13 +5,15 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import com.mysql.cj.util.Util;
+import javax.swing.SwingConstants;
 
 import controlador.utils.views.Utilidades;
+import modelo.clases.Trabajador;
+import vistas.dao.CheckLogin;
 import vistas.ventanas.custom.components.MenuButton;
 import vistas.ventanas.custom.containers.CustomPanel;
 import vistas.ventanas.custom.containers.TitleBar;
@@ -19,8 +21,6 @@ import vistas.ventanas.table.TablaEquipamiento;
 import vistas.ventanas.table.TablaPatrocinadores;
 import vistas.ventanas.table.TablaPeliculasSeries;
 import vistas.ventanas.table.TablaTrabajadores;
-import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
 
 public class GestionDatos extends JDialog implements ActionListener {
 
@@ -28,6 +28,7 @@ public class GestionDatos extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private final CustomPanel customPanel = new CustomPanel();
 	private final JDialog thisDialog;
+	private final Trabajador user = CheckLogin.getLogin();
 	private TitleBar bar;
 	private MenuButton btnGTrabajadores;
 	private MenuButton btnGObrasAudiovisuales;
@@ -118,6 +119,21 @@ public class GestionDatos extends JDialog implements ActionListener {
 		backgroundImg.setBounds(0, 0, this.getWidth(), 540);
 		contentPanel.add(backgroundImg);
 
+		if (user.getTipo().equalsIgnoreCase("administrador") || user.getTipo().equalsIgnoreCase("director")) {
+			btnGTrabajadores.setEnabled(true);
+			btnGObrasAudiovisuales.setEnabled(true);
+			btnGPatrocinadores.setEnabled(true);
+			btnGEquipamiento.setEnabled(true);
+			if (user.getTipo().equalsIgnoreCase("director"))
+				btnGEquipamiento.setEnabled(false);
+		} else {
+			btnGTrabajadores.setEnabled(false);
+			btnGObrasAudiovisuales.setEnabled(false);
+			btnGPatrocinadores.setEnabled(false);
+			btnGEquipamiento.setEnabled(true);
+
+		}
+
 		getContentPane().add(contentPanel);
 
 	}
@@ -139,7 +155,7 @@ public class GestionDatos extends JDialog implements ActionListener {
 			vAudiovisual.setVisible(true);
 
 		} else if (e.getSource().equals(btnGPatrocinadores)) {
-			TablaPatrocinadores vPatrocinadores = new TablaPatrocinadores();
+			TablaPatrocinadores vPatrocinadores = new TablaPatrocinadores(thisDialog, true);
 			thisDialog.dispose();
 			vPatrocinadores.setVisible(true);
 		} else if (e.getSource().equals(btnGEquipamiento)) {

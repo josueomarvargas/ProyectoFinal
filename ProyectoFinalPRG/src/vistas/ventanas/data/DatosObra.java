@@ -40,6 +40,8 @@ import controlador.utils.views.Utilidades;
 import modelo.clases.ObraAudiovisual;
 import modelo.clases.Pelicula;
 import modelo.clases.Serie;
+import modelo.clases.Trabajador;
+import vistas.dao.CheckLogin;
 import vistas.dao.RelationData;
 import vistas.ventanas.custom.components.MenuButton;
 import vistas.ventanas.custom.components.TextField;
@@ -54,6 +56,7 @@ public class DatosObra extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private final JPanel peliPanel = new JPanel();
 	private final JPanel seriePanel = new JPanel();
+	private Trabajador user = CheckLogin.getLogin();
 	private MenuButton btnBorrarDatos, btnModificar = null, btnAddObra, btnVolver, btnVerPatrocinadores, addPortada,
 			btnVerTrabajadores, btnVerEquipamiento, addTemporada;
 	private TextField fieldNombre, fieldDuracion, fieldFecha, fieldPresupuesto, addCap;;
@@ -160,18 +163,24 @@ public class DatosObra extends JDialog implements ActionListener {
 =======
 =======
 
+<<<<<<< HEAD
 >>>>>>> 0eb93779c040273dc6c5e24fe7d9afc3a015e84d
 
+=======
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 		JLabel invalidCharacter = new JLabel();
 		invalidCharacter.setText("Ese caracter es inválido.");
 		invalidCharacter.setFont(new Font("Calibri", Font.PLAIN, 14));
 		invalidCharacter.setForeground(Color.RED);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 89bb8fce0cc912af3e1e9b80e4fef56badfa70da
 =======
 
 >>>>>>> 0eb93779c040273dc6c5e24fe7d9afc3a015e84d
+=======
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 		// Nombre
 		fieldNombre = new TextField();
 		fieldNombre.setLabelText("Nombre");
@@ -388,7 +397,7 @@ public class DatosObra extends JDialog implements ActionListener {
 		btnBorrarDatos = new MenuButton();
 		Utilidades.configButtons(btnBorrarDatos, null);
 		btnBorrarDatos
-		.setIcon(new ImageIcon(getClass().getResource("/vistas/ventanas/custom/components/img/delete.png")));
+				.setIcon(new ImageIcon(getClass().getResource("/vistas/ventanas/custom/components/img/delete.png")));
 		btnBorrarDatos.setToolTipText("Borrar datos");
 		btnBorrarDatos.setBounds(size.width - 300, size.height - 75, 50, 25);
 		btnBorrarDatos.addActionListener(this);
@@ -439,6 +448,11 @@ public class DatosObra extends JDialog implements ActionListener {
 			btnAddObra.setEnabled(true);
 			btnBorrarDatos.setEnabled(false);
 			btnModificar.setEnabled(false);
+		}
+		if (user.getTipo().equalsIgnoreCase("tecnicoaudiovisual")) {
+			btnVerEquipamiento.setEnabled(true);
+			btnVerPatrocinadores.setEnabled(false);
+			btnVerTrabajadores.setEnabled(false);
 		}
 
 	}
@@ -538,7 +552,8 @@ public class DatosObra extends JDialog implements ActionListener {
 						"Modificación de datos", OptionPanel.MESSAGE);
 				thisDialog.dispose();
 			} else if (!valido || !ok) {
-				OptionPanel.showMessage(thisDialog, "Error al añadir la obra, compruebe los datos e inténtelo de nuevo",
+				OptionPanel.showMessage(thisDialog,
+						"Error al añadir la obra, compruebe los datos e inténtelo de nuevo",
 						"Error al intentar insertar", OptionPanel.MESSAGE);
 			}
 

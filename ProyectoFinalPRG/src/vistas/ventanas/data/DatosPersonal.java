@@ -7,8 +7,6 @@ import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -16,7 +14,6 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +24,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -48,7 +44,6 @@ import modelo.clases.TecnicoAudiovisual;
 import modelo.clases.Trabajador;
 import modelo.clases.Usuario;
 import vistas.ventanas.custom.components.MenuButton;
-import vistas.ventanas.custom.components.PasswordField;
 import vistas.ventanas.custom.components.TextField;
 import vistas.ventanas.custom.containers.OptionPanel;
 import vistas.ventanas.custom.containers.TitleBar;
@@ -657,7 +652,6 @@ public class DatosPersonal extends JDialog implements ActionListener {
 			}
 		}
 
-
 	}
 
 	private void radioPanels(String type) {
@@ -724,7 +718,6 @@ public class DatosPersonal extends JDialog implements ActionListener {
 		trabajador.setDireccion(direccionField.getText());
 		trabajador.setFechaNac(Utilidades.validateDate(textFecha.getText()));
 
-¡
 	}
 
 	@Override
@@ -755,7 +748,8 @@ public class DatosPersonal extends JDialog implements ActionListener {
 			if (valido) {
 				recogerData();
 				int i = OptionPanel.showOptionMessage(thisDialog,
-						"¿Estás segur@ de que quieres insertar esta trabajador?", "Confirmación", OptionPanel.CONFIRM);
+						"¿Estás segur@ de que quieres insertar esta trabajador?", "Confirmación",
+						OptionPanel.CONFIRM);
 				if (i == OptionPanel.CONFIRM) {
 					ok = FactoryDAO.getInsertData().dataManage(trabajador);
 				}
@@ -765,7 +759,8 @@ public class DatosPersonal extends JDialog implements ActionListener {
 						"Modificación de datos", OptionPanel.MESSAGE);
 				thisDialog.dispose();
 			} else if (!valido || !ok) {
-				OptionPanel.showMessage(thisDialog, "Error al añadir la obra, compruebe los datos e inténtelo de nuevo",
+				OptionPanel.showMessage(thisDialog,
+						"Error al añadir la obra, compruebe los datos e inténtelo de nuevo",
 						"Error al intentar insertar", OptionPanel.MESSAGE);
 			}
 		} else if (e.getSource().equals(btnUsuario)) {

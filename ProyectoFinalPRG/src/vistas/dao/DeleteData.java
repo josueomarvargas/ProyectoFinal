@@ -5,7 +5,7 @@ import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
 
 /**
- * 
+ * Clase para eliminar los datos
  *
  * @author Henrique Yeguo
  */

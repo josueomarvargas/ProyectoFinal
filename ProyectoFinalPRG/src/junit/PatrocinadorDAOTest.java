@@ -1,40 +1,32 @@
-package junitPruebas;
+package junit;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import modelo.clases.Equipamiento;
 import modelo.clases.Patrocinador;
-import modelo.dao.EquipDAO;
 import modelo.dao.PatrocinadorDAO;
 
 class PatrocinadorDAOTest {
-	
+
 	static Patrocinador patro = null;
 	boolean estado;
 	PatrocinadorDAO patDao = new PatrocinadorDAO();
 
-
-	@BeforeAll
+	@Before
 	static void setUpBeforeClass() throws Exception {
 		patro = new Patrocinador();
 		patro.setIdPatro(7);
 		patro.setNombre("kas");
 		patro.setCondicion("tres anuncios");
 		patro.setCantDinero(3000000);
-		
+
 	}
 
-	@AfterAll
+	@After
 	static void tearDownAfterClass() throws Exception {
 	}
 //
@@ -98,7 +90,7 @@ class PatrocinadorDAOTest {
 
 	@Test
 	void testRemove() {
-		String[] id = {"7"};
+		String[] id = { "7" };
 		try {
 			estado = patDao.remove(id);
 
@@ -108,7 +100,7 @@ class PatrocinadorDAOTest {
 			e.printStackTrace();
 			fail("Fallo SQL");
 		}
-	
-}
+
+	}
 
 }

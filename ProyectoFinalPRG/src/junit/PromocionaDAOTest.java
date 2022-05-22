@@ -1,17 +1,15 @@
-package junitPruebas;
+package junit;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import modelo.clases.Equipamiento;
-import modelo.clases.Participa;
 import modelo.clases.Promociona;
 import modelo.dao.PromocionaDAO;
 
@@ -20,7 +18,7 @@ class PromocionaDAOTest {
 	boolean estado;
 	PromocionaDAO proDao = new PromocionaDAO();
 
-	@BeforeAll
+	@Before
 	static void setUpBeforeClass() throws Exception {
 		promo = new Promociona();
 		List<Integer> IdObra = new ArrayList<>();
@@ -29,11 +27,10 @@ class PromocionaDAOTest {
 		List<Integer> IdPatrocinador = new ArrayList<>();
 		IdPatrocinador.add(7);
 		promo.setIdPatro(IdPatrocinador);
-		
-		
+
 	}
 
-	@AfterAll
+	@After
 	static void tearDownAfterClass() throws Exception {
 	}
 
@@ -86,7 +83,7 @@ class PromocionaDAOTest {
 
 	@Test
 	void testRemove() {
-		String[] id = {"14", "7"};
+		String[] id = { "14", "7" };
 		try {
 			estado = proDao.remove(id);
 
@@ -96,7 +93,7 @@ class PromocionaDAOTest {
 			e.printStackTrace();
 			fail("Fallo SQL");
 		}
-	
-}
+
+	}
 
 }

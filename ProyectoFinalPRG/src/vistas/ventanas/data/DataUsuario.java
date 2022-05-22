@@ -1,16 +1,18 @@
 package vistas.ventanas.data;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controlador.utils.dao.FactoryDAO;
@@ -22,16 +24,9 @@ import vistas.ventanas.custom.components.TextField;
 import vistas.ventanas.custom.containers.OptionPanel;
 import vistas.ventanas.custom.containers.TitleBar;
 
-import javax.swing.JTextField;
-import javax.swing.Popup;
-import javax.swing.PopupFactory;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
-
 public class DataUsuario extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private TextField usernameField;
 	private PasswordField passwdField;

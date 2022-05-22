@@ -1,31 +1,24 @@
-package junitPruebas;
+package junit;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import modelo.clases.Director;
 import modelo.clases.EquipObra;
-import modelo.clases.Trabajador;
 import modelo.dao.EquipObraDAO;
-import modelo.dao.TrabajadorDAO;
 
 class EquipObraDAOTest {
-	
+
 	static EquipObra eqo = null;
 	boolean estado;
 	EquipObraDAO eqoDao = new EquipObraDAO();
 
-
-	@BeforeAll
+	@Before
 	static void setUpBeforeClass() throws Exception {
 		eqo = new EquipObra();
 		List<Integer> Obra = new ArrayList<>();
@@ -36,7 +29,7 @@ class EquipObraDAOTest {
 		eqo.setIdEquip(Equipamiento);
 	}
 
-	@AfterAll
+	@After
 	static void tearDownAfterClass() throws Exception {
 	}
 
@@ -56,7 +49,7 @@ class EquipObraDAOTest {
 
 	@Test
 	void testSearch() {
-		String [] id = {"15"};	
+		String[] id = { "15" };
 		try {
 			EquipObra aux = eqoDao.search(id);
 			System.out.println(aux.getIdEquip());
@@ -79,7 +72,6 @@ class EquipObraDAOTest {
 //		}
 //		fail("Not yet implemented");
 //	}
-
 
 //	@Test
 //	void testUpdate() {

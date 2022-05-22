@@ -51,7 +51,7 @@ public class MenuButton extends JButton {
 			public void mouseEntered(MouseEvent me) {
 				if (enabled) {
 					setBorder(BorderFactory.createLoweredBevelBorder());
-					
+
 				}
 			}
 

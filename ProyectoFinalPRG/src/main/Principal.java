@@ -14,6 +14,18 @@ import vistas.ventanas.table.TablaPeliculasSeries;
 =======
 >>>>>>> 0eb93779c040273dc6c5e24fe7d9afc3a015e84d
 
+/**
+ * Clase principal para ejecutar el programa
+ * 
+ * <note>Nota: es importante que en el classpath del proyecto esten las
+ * siguientes librerias
+ * <li>Atxy2k
+ * <li>jcalendar
+ * <li>miglayout15 swing
+ * <li>mysql connector java
+ * <li>TimingFramework </note>
+ * 
+ */
 public class Principal {
 
 	/**
@@ -24,6 +36,7 @@ public class Principal {
 		LogIn vprincipal = new LogIn();
 		vprincipal.setVisible(true);
 
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -46,6 +59,8 @@ public class Principal {
 =======
 >>>>>>> 0eb93779c040273dc6c5e24fe7d9afc3a015e84d
 
+=======
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 	}
 
 }

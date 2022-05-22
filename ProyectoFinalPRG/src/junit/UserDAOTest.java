@@ -1,17 +1,12 @@
-package junitPruebas;
+package junit;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
-import java.sql.SQLException;
-import java.util.Map;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import modelo.clases.Director;
-import modelo.clases.Trabajador;
 import modelo.clases.Usuario;
 import modelo.dao.UserDAO;
 
@@ -21,31 +16,30 @@ class UserDAOTest {
 	boolean estado;
 	UserDAO uDao = new UserDAO();
 
-	
-	@BeforeAll
+	@Before
 	static void setUpBeforeClass() throws Exception {
-			usr = new Usuario();
-			usr.setIdUsuario("ManuLopez");
-			usr.setPasswd("abcd*1234");
-			usr.setIdTrabajador(3);
+		usr = new Usuario();
+		usr.setIdUsuario("ManuLopez");
+		usr.setPasswd("abcd*1234");
+		usr.setIdTrabajador(3);
 	}
 
-	@AfterAll
+	@After
 	static void tearDownAfterClass() throws Exception {
 	}
 
 	@Test
 	void testCreate() {
 		try {
-		estado = uDao.create(usr);
+			estado = uDao.create(usr);
 
-		assertTrue(estado);
+			assertTrue(estado);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail("Fallo SQL");
 		}
-		
+
 	}
 
 //	@Test

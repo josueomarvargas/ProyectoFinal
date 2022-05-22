@@ -1,20 +1,16 @@
-package junitPruebas;
+package junit;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import controlador.utils.dao.DAOFactory;
-import modelo.clases.ObraAudiovisual;
+import controlador.utils.dao.FactoryDAO;
 import modelo.clases.Serie;
 import modelo.dao.ObraDAO;
 
@@ -22,9 +18,9 @@ class SerieDAOTest {
 
 	static Serie ser = null;
 	boolean estado;
-	ObraDAO sDao = (ObraDAO) DAOFactory.OBRA.getInstance();
+	ObraDAO sDao = (ObraDAO) FactoryDAO.getObra();
 
-	@BeforeAll
+	@Before
 	static void setUpBeforeClass() throws Exception {
 		ser = new Serie();
 		ser.setIdObra(10);
@@ -34,7 +30,7 @@ class SerieDAOTest {
 		aux.get(0).add("jon");
 		aux.add(new ArrayList<>());
 		String nomCap = "iker";
-		
+
 	}
 //
 //	@Test

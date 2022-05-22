@@ -1,25 +1,16 @@
-package junitPruebas;
+package junit;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import modelo.clases.Actor;
-import modelo.clases.Director;
 import modelo.clases.Equipamiento;
-import modelo.clases.Trabajador;
-import modelo.dao.CaracteristicaDAO;
 import modelo.dao.EquipDAO;
-
 
 class EquipamientoDAOTest {
 
@@ -27,8 +18,7 @@ class EquipamientoDAOTest {
 	boolean estado;
 	EquipDAO eqpDao = new EquipDAO();
 
-	
-	@BeforeAll
+	@Before
 	static void setUpBeforeClass() throws Exception {
 		equipa = new Equipamiento();
 		equipa.setIdEquip(21);
@@ -59,9 +49,9 @@ class EquipamientoDAOTest {
 
 	@Test
 	void testSearch() {
-		String [] id = {"15"};
+		String[] id = { "15" };
 		try {
-		Equipamiento aux = eqpDao.search(id);
+			Equipamiento aux = eqpDao.search(id);
 			System.out.println(aux.getCaracteristicas());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -70,7 +60,6 @@ class EquipamientoDAOTest {
 
 		fail("Not yet implemented");
 	}
-
 
 //	@Test
 //	void testReadAll() {
@@ -103,9 +92,9 @@ class EquipamientoDAOTest {
 		}
 	}
 
-@Test
+	@Test
 	void testRemove() {
-		String[] id = {"21"};
+		String[] id = { "21" };
 		try {
 			estado = eqpDao.remove(id);
 
@@ -115,8 +104,6 @@ class EquipamientoDAOTest {
 			e.printStackTrace();
 			fail("Fallo SQL");
 		}
-	
-}
-}
 
-
+	}
+}

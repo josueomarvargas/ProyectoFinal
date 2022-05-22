@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import javax.swing.table.TableRowSorter;
 
@@ -34,6 +35,10 @@ import javax.swing.table.TableRowSorter;
 
 
 >>>>>>> 0eb93779c040273dc6c5e24fe7d9afc3a015e84d
+=======
+import javax.swing.table.TableRowSorter;
+
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
@@ -112,13 +117,18 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 			}
 		});
 
-		switch (new String("administrador")) {
+		switch (trabajador.getTipo()) {
 		case "administrador":
+		case "director":
 			btnAnadir.setEnabled(true);
 			btnVolver.setEnabled(true);
 			btnRefrescar.setEnabled(true);
 			break;
-
+		case "tecnicoaudiovisual":
+			btnAnadir.setEnabled(false);
+			btnVolver.setEnabled(true);
+			btnRefrescar.setEnabled(true);
+			break;
 		}
 
 		getContentPane().add(contentPanel);

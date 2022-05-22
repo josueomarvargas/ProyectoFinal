@@ -1,19 +1,15 @@
-package junitPruebas;
+package junit;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import modelo.clases.EquipObra;
-import modelo.clases.Equipamiento;
 import modelo.clases.Participa;
 import modelo.dao.ParticipaDAO;
 
@@ -23,7 +19,7 @@ class ParticipaDAOTest {
 	boolean estado;
 	ParticipaDAO parDao = new ParticipaDAO();
 
-	@BeforeAll
+	@Before
 	static void setUpBeforeClass() throws Exception {
 		par = new Participa();
 		List<Integer> trabajador = new ArrayList<>();
@@ -34,7 +30,7 @@ class ParticipaDAOTest {
 		par.setIdObra(obra);
 	}
 
-	@AfterAll
+	@After
 	static void tearDownAfterClass() throws Exception {
 	}
 
@@ -101,7 +97,7 @@ class ParticipaDAOTest {
 
 	@Test
 	void testRemove() {
-		String[] id = {"12", "14"};
+		String[] id = { "12", "14" };
 		try {
 			estado = parDao.remove(id);
 
@@ -111,7 +107,7 @@ class ParticipaDAOTest {
 			e.printStackTrace();
 			fail("Fallo SQL");
 		}
-	
-}
+
+	}
 
 }

@@ -1,35 +1,24 @@
-package junitPruebas;
+package junit;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import controlador.interfaz.BDgeneric;
-import controlador.utils.dao.DAOFactory;
-import modelo.clases.Actor;
-import modelo.clases.ObraAudiovisual;
+import controlador.utils.dao.FactoryDAO;
 import modelo.clases.Pelicula;
-import modelo.clases.Trabajador;
 import modelo.dao.ObraDAO;
-import modelo.dao.TrabajadorDAO;
-import modelo.dao.ViewPeliDAO;
 
 class PeliDAOTest {
 
 	static Pelicula pel = null;
 	boolean estado;
-	ObraDAO pDao = (ObraDAO) DAOFactory.OBRA.getInstance();
+	ObraDAO pDao = (ObraDAO) FactoryDAO.getObra();
 
-	@BeforeAll
+	@Before
 	static void setUpBeforeClass() throws Exception {
 		pel = new Pelicula();
 		pel.setIdObra(1);

@@ -2,8 +2,11 @@ package junit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+=======
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,8 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import controlador.utils.dao.FactoryDAO;
 import modelo.clases.Actor;
@@ -22,11 +25,17 @@ import modelo.dao.TrabajadorDAO;
 class ActorDAOTest {
 
 	static Trabajador act;
+<<<<<<< HEAD
+
+	boolean estado=false;
+	TrabajadorDAO aDao = (TrabajadorDAO) FactoryDAO.getTrabajador();
+=======
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 
 	boolean estado=false;
 	TrabajadorDAO aDao = (TrabajadorDAO) FactoryDAO.getTrabajador();
 
-	@BeforeAll
+	@Before
 	static void setUpBeforeClass() throws Exception {
 		Trabajador act = new Actor();
 		act.setIdTrabajador(14);
