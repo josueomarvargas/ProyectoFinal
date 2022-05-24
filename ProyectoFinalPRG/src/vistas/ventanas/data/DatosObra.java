@@ -158,12 +158,29 @@ public class DatosObra extends JDialog implements ActionListener {
 		lblTitulo.setFont(new Font("Calibri", Font.PLAIN, 28));
 		lblTitulo.setBounds(375, 32, 171, 36);
 		panel.add(lblTitulo);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
 
+<<<<<<< HEAD
+>>>>>>> 0eb93779c040273dc6c5e24fe7d9afc3a015e84d
+
+=======
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 		JLabel invalidCharacter = new JLabel();
 		invalidCharacter.setText("Ese caracter es inválido.");
 		invalidCharacter.setFont(new Font("Calibri", Font.PLAIN, 14));
 		invalidCharacter.setForeground(Color.RED);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 89bb8fce0cc912af3e1e9b80e4fef56badfa70da
+=======
+
+>>>>>>> 0eb93779c040273dc6c5e24fe7d9afc3a015e84d
+=======
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 		// Nombre
 		fieldNombre = new TextField();
 		fieldNombre.setLabelText("Nombre");

@@ -22,8 +22,23 @@ import javax.swing.RowFilter;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 import javax.swing.table.TableRowSorter;
 
+>>>>>>> 89bb8fce0cc912af3e1e9b80e4fef56badfa70da
+=======
+
+import javax.swing.table.TableRowSorter;
+
+
+>>>>>>> 0eb93779c040273dc6c5e24fe7d9afc3a015e84d
+=======
+import javax.swing.table.TableRowSorter;
+
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 import controlador.utils.ClasesEnum;
 import controlador.utils.dao.FactoryDAO;
 import controlador.utils.views.Utilidades;
@@ -228,10 +243,21 @@ public class TablaPeliculasSeries extends JDialog implements ActionListener {
 		contentPanel.add(btnAnadir);
 
 		btnRefrescar = new MenuButton();
+<<<<<<< HEAD
+<<<<<<< HEAD
+		btnRefrescar.setIcon(new ImageIcon(TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
+		btnRefrescar.setBounds(835, 455, 50, 30);
+=======
+		btnRefrescar.setIcon(new ImageIcon(
+				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
+		btnRefrescar.setBounds(835, 355, 50, 30);
+>>>>>>> 89bb8fce0cc912af3e1e9b80e4fef56badfa70da
+=======
 		btnRefrescar.setIcon(new ImageIcon(
 				TablaPeliculasSeries.class.getResource("/vistas/ventanas/custom/components/img/refresh.png")));
 		btnRefrescar.setBounds(835, 355, 50, 30);
 
+>>>>>>> 0eb93779c040273dc6c5e24fe7d9afc3a015e84d
 		Utilidades.configButtons(btnRefrescar, "");
 		btnRefrescar.addActionListener(this);
 		contentPanel.add(btnRefrescar);

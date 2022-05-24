@@ -9,6 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controlador.utils.dao.FactoryDAO;
+<<<<<<< HEAD
+import modelo.clases.Actor;
+=======
+>>>>>>> 02931d77581c2c5fc75eaf1ab1c10763fc16ee96
 import modelo.clases.Director;
 import modelo.clases.Trabajador;
 import modelo.dao.TrabajadorDAO;

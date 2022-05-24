@@ -30,6 +30,8 @@ public abstract class Trabajador {
 	private String tipo;
 	/** Fecha de naciemiento **/
 	private LocalDate fechaNac;
+	
+	
 
 	/**
 	 * 
